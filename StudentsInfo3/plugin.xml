@@ -29,5 +29,39 @@
             restorable="true">
       </view>
    </extension>
+   <extension
+         id="product1"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="StudentsInfo3.application"
+            name="Students Info">
+         <property
+               name="appName"
+               value="Students Info">
+         </property>
+         <property
+               name="windowImages"
+               value="icons/alt16.png,icons/alt32.png">
+         </property>
+         <property
+               name="aboutImage"
+               value="icons/about.gif">
+         </property>
+         <property
+               name="aboutText"
+               value="%aboutText">
+         </property>
+      </product>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="studentsinfo3.StudentEditor"
+            default="false"
+            icon="icons/student.gif"
+            id="StudentsInfo3.editors.studentseditor"
+            name="StudentEditor">
+      </editor>
+   </extension>
 
 </plugin>

@@ -5,10 +5,9 @@ import org.eclipse.ui.IPerspectiveFactory;
 
 
 public class Perspective implements IPerspectiveFactory {
-  //  public static final String ID = "studentsInfo3.perspective";
     @Override
     public void createInitialLayout(IPageLayout layout) {
         layout.setEditorAreaVisible(true);
-        layout.addStandaloneView(StudentsView.ID, false, IPageLayout.LEFT, 1.0f, layout.getEditorArea());
+        layout.addStandaloneView(StudentsView.ID, false, IPageLayout.LEFT, .20f, layout.getEditorArea());
     }
 }

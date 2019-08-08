@@ -5,32 +5,24 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
-import studentsinfo3.model.AbstractStudent;
 import studentsinfo3.model.Group;
 import studentsinfo3.model.Student;
 
 public class AdapterFactory implements IAdapterFactory {
- private IWorkbenchAdapter groupAdapter = new IWorkbenchAdapter() {
-        
+    
+    private IWorkbenchAdapter groupAdapter = new IWorkbenchAdapter() {
+
         public Object getParent(Object o) {
             return ((Group) o).getParent();
         }
 
         public String getLabel(Object o) {
             Group group = ((Group) o);
-            int available = 0;
-            AbstractStudent[] entries = group.getEntries();
-            for (int i = 0; i < entries.length; i++) {
-                AbstractStudent student = entries[i];
-                if (student instanceof Student) {
-                        available++;
-                }
-            }
-            return group.getName() + " (" + available + "/" + entries.length + ")";
+            return group.getName() + " (" + group.getEntries().length + ")";
         }
 
         public ImageDescriptor getImageDescriptor(Object object) {
-            return AbstractUIPlugin.imageDescriptorFromPlugin(Application.ID, ImageKeys.GROUP);
+            return AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.GROUP.getWay());
         }
 
         public Object[] getChildren(Object o) {
@@ -46,22 +38,19 @@ public class AdapterFactory implements IAdapterFactory {
 
         public String getLabel(Object o) {
             Student entry = ((Student) o);
-            return entry.getName() ;
+            return entry.getName();
         }
 
         public ImageDescriptor getImageDescriptor(Object object) {
-            return AbstractUIPlugin.imageDescriptorFromPlugin(Application.ID,  ImageKeys.STUDENT);
+            return AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.STUDENT.getWay());
 
-  }
+        }
 
         public Object[] getChildren(Object o) {
             return new Object[0];
         }
     };
-    
-    
-    
-    
+
     @Override
     public Object getAdapter(Object adaptableObject, Class adapterType) {
         if (adapterType == IWorkbenchAdapter.class && adaptableObject instanceof Group)
@@ -75,5 +64,4 @@ public class AdapterFactory implements IAdapterFactory {
     public Class[] getAdapterList() {
         return new Class[] { IWorkbenchAdapter.class };
     }
-
 }

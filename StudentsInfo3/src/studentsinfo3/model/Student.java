@@ -1,5 +1,6 @@
 package studentsinfo3.model;
 
+
 public class Student extends AbstractStudent {
 
     private String name;
@@ -61,5 +62,41 @@ public class Student extends AbstractStudent {
     public Group getParent() {
         return group;
     }
+    @Override
+    public int hashCode() {
+      final int prime = 13;
+      int result = 1;
+      result = prime * result + ((name == null) ? 0 : name.hashCode());
+      result+= prime * result + ((group == null) ? 0 : group.hashCode());
+      result+=prime * result + ((address == null) ? 0 : address.hashCode());
+      result+=prime * result + ((city == null) ? 0 : city.hashCode());
+      return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj)
+        return true;
+      if (obj == null)
+        return false;
+      if (getClass() != obj.getClass())
+        return false;
+      Student other = (Student) obj;
+      if (!name.equals(other.name))
+        return false;
+      if (!group.equals(other.group))
+        return false;
+      if (address != other.address)
+        return false;
+      if (city != other.city)
+          return false;
+      return true;
+    }
+
+    @Override
+    public String toString() {
+      return name + " " + group+" "+address+" "+city+" "+result;
+    }
+
 
 }

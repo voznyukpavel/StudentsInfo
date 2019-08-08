@@ -3,10 +3,12 @@ Bundle-ManifestVersion: 2
 Bundle-Name: StudentsInfo3
 Bundle-SymbolicName: StudentsInfo3;singleton:=true
 Bundle-Version: 1.0.0.qualifier
+Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.apache.felix.scr,
  org.eclipse.equinox.util,
- org.eclipse.equinox.event
+ org.eclipse.equinox.event,
+ org.eclipse.ui.workbench
 Automatic-Module-Name: StudentsInfo3
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
