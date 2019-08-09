@@ -20,6 +20,7 @@ public class DeleteGroupAction extends Action implements ISelectionListener, Act
     public DeleteGroupAction(IWorkbenchWindow window) {
         this.window = window;
         setId(ID);
+
         setText("&Delete group");
         setToolTipText("Delete group");
         setImageDescriptor(

@@ -11,6 +11,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+import studentsinfo3.model.Group;
 import studentsinfo3.model.Student;
 
 public class StudentSelectionAction extends Action implements ISelectionListener, IWorkbenchAction {
@@ -39,17 +40,13 @@ public class StudentSelectionAction extends Action implements ISelectionListener
     public void selectionChanged(IWorkbenchPart part, ISelection incoming) {
         if (incoming instanceof IStructuredSelection) {
             selection = (IStructuredSelection) incoming;
-            boolean isSelectionValid = selection.size() == 1 && selection.getFirstElement() instanceof Student;
-            if (isSelectionValid) {
-                run();
-            }
+            setEnabled(selection.size() == 1 && selection.getFirstElement() instanceof Student);
         } else {
-      //      setEnabled(false);
+            setEnabled(false);
         }
     }
 
     public void run() {
-
         Object item = selection.getFirstElement();
         Student entry = (Student) item;
         IWorkbenchPage page = window.getActivePage();

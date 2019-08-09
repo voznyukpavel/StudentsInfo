@@ -72,6 +72,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         editMenu.add(saveAction);
         editMenu.add(new Separator());
         editMenu.add(addStudentAction);
+        editMenu.add(studentSelectionAction);
         editMenu.add(deleteStudentAction);
         editMenu.add(new Separator());
         editMenu.add(addGroupAction);
@@ -93,6 +94,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         toolbar.add(saveAction);
         toolbar.add(deleteStudentAction);
         toolbar.add(addStudentAction);
+        toolbar.add(studentSelectionAction);
     }
 
     protected void fillTrayItem(IMenuManager trayItem) {

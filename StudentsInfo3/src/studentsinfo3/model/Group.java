@@ -84,7 +84,8 @@ public class Group extends AbstractStudent{
             Object[] rls = studentsListeners.getListeners();
             for (int i = 0; i < rls.length; i++) {
                 StudentsListener listener = (StudentsListener) rls[i];
-                listener.updateStudent(this, entry);
+             
+                listener.updateStudent();
             }
         }
     }

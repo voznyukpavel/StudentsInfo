@@ -44,7 +44,7 @@ public class StudentsView extends ViewPart {
         treeViewer.setContentProvider(new BaseWorkbenchContentProvider());
         treeViewer.setInput(groupRoor.getRoot());
         groupRoor.getRoot().addStudentsListener(new StudentsListener() {
-            public void updateStudent(Group contacts, Student entry) {
+            public void updateStudent() {
                 treeViewer.refresh();
             }
         });

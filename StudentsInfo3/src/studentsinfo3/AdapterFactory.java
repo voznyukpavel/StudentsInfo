@@ -26,7 +26,8 @@ public class AdapterFactory implements IAdapterFactory {
         }
 
         public Object[] getChildren(Object o) {
-            return ((Group) o).getEntries();
+      //      return  ArrayContentProvider.getInstance().getElements(o);
+           return ((Group) o).getEntries();
         }
     };
 
