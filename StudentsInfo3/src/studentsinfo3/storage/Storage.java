@@ -8,29 +8,28 @@ import studentsinfo3.model.Group;
 
 public class Storage implements IDAO {
 
-    private final List<Group> storage = new ArrayList<>();
+    private final List<Entity> storage = new ArrayList<>();
     private static Storage instance;
-   // private static Group rootGroup;
+    private static Group rootGroup;
     
-    //public static Group getRoot() {
-    //    if (rootGroup == null)
-    //        rootGroup = new Group(null, "RootGroup");
-    //    return rootGroup;
-    //}
-
+    public static Group getRoot() {
+        if (rootGroup == null)
+            rootGroup = new Group(null, "RootGroup");
+        return rootGroup;
+    }
 
     private Storage() {
 
     }
 
     @Override
-    public void addGroup(Group group) {
+    public void addGroup(Entity group) {
         storage.add(group);
 
     }
 
     @Override
-    public void deleteGroup(Group group) {
+    public void deleteGroup(Entity group) {
         storage.remove(group);
     }
    

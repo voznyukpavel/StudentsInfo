@@ -11,21 +11,20 @@ import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 import org.eclipse.ui.part.ViewPart;
 
-import studentsinfo3.model.AbstractStudent;
+import studentsinfo3.listeners.EntityListener;
+import studentsinfo3.managers.GroupDataManager;
+import studentsinfo3.model.Entity;
 import studentsinfo3.model.Group;
-import studentsinfo3.model.GroupRoot;
-import studentsinfo3.model.Student;
-import studentsinfo3.model.StudentsListener;
+import studentsinfo3.storage.Storage;
 
-public class StudentsView extends ViewPart {
+
+
+
+public class StudentsView extends ViewPart implements EntityListener{
     public static final String ID = "studentsInfo3.view.students";
 
     private TreeViewer treeViewer;
-    private GroupRoot groupRoor;
 
-    public GroupRoot getGroupRoor() {
-        return groupRoor;
-    }
 
     private IAdapterFactory adapterFactory = new AdapterFactory();
     
@@ -35,19 +34,13 @@ public class StudentsView extends ViewPart {
 
     @Override
     public void createPartControl(Composite parent) {
-        groupRoor = new GroupRoot();
-        AddGroupAction.getGroupRoot(groupRoor);
+        signUp();
         treeViewer = new TreeViewer(parent, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
-        Platform.getAdapterManager().registerAdapters(adapterFactory, AbstractStudent.class); 
+        Platform.getAdapterManager().registerAdapters(adapterFactory, Entity.class); 
         getSite().setSelectionProvider(treeViewer);
         treeViewer.setLabelProvider(new WorkbenchLabelProvider());
         treeViewer.setContentProvider(new BaseWorkbenchContentProvider());
-        treeViewer.setInput(groupRoor.getRoot());
-        groupRoor.getRoot().addStudentsListener(new StudentsListener() {
-            public void updateStudent() {
-                treeViewer.refresh();
-            }
-        });
+        treeViewer.setInput(Storage.getRoot()); 
     }
 
     public void dispose() {
@@ -58,6 +51,15 @@ public class StudentsView extends ViewPart {
     @Override
     public void setFocus() {
         treeViewer.getControl().setFocus();
+    }
+
+    @Override
+    public void updateData() {
+        treeViewer.refresh();
+        
+    }
+    private void signUp() {
+        GroupDataManager.getInstance().registerObserver(this);
     }
 
 }

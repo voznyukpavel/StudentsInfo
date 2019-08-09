@@ -2,18 +2,18 @@ package studentsinfo3.managers;
 
 import java.util.ArrayList;
 
-import studentsinfo3.listeners.GroupListener;
+import studentsinfo3.listeners.EntityListener;
 import studentsinfo3.model.Group;
 import studentsinfo3.storage.IDAO;
 import studentsinfo3.storage.Storage;
 
 public class GroupDataManager {
     private static GroupDataManager instance;
-    private ArrayList<GroupListener> observers;
+    private ArrayList<EntityListener> observers;
     private IDAO storage;
 
     private GroupDataManager() {
-        observers = new ArrayList<GroupListener>();
+        observers = new ArrayList<EntityListener>();
         storage = Storage.getInstance();
     }
 
@@ -24,7 +24,7 @@ public class GroupDataManager {
         return instance;
     }
 
-    public void registerObserver(GroupListener observer) {
+    public void registerObserver(EntityListener observer) {
         observers.add(observer);
     }
 
@@ -32,10 +32,14 @@ public class GroupDataManager {
         storage.addGroup(group);
         notifyObserversUpdate();
     }
+    public void removeGroup(Group group) {
+        storage.deleteGroup(group);
+        notifyObserversUpdate();
+    }
 
     public void notifyObserversUpdate() {
         for (int i = 0; i < observers.size(); i++) {
-            GroupListener observer = (GroupListener) observers.get(i);
+            EntityListener observer = (EntityListener) observers.get(i);
             observer.updateData();
         }
     }

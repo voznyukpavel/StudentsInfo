@@ -1,13 +1,15 @@
 package studentsinfo3.model;
 
+import org.eclipse.swt.graphics.Image;
 
-public class Student extends AbstractStudent {
+public class Student extends Entity {
 
     private String name;
     private Group group;
     private String address;
     private String city;
     private int result;
+    private Image photo;
 
     public Student(String name, Group group, String address, String city, int result) {
         super();
@@ -58,7 +60,7 @@ public class Student extends AbstractStudent {
         this.result = result;
     }
 
-    @Override
+   // @Override
     public Group getParent() {
         return group;
     }

@@ -8,13 +8,14 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
-
+import studentsinfo3.managers.GroupDataManager;
 import studentsinfo3.model.Group;
-import studentsinfo3.model.GroupRoot;
+import studentsinfo3.storage.Storage;
+//import studentsinfo3.model.GroupRoot;
 
 public class AddGroupAction extends Action {
     private final IWorkbenchWindow window;
-    private static GroupRoot groupRoot;
+ //   private static GroupRoot groupRoot;
     
     public final static String ID = "studentsinfo3.addGroup";
 
@@ -31,18 +32,15 @@ public class AddGroupAction extends Action {
     public void run() {
         AddGroupDialog dialog = new AddGroupDialog(window.getShell());
         int code = dialog.open();
-        if (code == Window.OK) {
-        //   IWorkbenchPage page = window.getActivePage();
-        //    IViewPart []vp=page.getViews();
-        //    vp[0].getTitle();
-       //     System.out.println(vp[0].getTitle());
-           Group root = groupRoot.getRoot();
+        if (code == Window.OK) {           
+           Group root = Storage.getRoot();
            Group group= new Group(root,dialog.getName());
            root.addEntry(group);
+           GroupDataManager.getInstance().addGroup(group);
         }
     }
 
-    public static void getGroupRoot(GroupRoot root) {
-        groupRoot=root;
-    }
+  //  public static void getGroupRoot(GroupRoot root) {
+  //      groupRoot=root;
+  //  }
 }

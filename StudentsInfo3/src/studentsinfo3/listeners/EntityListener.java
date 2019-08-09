@@ -1,6 +1,6 @@
 package studentsinfo3.listeners;
 
-public interface GroupListener {
+public interface EntityListener {
 
     void updateData();
 
