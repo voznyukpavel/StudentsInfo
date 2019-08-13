@@ -1,4 +1,4 @@
-package studentsinfo3;
+package studentsinfo3.dialogs;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -11,6 +11,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import studentsinfo3.ErrorMessageTextFinals;
+import studentsinfo3.FieldsNamesEnum;
 import studentsinfo3.util.FieldsChecker;
 
 public class AddStudentDialog extends Dialog {
@@ -25,7 +27,7 @@ public class AddStudentDialog extends Dialog {
     private String city;
     private int result;
 
-    protected AddStudentDialog(Shell shell) {
+    public AddStudentDialog(Shell shell) {
         super(shell);
     }
 
@@ -78,10 +80,10 @@ public class AddStudentDialog extends Dialog {
     }
 
     protected void okPressed() {
-        name = nameText.getText();
-        address = addressText.getText();
-        city = cityText.getText();
-        String resultString = resultText.getText();
+        name = nameText.getText().trim();
+        address = addressText.getText().trim();
+        city = cityText.getText().trim();
+        String resultString = resultText.getText().trim();
 
         if (resultString.equals("")) {
             result = 0;
@@ -92,14 +94,15 @@ public class AddStudentDialog extends Dialog {
         if (!isFieldValid(FieldsNamesEnum.NAME.getText(), name)) {
             return;
         }
+        
         String fieldAddress = FieldsNamesEnum.ADDRESS.getText();
         if (isFieldEmpty(fieldAddress, address)) {
             return;
         }
 
         if (!FieldsChecker.numbersSignsAndLatersCheck(address)) {
-            sendErrorMessage(ErrorMessageTextEnum.INVALID_ADDRESS.getMessage(),
-                    ErrorMessageTextEnum.ADDRESS_CONTAIN_FORBIDDEN_SYMBOLS.getMessage());
+            sendErrorMessage(ErrorMessageTextFinals.INVALID_ADDRESS,
+                    ErrorMessageTextFinals.ADDRESS_CONTAIN_FORBIDDEN_SYMBOLS);
             return;
         }
 
@@ -116,8 +119,8 @@ public class AddStudentDialog extends Dialog {
             } else
                 throw new NumberFormatException();
         } catch (NumberFormatException e) {
-            sendErrorMessage(ErrorMessageTextEnum.WRONG_RESULT.getMessage(),
-                    ErrorMessageTextEnum.RESULT_MUST_BE_INTEGER.getMessage());
+            sendErrorMessage(ErrorMessageTextFinals.WRONG_RESULT,
+                    ErrorMessageTextFinals.RESULT_MUST_BE_INTEGER);
             return false;
         }
         return true;
@@ -129,8 +132,8 @@ public class AddStudentDialog extends Dialog {
 
     private boolean isFieldEmpty(String fieldsName, String content) {
         if (content.equals("")) {
-            sendErrorMessage(ErrorMessageTextEnum.INVALID.getMessage() + fieldsName,
-                    fieldsName + ErrorMessageTextEnum.EMPTY_FIELD_ERROR_MESSAGE.getMessage());
+            sendErrorMessage(ErrorMessageTextFinals.INVALID + fieldsName,
+                    fieldsName + ErrorMessageTextFinals.EMPTY_FIELD_ERROR_MESSAGE);
             return true;
         }
         return false;
@@ -138,8 +141,8 @@ public class AddStudentDialog extends Dialog {
 
     private boolean isFieldDataValid(String fieldsName, String content) {
         if (!FieldsChecker.latersCheck(content)) {
-            sendErrorMessage(ErrorMessageTextEnum.INVALID.getMessage() + fieldsName,
-                    fieldsName + ErrorMessageTextEnum.ONLY_LATERS_ERROR_MESSAGE.getMessage());
+            sendErrorMessage(ErrorMessageTextFinals.INVALID + fieldsName,
+                    fieldsName + ErrorMessageTextFinals.ONLY_LATERS_ERROR_MESSAGE);
             return false;
         }
         return true;

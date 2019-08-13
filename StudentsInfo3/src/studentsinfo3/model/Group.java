@@ -8,17 +8,11 @@ public class Group extends Entity {
     private List<Entity> entries;
 
     private Group parent;
-    private String name;
 
-    
     public Group(Group parent, String name) {
-        setGroupEntity(true);
         this.name = name;
         this.parent = parent;
-    }
-
-    public String getName() {
-        return name;
+        type = EntityType.GROUP;
     }
 
     public Group getParent() {

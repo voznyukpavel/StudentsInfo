@@ -1,27 +1,26 @@
-package studentsinfo3;
+package studentsinfo3.action;
 
-import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.ui.ISelectionListener;
+
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+import studentsinfo3.Application;
+import studentsinfo3.ImageWayKeysEnum;
+import studentsinfo3.StudentEditorInput;
 import studentsinfo3.managers.DataManager;
-import studentsinfo3.model.Entity;
+import studentsinfo3.model.EntityType;
 import studentsinfo3.model.Student;
 
-public class DeleteStudentAction extends Action implements ISelectionListener, ActionFactory.IWorkbenchAction {
+public class DeleteStudentAction extends AbstractAction implements ActionFactory.IWorkbenchAction {
     private final IWorkbenchWindow window;
     public final static String ID = "studentsinfo3.deleteStudent";
-    private IStructuredSelection selection;
 
     public DeleteStudentAction(IWorkbenchWindow window) {
         this.window = window;
+        this.enableIfType = EntityType.STUDENT;
         setId(ID);
         setText("&Delete Student");
         setToolTipText("Delete student from this group.");
@@ -31,25 +30,12 @@ public class DeleteStudentAction extends Action implements ISelectionListener, A
     }
 
     @Override
-    public void selectionChanged(IWorkbenchPart part, ISelection incoming) {
-        if (incoming instanceof IStructuredSelection) {
-            selection = (IStructuredSelection) incoming;
-
-            Entity entity = (Entity) selection.getFirstElement();
-            setEnabled(selection.size() == 1 && !entity.isGroupEntity());
-        } else {
-            setEnabled(false);
-        }
-    }
-
-    @Override
     public void dispose() {
         window.getSelectionService().removeSelectionListener(this);
     }
 
     public void run() {
-        Object item = selection.getFirstElement();
-        Student student = (Student) item;
+        Student student = (Student) selection.getFirstElement();
         if (MessageDialog.openConfirm(window.getShell(), "Delete Student",
                 "Do you want to delete the student: " + student.getName() + " ?")) {
             IWorkbenchPage page = window.getActivePage();

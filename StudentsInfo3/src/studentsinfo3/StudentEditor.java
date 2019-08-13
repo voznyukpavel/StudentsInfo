@@ -50,10 +50,10 @@ public class StudentEditor extends EditorPart {
     
     @Override
     public void dispose() {
-        if(isDirty()) {
-   //         SaveDialog saveDialog=new SaveDialog();
-        }
-   //     MessageDialog.openQuestion(new Shell(), "df", "dff");
+  //      if(isDirty()) {
+       //     MessageDialog.openQuestion(new Shell(), "df", "dff");
+     //   }
+        
      //   MessageDialog.openError(new Shell(), title, message);
      //   System.out.println("dfde");
     }
@@ -61,7 +61,7 @@ public class StudentEditor extends EditorPart {
     @Override
     public void doSaveAs() {
         // TODO Auto-generated method stub
-         System.out.println("df1d");
+     //    System.out.println("df1d");
     }
 
     @Override
@@ -83,9 +83,6 @@ public class StudentEditor extends EditorPart {
         } else if (!((Integer) currentStudent.getResult()).toString().equals(resultText.getText())) {
             return true;
         } 
-        // else if (currentStudent.getPhoto().equals(resultText.getText())) {
-        // return true;
-        // }
         return false;
     }
 
@@ -174,30 +171,6 @@ public class StudentEditor extends EditorPart {
     private Student getStudent() {
         return ((StudentEditorInput) getEditorInput()).getStudent();
     }
-
-    // private String getStudentsName() {
-    // return ((StudentEditorInput) getEditorInput()).getStudentsName();
-    // }
-
-    // private String getStudentsAddress() {
-    // return ((StudentEditorInput) getEditorInput()).getStudentsAddress();
-    // }
-
-    // private String getStudentsGroupName() {
-    // return ((StudentEditorInput) getEditorInput()).getStudentsGroupName();
-    // }
-
-    // private String getStudentsCity() {
-    // return ((StudentEditorInput) getEditorInput()).getStudentsCity();
-    // }
-
-    // private Integer getStudentsResult() {
-    // return ((StudentEditorInput) getEditorInput()).getStudentsResult();
-    // }
-
-    // private Image getStudentsPhoto() {
-    // return ((StudentEditorInput) getEditorInput()).getStudentsPhoto();
-    // }
 
     @Override
     public void setFocus() {

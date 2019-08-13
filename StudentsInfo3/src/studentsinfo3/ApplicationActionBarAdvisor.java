@@ -12,22 +12,26 @@ import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 
+import studentsinfo3.action.AddGroupAction;
+import studentsinfo3.action.AddStudentAction;
+import studentsinfo3.action.DeleteGroupAction;
+import studentsinfo3.action.DeleteStudentAction;
+import studentsinfo3.action.OpenGroupAction;
+import studentsinfo3.action.OpenStudentAction;
+
 
 
 public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
     private IWorkbenchAction exitAction;
     private IWorkbenchAction aboutAction;
-
     private AddStudentAction addStudentAction;
     private SaveAction saveAction;
-    private GroupSelectionAction openAction;
+    private OpenGroupAction openAction;
     private DeleteStudentAction deleteStudentAction;
-
     private AddGroupAction addGroupAction;
     private DeleteGroupAction deleteGroupAction;
-    
-    private StudentSelectionAction studentSelectionAction;
+    private OpenStudentAction studentSelectionAction;
 
 
     public ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
@@ -41,25 +45,21 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         exitAction = ActionFactory.QUIT.create(window);
         exitAction.setText("&Exit@Alt+X");
         register(exitAction);
-        
         aboutAction = ActionFactory.ABOUT.create(window);
         register(aboutAction);
-
         addStudentAction = new AddStudentAction(window);
         register(addStudentAction);
         deleteStudentAction = new DeleteStudentAction(window);
         register(deleteStudentAction);
         saveAction = new SaveAction(window);
         register(saveAction);
-        openAction = new GroupSelectionAction(window);
+        openAction = new OpenGroupAction(window);
         register(openAction);
-
         addGroupAction = new AddGroupAction(window);
         register(addGroupAction);
         deleteGroupAction= new DeleteGroupAction(window);
-        register(deleteGroupAction);
-        
-        studentSelectionAction =new StudentSelectionAction(window);
+        register(deleteGroupAction);       
+        studentSelectionAction =new OpenStudentAction(window);
         register(studentSelectionAction);
     }
 
@@ -67,23 +67,18 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
     protected void fillMenuBar(IMenuManager menuBar) {
         MenuManager fileMenu = new MenuManager("&File", "File");
         fileMenu.add(exitAction);
-
-        MenuManager editMenu = new MenuManager("&Edit", "Edit");
         
+        MenuManager editMenu = new MenuManager("&Edit", "Edit");
         editMenu.add(openAction);
         editMenu.add(saveAction);
-        
         editMenu.add(new Separator());
-        
         editMenu.add(addStudentAction);
         editMenu.add(studentSelectionAction);
         editMenu.add(deleteStudentAction);
-        
         editMenu.add(new Separator());
-        
         editMenu.add(addGroupAction);
         editMenu.add(deleteGroupAction);
-
+        
         MenuManager helpMenu = new MenuManager("&Help", "help");
         helpMenu.add(aboutAction);
 

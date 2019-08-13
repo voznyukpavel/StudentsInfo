@@ -4,7 +4,6 @@ import org.eclipse.swt.graphics.Image;
 
 public class Student extends Entity {
 
-    private String name;
     private Group group;
     private String address;
     private String city;
@@ -18,14 +17,7 @@ public class Student extends Entity {
         this.address = address;
         this.city = city;
         this.result = result;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        type = EntityType.STUDENT;
     }
 
     public Group getGroup() {

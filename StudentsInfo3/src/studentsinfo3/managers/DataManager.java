@@ -63,7 +63,7 @@ public class DataManager {
     }
 
     public void addGroup(String groupName) {
-        Storage.getRoot().addEntry(new Group(Storage.getRoot(),groupName));
+        Storage.getRoot().addEntry(new Group(Storage.getRoot(), groupName));
         notifyObserversUpdate();
     }
     

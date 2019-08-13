@@ -6,6 +6,7 @@ import org.eclipse.ui.model.IWorkbenchAdapter;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import studentsinfo3.model.Entity;
+import studentsinfo3.model.EntityType;
 import studentsinfo3.model.Group;
 import studentsinfo3.model.Student;
 
@@ -55,11 +56,16 @@ public class AdapterFactory implements IAdapterFactory {
 
     @Override
     public Object getAdapter(Object adaptableObject, Class adapterType) {
-        Entity entity=(Entity)adaptableObject;
-        if (adapterType == IWorkbenchAdapter.class &&entity.isGroupEntity())
-            return groupAdapter;
-        if (adapterType == IWorkbenchAdapter.class &&!entity.isGroupEntity())
-            return entryAdapter;
+        if (adapterType == IWorkbenchAdapter.class) {
+            Entity entity=(Entity)adaptableObject;
+            if (entity.getType() == EntityType.GROUP) {
+                return groupAdapter;
+            } else if (entity.getType() == EntityType.STUDENT) {
+                return entryAdapter;
+            } else {
+                throw new RuntimeException("!!");
+            }
+        }
         return null;
     }
 

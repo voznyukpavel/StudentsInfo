@@ -9,7 +9,6 @@ public class Storage {
     private Storage() {
 
     }
-
     public static Group getRoot() {
         if (rootGroup == null)
             rootGroup = new Group(null, "RootGroup");

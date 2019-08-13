@@ -2,14 +2,11 @@ package studentsinfo3;
 
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.core.runtime.Platform;
-
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.widgets.Composite;
-
 import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 import org.eclipse.ui.part.ViewPart;
@@ -43,7 +40,7 @@ public class StudentsView extends ViewPart implements EntityListener {
             @Override
             public void mouseDown(MouseEvent e) {
                 if (e.button == 3) {
-                
+   
                 }
             }
             @Override

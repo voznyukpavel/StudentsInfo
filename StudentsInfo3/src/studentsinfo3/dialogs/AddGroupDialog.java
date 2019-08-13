@@ -1,4 +1,4 @@
-package studentsinfo3;
+package studentsinfo3.dialogs;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -11,6 +11,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import studentsinfo3.ErrorMessageTextFinals;
+import studentsinfo3.FieldsNamesEnum;
 import studentsinfo3.util.FieldsChecker;
 
 public class AddGroupDialog extends Dialog {
@@ -18,7 +20,7 @@ public class AddGroupDialog extends Dialog {
     private Text nameText;
     private String groupName;
 
-    protected AddGroupDialog(Shell parentShell) {
+    public AddGroupDialog(Shell parentShell) {
         super(parentShell);
 
     }
@@ -48,14 +50,14 @@ public class AddGroupDialog extends Dialog {
     }
 
     protected void okPressed() {
-        groupName = nameText.getText();
+        groupName = nameText.getText().trim();
         String fieldName = FieldsNamesEnum.GROUP_NAME.getText();
         if (isFieldEmpty(fieldName, groupName)) {
             return;
         }
         if (!FieldsChecker.numbersSignsAndLatersCheck(groupName)) {
-            sendErrorMessage(ErrorMessageTextEnum.INVALID.getMessage() + fieldName,
-                    fieldName + ErrorMessageTextEnum.CONTAIN_FORBIDDEN_SIMBOLS.getMessage());
+            sendErrorMessage(ErrorMessageTextFinals.INVALID + fieldName,
+                    fieldName + ErrorMessageTextFinals.CONTAIN_FORBIDDEN_SIMBOLS);
             return;
         }
         super.okPressed();
@@ -63,8 +65,8 @@ public class AddGroupDialog extends Dialog {
 
     private boolean isFieldEmpty(String fieldsName, String content) {
         if (content.equals("")) {
-            sendErrorMessage(ErrorMessageTextEnum.INVALID.getMessage() + fieldsName,
-                    fieldsName + ErrorMessageTextEnum.EMPTY_FIELD_ERROR_MESSAGE.getMessage());
+            sendErrorMessage(ErrorMessageTextFinals.INVALID + fieldsName,
+                    fieldsName + ErrorMessageTextFinals.EMPTY_FIELD_ERROR_MESSAGE);
             return true;
         }
         return false;
