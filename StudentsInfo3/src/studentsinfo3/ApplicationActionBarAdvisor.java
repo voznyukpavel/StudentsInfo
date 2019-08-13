@@ -11,7 +11,7 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
+
 
 
 public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
@@ -21,7 +21,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
     private AddStudentAction addStudentAction;
     private SaveAction saveAction;
-    private OpenAction openAction;
+    private GroupSelectionAction openAction;
     private DeleteStudentAction deleteStudentAction;
 
     private AddGroupAction addGroupAction;
@@ -41,6 +41,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         exitAction = ActionFactory.QUIT.create(window);
         exitAction.setText("&Exit@Alt+X");
         register(exitAction);
+        
         aboutAction = ActionFactory.ABOUT.create(window);
         register(aboutAction);
 
@@ -50,7 +51,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         register(deleteStudentAction);
         saveAction = new SaveAction(window);
         register(saveAction);
-        openAction = new OpenAction(window);
+        openAction = new GroupSelectionAction(window);
         register(openAction);
 
         addGroupAction = new AddGroupAction(window);
@@ -68,13 +69,18 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         fileMenu.add(exitAction);
 
         MenuManager editMenu = new MenuManager("&Edit", "Edit");
+        
         editMenu.add(openAction);
         editMenu.add(saveAction);
+        
         editMenu.add(new Separator());
+        
         editMenu.add(addStudentAction);
         editMenu.add(studentSelectionAction);
         editMenu.add(deleteStudentAction);
+        
         editMenu.add(new Separator());
+        
         editMenu.add(addGroupAction);
         editMenu.add(deleteGroupAction);
 
@@ -84,6 +90,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         menuBar.add(fileMenu);
         menuBar.add(editMenu);
         menuBar.add(helpMenu);
+
     }
 
     @Override
@@ -101,4 +108,5 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         trayItem.add(aboutAction);
         trayItem.add(exitAction);
     }
+    
 }

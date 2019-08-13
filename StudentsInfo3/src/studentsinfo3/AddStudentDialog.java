@@ -14,9 +14,7 @@ import org.eclipse.swt.widgets.Text;
 import studentsinfo3.util.FieldsChecker;
 
 public class AddStudentDialog extends Dialog {
-    private static final String EMPTY_FIELD_ERROR_MESSAGE=" field can`t be empty.";
-    private static final String ONLY_LATERS_ERROR_MESSAGE=" must contain only laters.";
-    
+
     private Text nameText;
     private Text addressText;
     private Text cityText;
@@ -53,7 +51,7 @@ public class AddStudentDialog extends Dialog {
 
         Label addressLabel = new Label(composite, SWT.NONE);
         addressLabel.setText("&Address:");
-        addressLabel.setLayoutData(labelGridData);
+        addressLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.CENTER, false, false));
 
         addressText = new Text(composite, SWT.BORDER);
         addressText.setLayoutData(textGridData);
@@ -82,34 +80,35 @@ public class AddStudentDialog extends Dialog {
     protected void okPressed() {
         name = nameText.getText();
         address = addressText.getText();
-        city = cityText.getText();       
+        city = cityText.getText();
         String resultString = resultText.getText();
-        
+
         if (resultString.equals("")) {
             result = 0;
-        } else if(!isNumberFieldValid(resultString)) {
-          return;
-        }
-        
-        if (!isFieldValid(FieldsNames.NAME.getText(),name)) {
+        } else if (!isNumberFieldValid(resultString)) {
             return;
         }
-        String fieldAddress=FieldsNames.ADDRESS.getText();
-        if (isFieldEmpty(fieldAddress,address)) {
+
+        if (!isFieldValid(FieldsNamesEnum.NAME.getText(), name)) {
             return;
         }
-        
+        String fieldAddress = FieldsNamesEnum.ADDRESS.getText();
+        if (isFieldEmpty(fieldAddress, address)) {
+            return;
+        }
+
         if (!FieldsChecker.numbersSignsAndLatersCheck(address)) {
-            sendErrorMessage("Invalid Address", "Address contains forbidden symbols");
+            sendErrorMessage(ErrorMessageTextEnum.INVALID_ADDRESS.getMessage(),
+                    ErrorMessageTextEnum.ADDRESS_CONTAIN_FORBIDDEN_SYMBOLS.getMessage());
             return;
         }
-        
-        if (!isFieldValid(FieldsNames.CITY.getText(),city)) {
+
+        if (!isFieldValid(FieldsNamesEnum.CITY.getText(), city)) {
             return;
         }
         super.okPressed();
     }
-    
+
     private boolean isNumberFieldValid(String resultString) {
         try {
             if (FieldsChecker.numbersCheck(resultString)) {
@@ -117,32 +116,34 @@ public class AddStudentDialog extends Dialog {
             } else
                 throw new NumberFormatException();
         } catch (NumberFormatException e) {
-            sendErrorMessage("Wrong result", "Result must be an integer number 0-5.");
+            sendErrorMessage(ErrorMessageTextEnum.WRONG_RESULT.getMessage(),
+                    ErrorMessageTextEnum.RESULT_MUST_BE_INTEGER.getMessage());
             return false;
         }
         return true;
     }
-    
-    private boolean isFieldValid(String fieldsName,String content) {
-        return !isFieldEmpty(fieldsName,content)&&isFieldDataValid(fieldsName,content);
+
+    private boolean isFieldValid(String fieldsName, String content) {
+        return !isFieldEmpty(fieldsName, content) && isFieldDataValid(fieldsName, content);
     }
-    
-    private boolean isFieldEmpty(String fieldsName,String content) {
+
+    private boolean isFieldEmpty(String fieldsName, String content) {
         if (content.equals("")) {
-            sendErrorMessage("Invalid "+fieldsName, fieldsName+EMPTY_FIELD_ERROR_MESSAGE);
+            sendErrorMessage(ErrorMessageTextEnum.INVALID.getMessage() + fieldsName,
+                    fieldsName + ErrorMessageTextEnum.EMPTY_FIELD_ERROR_MESSAGE.getMessage());
             return true;
         }
         return false;
     }
-    
-    private boolean isFieldDataValid(String fieldsName,String content) {
+
+    private boolean isFieldDataValid(String fieldsName, String content) {
         if (!FieldsChecker.latersCheck(content)) {
-            sendErrorMessage("Invalid "+fieldsName, fieldsName+ONLY_LATERS_ERROR_MESSAGE);
+            sendErrorMessage(ErrorMessageTextEnum.INVALID.getMessage() + fieldsName,
+                    fieldsName + ErrorMessageTextEnum.ONLY_LATERS_ERROR_MESSAGE.getMessage());
             return false;
         }
         return true;
     }
-   
 
     public String getName() {
         return name;

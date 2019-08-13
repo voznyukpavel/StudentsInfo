@@ -94,7 +94,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         if (tray == null)
             return null;
         trayItem = new TrayItem(tray, SWT.NONE);
-        trayImage = AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.STUDENT.getWay())
+        trayImage = AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeysEnum.STUDENT.getWay())
                 .createImage();
         trayItem.setImage(trayImage);
         trayItem.setToolTipText(TOOL_TIP_TEXT);

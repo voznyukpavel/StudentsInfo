@@ -10,6 +10,8 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+import studentsinfo3.managers.DataManager;
+import studentsinfo3.model.Entity;
 import studentsinfo3.model.Group;
 
 public class DeleteGroupAction extends Action implements ISelectionListener, ActionFactory.IWorkbenchAction {
@@ -19,12 +21,13 @@ public class DeleteGroupAction extends Action implements ISelectionListener, Act
 
     public DeleteGroupAction(IWorkbenchWindow window) {
         this.window = window;
+     
         setId(ID);
 
         setText("&Delete group");
         setToolTipText("Delete group");
         setImageDescriptor(
-                AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.REMOVE_GROUP.getWay()));
+                AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeysEnum.REMOVE_GROUP.getWay()));
         window.getSelectionService().addSelectionListener(this);
     }
 
@@ -33,8 +36,7 @@ public class DeleteGroupAction extends Action implements ISelectionListener, Act
         Group group = (Group) item;
         if (MessageDialog.openConfirm(window.getShell(), "Delete Group",
                 "Do you want to delete the group: " + group.getName() + " ?")) {
-            Group groupParent = group.getParent();
-            groupParent.removeEntry(group);
+            DataManager.getInstance().removeGroup(group);
         }
     }
 
@@ -47,7 +49,8 @@ public class DeleteGroupAction extends Action implements ISelectionListener, Act
     public void selectionChanged(IWorkbenchPart part, ISelection incoming) {
         if (incoming instanceof IStructuredSelection) {
             selection = (IStructuredSelection) incoming;
-            setEnabled(selection.size() == 1 && selection.getFirstElement() instanceof Group);
+            Entity entity=(Entity)selection.getFirstElement();
+            setEnabled(selection.size() == 1 &&entity.isGroupEntity());
         } else {
             setEnabled(false);
         }

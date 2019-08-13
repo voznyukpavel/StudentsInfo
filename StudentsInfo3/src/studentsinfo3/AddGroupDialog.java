@@ -14,9 +14,7 @@ import org.eclipse.swt.widgets.Text;
 import studentsinfo3.util.FieldsChecker;
 
 public class AddGroupDialog extends Dialog {
-    private static final String EMPTY_FIELD_ERROR_MESSAGE = " field can`t be empty.";
 
-    
     private Text nameText;
     private String groupName;
 
@@ -51,12 +49,13 @@ public class AddGroupDialog extends Dialog {
 
     protected void okPressed() {
         groupName = nameText.getText();
-        String fieldName=FieldsNames.GROUP_NAME.getText();
+        String fieldName = FieldsNamesEnum.GROUP_NAME.getText();
         if (isFieldEmpty(fieldName, groupName)) {
             return;
         }
-        if(!FieldsChecker.numbersSignsAndLatersCheck(groupName)) {
-            sendErrorMessage("Invalid "+fieldName , fieldName + " contains forbidden symbols");
+        if (!FieldsChecker.numbersSignsAndLatersCheck(groupName)) {
+            sendErrorMessage(ErrorMessageTextEnum.INVALID.getMessage() + fieldName,
+                    fieldName + ErrorMessageTextEnum.CONTAIN_FORBIDDEN_SIMBOLS.getMessage());
             return;
         }
         super.okPressed();
@@ -64,7 +63,8 @@ public class AddGroupDialog extends Dialog {
 
     private boolean isFieldEmpty(String fieldsName, String content) {
         if (content.equals("")) {
-            sendErrorMessage("Invalid " + fieldsName, fieldsName + EMPTY_FIELD_ERROR_MESSAGE);
+            sendErrorMessage(ErrorMessageTextEnum.INVALID.getMessage() + fieldsName,
+                    fieldsName + ErrorMessageTextEnum.EMPTY_FIELD_ERROR_MESSAGE.getMessage());
             return true;
         }
         return false;

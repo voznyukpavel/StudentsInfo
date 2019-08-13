@@ -38,6 +38,31 @@ public class StudentEditorInput implements IEditorInput {
     public Student getStudent() {
         return currentStudent;
     }
+    
+//    public String getStudentsName() {
+ //       return currentStudent.getName();
+ //   }
+    
+//    public String getStudentsAddress() {
+//        return currentStudent.getAddress();
+//    }
+    
+//    public String getStudentsCity() {
+//        return currentStudent.getCity();
+ //   }
+    
+ //   public int getStudentsResult() {
+ //       return currentStudent.getResult();
+ //   }
+    
+ //   public String getStudentsGroupName() {
+ //       return currentStudent.getGroup().getName();
+ //   }
+    
+//    public Image getStudentsPhoto() {
+//        return currentStudent.getPhoto();
+ //   }
+    
 
     @Override
     public IPersistableElement getPersistable() {

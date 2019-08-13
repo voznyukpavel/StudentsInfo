@@ -13,7 +13,7 @@ public class SaveAction extends Action{
         setId(ID);
         setText("&Save");
         setToolTipText("Save");
-        setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.SAVE.getWay()));
+        setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeysEnum.SAVE.getWay()));
         
     }
 

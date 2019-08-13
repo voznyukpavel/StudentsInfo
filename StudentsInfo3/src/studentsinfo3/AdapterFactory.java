@@ -5,6 +5,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+import studentsinfo3.model.Entity;
 import studentsinfo3.model.Group;
 import studentsinfo3.model.Student;
 
@@ -22,7 +23,7 @@ public class AdapterFactory implements IAdapterFactory {
         }
 
         public ImageDescriptor getImageDescriptor(Object object) {
-            return AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.GROUP.getWay());
+            return AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeysEnum.GROUP.getWay());
         }
 
         public Object[] getChildren(Object o) {
@@ -43,7 +44,7 @@ public class AdapterFactory implements IAdapterFactory {
         }
 
         public ImageDescriptor getImageDescriptor(Object object) {
-            return AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.STUDENT.getWay());
+            return AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeysEnum.STUDENT.getWay());
 
         }
 
@@ -54,9 +55,10 @@ public class AdapterFactory implements IAdapterFactory {
 
     @Override
     public Object getAdapter(Object adaptableObject, Class adapterType) {
-        if (adapterType == IWorkbenchAdapter.class && adaptableObject instanceof Group)
+        Entity entity=(Entity)adaptableObject;
+        if (adapterType == IWorkbenchAdapter.class &&entity.isGroupEntity())
             return groupAdapter;
-        if (adapterType == IWorkbenchAdapter.class && adaptableObject instanceof Student)
+        if (adapterType == IWorkbenchAdapter.class &&!entity.isGroupEntity())
             return entryAdapter;
         return null;
     }

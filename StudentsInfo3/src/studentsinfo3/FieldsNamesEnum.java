@@ -1,16 +1,16 @@
 package studentsinfo3;
 
-public enum FieldsNames {
+public enum FieldsNamesEnum {
 
-    NAME("Name:"),
+    NAME      ("Name:"),
     GROUP_NAME("Group name:"),
-    ADDRESS("Address:"),
-    CITY("City:"),
-    RESULT("Result:");
+    ADDRESS   ("Address:"),
+    CITY      ("City:"),
+    RESULT    ("Result:");
 
     private String name;
 
-    FieldsNames(String name) {
+    FieldsNamesEnum(String name) {
         this.name = name;
     }
 

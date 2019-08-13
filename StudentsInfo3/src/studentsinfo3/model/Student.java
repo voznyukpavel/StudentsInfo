@@ -60,10 +60,19 @@ public class Student extends Entity {
         this.result = result;
     }
 
-   // @Override
+    @Override
     public Group getParent() {
         return group;
     }
+    
+    public Image getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Image photo) {
+        this.photo = photo;
+    }
+    
     @Override
     public int hashCode() {
       final int prime = 13;
@@ -88,9 +97,9 @@ public class Student extends Entity {
         return false;
       if (!group.equals(other.group))
         return false;
-      if (address != other.address)
+      if (!address.equals(address))
         return false;
-      if (city != other.city)
+      if (!city.equals(city))
           return false;
       return true;
     }
@@ -99,6 +108,5 @@ public class Student extends Entity {
     public String toString() {
       return name + " " + group+" "+address+" "+city+" "+result;
     }
-
 
 }

@@ -3,7 +3,7 @@ package studentsinfo3.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Group extends Entity{
+public class Group extends Entity {
   
     private List<Entity> entries;
 
@@ -12,6 +12,7 @@ public class Group extends Entity{
 
     
     public Group(Group parent, String name) {
+        setGroupEntity(true);
         this.name = name;
         this.parent = parent;
     }
@@ -47,7 +48,6 @@ public class Group extends Entity{
             return (Entity[]) entries.toArray(new Entity[entries.size()]);
         return new Entity[0];
     }
-
 
     @Override
     public int hashCode() {
