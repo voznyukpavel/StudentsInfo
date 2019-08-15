@@ -18,6 +18,8 @@ import studentsinfo3.action.DeleteGroupAction;
 import studentsinfo3.action.DeleteStudentAction;
 import studentsinfo3.action.OpenGroupAction;
 import studentsinfo3.action.OpenStudentAction;
+import studentsinfo3.action.SaveAction;
+import studentsinfo3.action.SaveAllAction;
 
 
 
@@ -26,6 +28,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
     private IWorkbenchAction exitAction;
     private IWorkbenchAction aboutAction;
     private AddStudentAction addStudentAction;
+    private SaveAllAction saveAllAction;
     private SaveAction saveAction;
     private OpenGroupAction openAction;
     private DeleteStudentAction deleteStudentAction;
@@ -37,20 +40,20 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
     public ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
         super(configurer);
     }
-    
- 
 
     @Override
     protected void makeActions(IWorkbenchWindow window) {
         exitAction = ActionFactory.QUIT.create(window);
         exitAction.setText("&Exit@Alt+X");
-        register(exitAction);
+        register(exitAction);       
         aboutAction = ActionFactory.ABOUT.create(window);
         register(aboutAction);
         addStudentAction = new AddStudentAction(window);
         register(addStudentAction);
         deleteStudentAction = new DeleteStudentAction(window);
         register(deleteStudentAction);
+        saveAllAction=new SaveAllAction(window);
+        register(saveAllAction);
         saveAction = new SaveAction(window);
         register(saveAction);
         openAction = new OpenGroupAction(window);
@@ -93,6 +96,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         IToolBarManager toolbar = new ToolBarManager(coolBar.getStyle());
         coolBar.add(toolbar);
         toolbar.add(openAction);
+      //  toolbar.add(saveAllAction);
         toolbar.add(saveAction);
         toolbar.add(deleteStudentAction);
         toolbar.add(addStudentAction);

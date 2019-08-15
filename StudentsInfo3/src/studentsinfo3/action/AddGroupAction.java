@@ -8,7 +8,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import studentsinfo3.Application;
 import studentsinfo3.ErrorMessageTextFinals;
-import studentsinfo3.ImageWayKeysEnum;
+import studentsinfo3.ImageWayKeys;
 import studentsinfo3.dialogs.AddGroupDialog;
 import studentsinfo3.managers.DataManager;
 
@@ -25,7 +25,7 @@ public class AddGroupAction extends Action {
         setText("&Add Group");
         setToolTipText("Add Group");
         setImageDescriptor(
-                AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeysEnum.ADD_GROUP.getWay()));
+                AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.ADD_GROUP));
     }
 
     public void run() {

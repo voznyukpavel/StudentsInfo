@@ -57,7 +57,7 @@ public class AddGroupDialog extends Dialog {
         }
         if (!FieldsChecker.numbersSignsAndLatersCheck(groupName)) {
             sendErrorMessage(ErrorMessageTextFinals.INVALID + fieldName,
-                    fieldName + ErrorMessageTextFinals.CONTAIN_FORBIDDEN_SIMBOLS);
+                    fieldName + ErrorMessageTextFinals.ADDRESS_CONTAIN_FORBIDDEN_SYMBOLS);
             return;
         }
         super.okPressed();

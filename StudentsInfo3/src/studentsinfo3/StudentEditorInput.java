@@ -17,24 +17,6 @@ public class StudentEditorInput implements IEditorInput {
         this.currentStudent = currentStudent;
     }
 
-    @Override
-    public <T> T getAdapter(Class<T> adapter) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public boolean exists() {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public ImageDescriptor getImageDescriptor() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
     public Student getStudent() {
         return currentStudent;
     }
@@ -42,7 +24,6 @@ public class StudentEditorInput implements IEditorInput {
     
     @Override
     public IPersistableElement getPersistable() {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -66,7 +47,20 @@ public class StudentEditorInput implements IEditorInput {
 
     @Override
     public String getName() {
-        // TODO Auto-generated method stub
+        return null;
+    }
+    @Override
+    public <T> T getAdapter(Class<T> adapter) {
+        return null;
+    }
+
+    @Override
+    public boolean exists() {
+        return false;
+    }
+
+    @Override
+    public ImageDescriptor getImageDescriptor() {
         return null;
     }
 }

@@ -2,7 +2,6 @@ package studentsinfo3.action;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.IStructuredSelection;
-
 import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
@@ -14,13 +13,14 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import studentsinfo3.Application;
 import studentsinfo3.ImageWayKeys;
 import studentsinfo3.StudentEditor;
+
 import studentsinfo3.listeners.EditorListener;
 import studentsinfo3.managers.DataManager;
 import studentsinfo3.managers.EditorIsDirtydManager;
 import studentsinfo3.managers.SaveDataManager;
 import studentsinfo3.model.Student;
 
-public class SaveAction extends Action implements EditorListener, ActionFactory.IWorkbenchAction {
+public class SaveAllAction extends Action implements EditorListener, ActionFactory.IWorkbenchAction {
 
     protected IStructuredSelection selection;
 
@@ -28,12 +28,12 @@ public class SaveAction extends Action implements EditorListener, ActionFactory.
 
     public final static String ID = "studentsinfo3.save";
 
-    public SaveAction(IWorkbenchWindow window) {
+    public SaveAllAction(IWorkbenchWindow window) {
         setId(ID);
         setText("&Save");
         setToolTipText("Save");
         setImageDescriptor(
-                AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.SAVE));
+                AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.SAVE_ALL));
         page = window.getActivePage();
         page.addPartListener(new EditorChangedListener());
         setEnabled(false);
@@ -108,3 +108,4 @@ public class SaveAction extends Action implements EditorListener, ActionFactory.
         }
     }
 }
+

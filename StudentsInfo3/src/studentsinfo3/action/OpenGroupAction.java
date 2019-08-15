@@ -11,7 +11,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import studentsinfo3.Application;
 import studentsinfo3.ErrorMessageTextFinals;
-import studentsinfo3.ImageWayKeysEnum;
+import studentsinfo3.ImageWayKeys;
 import studentsinfo3.StudentEditor;
 import studentsinfo3.StudentEditorInput;
 import studentsinfo3.model.Entity;
@@ -33,7 +33,7 @@ public class OpenGroupAction extends AbstractAction implements ActionFactory.IWo
         setText("&Open");
         setToolTipText("Open");
         setImageDescriptor(
-                AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeysEnum.OPEN.getWay()));
+                AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.OPEN));
         window.getSelectionService().addSelectionListener(this);
     }
 

@@ -11,7 +11,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import studentsinfo3.Application;
 import studentsinfo3.ErrorMessageTextFinals;
-import studentsinfo3.ImageWayKeysEnum;
+import studentsinfo3.ImageWayKeys;
 import studentsinfo3.StudentEditor;
 import studentsinfo3.StudentEditorInput;
 import studentsinfo3.model.EntityType;
@@ -31,7 +31,7 @@ public class OpenStudentAction extends AbstractAction implements IWorkbenchActio
         setText("&Student");
         setToolTipText("Current student");
         setImageDescriptor(
-                AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeysEnum.STUDENT.getWay()));
+                AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.STUDENT));
         window.getSelectionService().addSelectionListener(this);
     }
 

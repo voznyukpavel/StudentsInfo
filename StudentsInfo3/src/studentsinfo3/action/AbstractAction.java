@@ -21,8 +21,6 @@ public abstract class AbstractAction extends Action implements ISelectionListene
        setEnabled(isTypesEqual(selection));
     }
     
-    
-    
     private boolean isTypesEqual(ISelection selection) {
         return enableIfType == null || enableIfType == getSelectionType(selection);
     }

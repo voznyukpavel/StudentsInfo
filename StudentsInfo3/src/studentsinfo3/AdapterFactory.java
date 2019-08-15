@@ -24,7 +24,7 @@ public class AdapterFactory implements IAdapterFactory {
         }
 
         public ImageDescriptor getImageDescriptor(Object object) {
-            return AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeysEnum.GROUP.getWay());
+            return AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.GROUP);
         }
 
         public Object[] getChildren(Object o) {
@@ -45,7 +45,7 @@ public class AdapterFactory implements IAdapterFactory {
         }
 
         public ImageDescriptor getImageDescriptor(Object object) {
-            return AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeysEnum.STUDENT.getWay());
+            return AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.STUDENT);
 
         }
 

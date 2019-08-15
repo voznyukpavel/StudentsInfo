@@ -4,6 +4,7 @@ import org.eclipse.swt.graphics.Image;
 
 public class Student extends Entity {
 
+    private int id;
     private Group group;
     private String address;
     private String city;
@@ -18,6 +19,14 @@ public class Student extends Entity {
         this.city = city;
         this.result = result;
         type = EntityType.STUDENT;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Group getGroup() {
@@ -56,7 +65,7 @@ public class Student extends Entity {
     public Group getParent() {
         return group;
     }
-    
+
     public Image getPhoto() {
         return photo;
     }
@@ -64,41 +73,44 @@ public class Student extends Entity {
     public void setPhoto(Image photo) {
         this.photo = photo;
     }
-    
+
     @Override
     public int hashCode() {
-      final int prime = 13;
-      int result = 1;
-      result = prime * result + ((name == null) ? 0 : name.hashCode());
-      result+= prime * result + ((group == null) ? 0 : group.hashCode());
-      result+=prime * result + ((address == null) ? 0 : address.hashCode());
-      result+=prime * result + ((city == null) ? 0 : city.hashCode());
-      return result;
+        final int prime = 13;
+        int result = 1;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result += prime * result + ((group == null) ? 0 : group.hashCode());
+        result += prime * result + ((address == null) ? 0 : address.hashCode());
+        result += prime * result + ((city == null) ? 0 : city.hashCode());
+        result+=prime+id;
+        return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-      if (this == obj)
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Student other = (Student) obj;
+        if (id != other.id) 
+            return false;
+        if (!name.equals(other.name))
+            return false;
+        if (!group.equals(other.group))
+            return false;
+        if (!address.equals(address))
+            return false;
+        if (!city.equals(city))
+            return false;
         return true;
-      if (obj == null)
-        return false;
-      if (getClass() != obj.getClass())
-        return false;
-      Student other = (Student) obj;
-      if (!name.equals(other.name))
-        return false;
-      if (!group.equals(other.group))
-        return false;
-      if (!address.equals(address))
-        return false;
-      if (!city.equals(city))
-          return false;
-      return true;
     }
 
     @Override
     public String toString() {
-      return name + " " + group+" "+address+" "+city+" "+result;
+        return id + " " + name + " " + group + " " + address + " " + city + " " + result;
     }
 
 }

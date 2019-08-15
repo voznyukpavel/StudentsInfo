@@ -13,7 +13,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
@@ -21,10 +20,16 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+import studentsinfo3.listeners.SaveListener;
+import studentsinfo3.managers.EditorIsDirtydManager;
+import studentsinfo3.managers.SaveDataManager;
+import studentsinfo3.model.Group;
 import studentsinfo3.model.Student;
+import studentsinfo3.storage.Storage;
+import studentsinfo3.util.FieldsChecker;
 import studentsinfo3.util.ResizedImage;
 
-public class StudentEditor extends EditorPart {
+public class StudentEditor extends EditorPart implements SaveListener {
     public static final String ID = "StudentsInfo3.editors.studentseditor";
 
     private static final int PHOTO_SIZE = 120;
@@ -34,8 +39,15 @@ public class StudentEditor extends EditorPart {
     private Text addressText;
     private Text cityText;
     private Text resultText;
+
+    private String name;
+    private String groupName;
+    private String address;
+    private String city;
+    
     private Canvas photoCanvas;
     private Image photoImage;
+    private Composite parent;
 
     private Student currentStudent;
 
@@ -43,31 +55,10 @@ public class StudentEditor extends EditorPart {
     }
 
     @Override
-    public void doSave(IProgressMonitor monitor) {
-        // TODO Auto-generated method stub
-         System.out.println("dfd");
-    }
-    
-    @Override
-    public void dispose() {
-  //      if(isDirty()) {
-       //     MessageDialog.openQuestion(new Shell(), "df", "dff");
-     //   }
-        
-     //   MessageDialog.openError(new Shell(), title, message);
-     //   System.out.println("dfde");
-    }
-
-    @Override
-    public void doSaveAs() {
-        // TODO Auto-generated method stub
-     //    System.out.println("df1d");
-    }
-
-    @Override
     public void init(IEditorSite site, IEditorInput input) throws PartInitException {
         setSite(site);
         setInput(input);
+        
     }
 
     @Override
@@ -82,17 +73,14 @@ public class StudentEditor extends EditorPart {
             return true;
         } else if (!((Integer) currentStudent.getResult()).toString().equals(resultText.getText())) {
             return true;
-        } 
-        return false;
-    }
-
-    @Override
-    public boolean isSaveAsAllowed() {
+        }
         return false;
     }
 
     @Override
     public void createPartControl(Composite parent) {
+        this.parent = parent;
+        signUp();
         currentStudent = getStudent();
         setPartName(currentStudent.getName() + " " + currentStudent.getGroup().getName());
 
@@ -103,12 +91,13 @@ public class StudentEditor extends EditorPart {
         Label name = new Label(parent, SWT.NULL);
         name.setText(FieldsNamesEnum.NAME.getText());
 
+        TextModifyListener textModifyListener = new TextModifyListener();
         nameText = new Text(parent, SWT.SINGLE | SWT.BORDER);
         GridData textGridData = new GridData();
         textGridData.widthHint = 150;
         nameText.setLayoutData(textGridData);
         nameText.setText(currentStudent.getName());
-        nameText.addModifyListener(new TextModifyListener());
+        nameText.addModifyListener(textModifyListener);
 
         photoCanvas = new Canvas(parent, SWT.BORDER);
         GridData gridData = new GridData();
@@ -126,7 +115,7 @@ public class StudentEditor extends EditorPart {
                     event.gc.drawImage(photoImage, 0, 0);
                 } else {
                     event.gc.drawImage(AbstractUIPlugin
-                            .imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeysEnum.STUDENT_INSTEAD.getWay())
+                            .imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.STUDENT_INSTEAD)
                             .createImage(), 0, 0);
                 }
             }
@@ -138,7 +127,7 @@ public class StudentEditor extends EditorPart {
         groupText = new Text(parent, SWT.SINGLE | SWT.BORDER);
         groupText.setLayoutData(textGridData);
         groupText.setText(currentStudent.getGroup().getName());
-        groupText.addModifyListener(new TextModifyListener());
+        groupText.addModifyListener(textModifyListener);
 
         Label address = new Label(parent, SWT.NULL);
         address.setText(FieldsNamesEnum.ADDRESS.getText());
@@ -146,7 +135,7 @@ public class StudentEditor extends EditorPart {
         addressText = new Text(parent, SWT.SINGLE | SWT.BORDER);
         addressText.setLayoutData(textGridData);
         addressText.setText(currentStudent.getAddress());
-        addressText.addModifyListener(new TextModifyListener());
+        addressText.addModifyListener(textModifyListener);
 
         Label city = new Label(parent, SWT.NULL);
         city.setText(FieldsNamesEnum.CITY.getText());
@@ -154,7 +143,7 @@ public class StudentEditor extends EditorPart {
         cityText = new Text(parent, SWT.SINGLE | SWT.BORDER);
         cityText.setLayoutData(textGridData);
         cityText.setText(currentStudent.getCity());
-        cityText.addModifyListener(new TextModifyListener());
+        cityText.addModifyListener(textModifyListener);
 
         Label result = new Label(parent, SWT.NULL);
         result.setText(FieldsNamesEnum.RESULT.getText());
@@ -164,7 +153,7 @@ public class StudentEditor extends EditorPart {
         resultGridData.widthHint = 5;
         resultText.setLayoutData(resultGridData);
         resultText.setText(((Integer) currentStudent.getResult()).toString());
-        resultText.addModifyListener(new TextModifyListener());
+        resultText.addModifyListener(textModifyListener);
 
     }
 
@@ -178,11 +167,120 @@ public class StudentEditor extends EditorPart {
             nameText.setFocus();
         }
     }
-    
+
     private class TextModifyListener implements ModifyListener {
         @Override
         public void modifyText(ModifyEvent e) {
-            isDirty();
+            EditorIsDirtydManager.getInstance().dataIsDirty(isDirty());
         }
-      }
+    }
+
+    @Override
+    public void saveStart() {
+        groupName = groupText.getText().trim();
+        name = nameText.getText().trim();
+        address = addressText.getText().trim();
+        city = cityText.getText().trim();
+        String resultString = resultText.getText().trim();
+
+        if (!isFieldNotOnlyLatersValid(FieldsNamesEnum.GROUP_NAME.getText(),groupName)) {
+            return;
+        }
+
+        if (resultString.equals("")) {
+        } else if (!isNumberFieldValid(resultString)) {
+            return;
+        }
+
+        if (!isFieldValid(FieldsNamesEnum.NAME.getText(), name)) {
+            return;
+        }
+
+        if (!isFieldNotOnlyLatersValid(FieldsNamesEnum.ADDRESS.getText(),address)) {
+            return;
+        }
+        
+        if (!isFieldValid(FieldsNamesEnum.CITY.getText(), city)) {
+            return;
+        }
+        setPartName(name + " " + groupName);
+        currentStudent.setName(name);
+        currentStudent.setAddress(address);
+        currentStudent.setCity(city);
+        currentStudent.setResult(Integer.parseInt(resultString));
+        if (!currentStudent.getGroup().getName().equals(groupName)) {
+            currentStudent.setGroup(new Group(Storage.getRoot(), groupName));
+        }
+        EditorIsDirtydManager.getInstance().dataChenged(currentStudent);
+    }
+
+    private boolean isNumberFieldValid(String resultString) {
+        try {
+            if (FieldsChecker.numbersCheck(resultString)) {
+                Integer.parseInt(resultString);
+            } else
+                throw new NumberFormatException();
+        } catch (NumberFormatException e) {
+            sendErrorMessage(ErrorMessageTextFinals.WRONG_RESULT, ErrorMessageTextFinals.RESULT_MUST_BE_INTEGER);
+            return false;
+        }
+        return true;
+    }
+    
+    private boolean isFieldNotOnlyLatersValid(String fieldsName, String content) {
+        return !isFieldEmpty(fieldsName, content) && isFieldDataNotOnlyLatersValid(fieldsName, content);
+    }
+    
+    private boolean isFieldDataNotOnlyLatersValid(String fieldsName, String content) {
+        if (!FieldsChecker.numbersSignsAndLatersCheck(content)) {
+            sendErrorMessage(ErrorMessageTextFinals.INVALID + fieldsName,
+                    fieldsName + ErrorMessageTextFinals.CONTAIN_FORBIDDEN_SYMBOLS);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isFieldValid(String fieldsName, String content) {
+        return !isFieldEmpty(fieldsName, content) && isFieldDataValid(fieldsName, content);
+    }
+
+    private boolean isFieldDataValid(String fieldsName, String content) {
+        if (!FieldsChecker.latersCheck(content)) {
+            sendErrorMessage(ErrorMessageTextFinals.INVALID + fieldsName,
+                    fieldsName + ErrorMessageTextFinals.ONLY_LATERS_ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+    
+    private boolean isFieldEmpty(String fieldsName, String content) {
+        if (content.equals("")) {
+            sendErrorMessage(ErrorMessageTextFinals.INVALID + fieldsName,
+                    fieldsName + ErrorMessageTextFinals.EMPTY_FIELD_ERROR_MESSAGE);
+            return true;
+        }
+        return false;
+    }
+
+    private void signUp() {
+        SaveDataManager.getInstance().registerObserver(this);
+    }
+
+    private void sendErrorMessage(String title, String message) {
+        MessageDialog.openError(parent.getShell(), title, message);
+    }
+    
+    @Override
+    public void doSaveAs() {
+    }
+
+    @Override
+    public boolean isSaveAsAllowed() {
+        return false;
+    }
+
+    @Override
+    public void doSave(IProgressMonitor monitor) {
+    }
+
 }

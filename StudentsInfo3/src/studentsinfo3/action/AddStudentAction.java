@@ -8,7 +8,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import studentsinfo3.Application;
 import studentsinfo3.ErrorMessageTextFinals;
-import studentsinfo3.ImageWayKeysEnum;
+import studentsinfo3.ImageWayKeys;
 import studentsinfo3.dialogs.AddStudentDialog;
 import studentsinfo3.managers.DataManager;
 import studentsinfo3.model.EntityType;
@@ -27,7 +27,7 @@ public class AddStudentAction extends AbstractAction implements ActionFactory.IW
         setText("&Add Student");
         setToolTipText("Add student in this group.");
         setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID,
-                ImageWayKeysEnum.ADD_STUDENT.getWay()));
+                ImageWayKeys.ADD_STUDENT));
         window.getSelectionService().addSelectionListener(this);
     }
 
