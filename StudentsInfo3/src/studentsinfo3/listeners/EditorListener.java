@@ -1,8 +1,10 @@
 package studentsinfo3.listeners;
 
-import studentsinfo3.model.Student;
+import studentsinfo3.events.DirtyEvent;
+import studentsinfo3.events.UpdateEvent;
+
 
 public interface EditorListener {
-    void isDataDirty(boolean isDirty);
-    void updateStudent(Student student);
+    void isDataDirty(DirtyEvent e);
+    void updateStudent(UpdateEvent e);
 }

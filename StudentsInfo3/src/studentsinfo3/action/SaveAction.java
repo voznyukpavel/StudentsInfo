@@ -1,8 +1,6 @@
 package studentsinfo3.action;
 
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.viewers.IStructuredSelection;
-
 import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
@@ -14,17 +12,17 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import studentsinfo3.Application;
 import studentsinfo3.ImageWayKeys;
 import studentsinfo3.StudentEditor;
+import studentsinfo3.events.DirtyEvent;
+import studentsinfo3.events.UpdateEvent;
 import studentsinfo3.listeners.EditorListener;
 import studentsinfo3.managers.DataManager;
 import studentsinfo3.managers.EditorIsDirtydManager;
 import studentsinfo3.managers.SaveDataManager;
-import studentsinfo3.model.Student;
 
 public class SaveAction extends Action implements EditorListener, ActionFactory.IWorkbenchAction {
 
-    protected IStructuredSelection selection;
-
     private IWorkbenchPage page;
+    private StudentEditor studentEditor;
 
     public final static String ID = "studentsinfo3.save";
 
@@ -32,17 +30,15 @@ public class SaveAction extends Action implements EditorListener, ActionFactory.
         setId(ID);
         setText("&Save");
         setToolTipText("Save");
-        setImageDescriptor(
-                AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.SAVE));
+        setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.SAVE));
         page = window.getActivePage();
         page.addPartListener(new EditorChangedListener());
         setEnabled(false);
         signUp();
     }
 
-    public void run() { 
-        SaveDataManager.getInstance().startSave();
-        setEnabled(false);
+    public void run() {
+        SaveDataManager.getInstance().startSave(studentEditor);
     }
 
     @Override
@@ -54,13 +50,15 @@ public class SaveAction extends Action implements EditorListener, ActionFactory.
     }
 
     @Override
-    public void isDataDirty(boolean isDirty) {
-        setEnabled(isDirty);
+    public void isDataDirty(DirtyEvent e) {
+        setEnabled(e.isDirty());
+        studentEditor = e.getImDirty();
     }
-    
+
     @Override
-    public void updateStudent(Student student) {
-        DataManager.getInstance().updateStudent(student);
+    public void updateStudent(UpdateEvent e) {
+        DataManager.getInstance().updateStudent(e.getStudent());
+        setEnabled(false);
     }
 
     private class EditorChangedListener implements IPartListener2 {
@@ -70,17 +68,19 @@ public class SaveAction extends Action implements EditorListener, ActionFactory.
             IWorkbenchPart part = partRef.getPart(true);
             if (part instanceof StudentEditor) {
                 setEnabled(((StudentEditor) part).isDirty());
+                studentEditor = ((StudentEditor) part).getStudentEditor();
             }
         }
-        
+
         @Override
         public void partInputChanged(IWorkbenchPartReference partRef) {
             IWorkbenchPart part = partRef.getPart(true);
             if (part instanceof StudentEditor) {
                 setEnabled(((StudentEditor) part).isDirty());
+                studentEditor = ((StudentEditor) part).getStudentEditor();
             }
-
         }
+
         @Override
         public void partClosed(IWorkbenchPartReference partRef) {
             setEnabled(false);
@@ -107,4 +107,5 @@ public class SaveAction extends Action implements EditorListener, ActionFactory.
         public void partVisible(IWorkbenchPartReference partRef) {
         }
     }
+
 }

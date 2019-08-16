@@ -22,7 +22,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     private static final int MINIMUM_WIDTH=500;
     private static final int MINIMUM_HEIGHT=300;
-    private static final int INITIAL_WIDTH=800;
+    private static final int INITIAL_WIDTH=600;
     private static final int INITIAL_HEIGHT=300;
     private static final String TOOL_TIP_TEXT="Student info";
     

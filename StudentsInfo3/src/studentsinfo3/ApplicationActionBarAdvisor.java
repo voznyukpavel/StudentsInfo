@@ -74,6 +74,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         MenuManager editMenu = new MenuManager("&Edit", "Edit");
         editMenu.add(openAction);
         editMenu.add(saveAction);
+        editMenu.add(saveAllAction);
         editMenu.add(new Separator());
         editMenu.add(addStudentAction);
         editMenu.add(studentSelectionAction);
@@ -96,7 +97,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         IToolBarManager toolbar = new ToolBarManager(coolBar.getStyle());
         coolBar.add(toolbar);
         toolbar.add(openAction);
-      //  toolbar.add(saveAllAction);
+        toolbar.add(saveAllAction);
         toolbar.add(saveAction);
         toolbar.add(deleteStudentAction);
         toolbar.add(addStudentAction);

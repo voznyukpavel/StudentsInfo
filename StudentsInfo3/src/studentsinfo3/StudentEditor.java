@@ -34,6 +34,8 @@ public class StudentEditor extends EditorPart implements SaveListener {
 
     private static final int PHOTO_SIZE = 120;
 
+    private boolean isDirty;
+    
     private Text nameText;
     private Text groupText;
     private Text addressText;
@@ -50,6 +52,8 @@ public class StudentEditor extends EditorPart implements SaveListener {
     private Composite parent;
 
     private Student currentStudent;
+    private StudentEditor studentEditor;
+
 
     public StudentEditor() {
     }
@@ -58,27 +62,36 @@ public class StudentEditor extends EditorPart implements SaveListener {
     public void init(IEditorSite site, IEditorInput input) throws PartInitException {
         setSite(site);
         setInput(input);
-        
+       
+    }
+    public StudentEditor getStudentEditor() {
+        return studentEditor;
     }
 
     @Override
     public boolean isDirty() {
-        if (!currentStudent.getName().equals(nameText.getText())) {
-            return true;
-        } else if (!currentStudent.getAddress().equals(addressText.getText())) {
-            return true;
-        } else if (!currentStudent.getCity().equals(cityText.getText())) {
-            return true;
-        } else if (!currentStudent.getGroup().getName().equals(groupText.getText())) {
-            return true;
-        } else if (!((Integer) currentStudent.getResult()).toString().equals(resultText.getText())) {
-            return true;
-        }
-        return false;
+        return isDirty;
     }
 
+    public void setDirty() {
+        if (!currentStudent.getName().equals(nameText.getText())) {
+            isDirty = true;
+        } else if (!currentStudent.getAddress().equals(addressText.getText())) {
+            isDirty = true;
+        } else if (!currentStudent.getCity().equals(cityText.getText())) {
+            isDirty = true;
+        } else if (!currentStudent.getGroup().getName().equals(groupText.getText())) {
+            isDirty = true;
+        } else if (!((Integer) currentStudent.getResult()).toString().equals(resultText.getText())) {
+            isDirty = true;
+        } else {
+            isDirty = false;
+        }
+    }
+    
     @Override
     public void createPartControl(Composite parent) {
+        studentEditor=this;
         this.parent = parent;
         signUp();
         currentStudent = getStudent();
@@ -171,12 +184,14 @@ public class StudentEditor extends EditorPart implements SaveListener {
     private class TextModifyListener implements ModifyListener {
         @Override
         public void modifyText(ModifyEvent e) {
-            EditorIsDirtydManager.getInstance().dataIsDirty(isDirty());
+            setDirty();
+            EditorIsDirtydManager.getInstance().dataIsDirty(isDirty,studentEditor);
         }
     }
 
     @Override
     public void saveStart() {
+        
         groupName = groupText.getText().trim();
         name = nameText.getText().trim();
         address = addressText.getText().trim();
@@ -203,6 +218,7 @@ public class StudentEditor extends EditorPart implements SaveListener {
         if (!isFieldValid(FieldsNamesEnum.CITY.getText(), city)) {
             return;
         }
+        
         setPartName(name + " " + groupName);
         currentStudent.setName(name);
         currentStudent.setAddress(address);
@@ -212,6 +228,7 @@ public class StudentEditor extends EditorPart implements SaveListener {
             currentStudent.setGroup(new Group(Storage.getRoot(), groupName));
         }
         EditorIsDirtydManager.getInstance().dataChenged(currentStudent);
+        isDirty = false;
     }
 
     private boolean isNumberFieldValid(String resultString) {
@@ -281,6 +298,12 @@ public class StudentEditor extends EditorPart implements SaveListener {
 
     @Override
     public void doSave(IProgressMonitor monitor) {
+    }
+
+    @Override
+    public void dispose() {
+        SaveDataManager.getInstance().unregisterObserver(this);
+        super.dispose();
     }
 
 }
