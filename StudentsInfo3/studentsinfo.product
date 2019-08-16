@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Students Info" uid="StudentsInfo3" id="StudentsInfo3.product1" application="StudentsInfo3.application" version="1.0.0.qualifier" useFeatures="false" includeLaunchers="true">
+<product name="Students Info" uid="StudentsInfo3" id="StudentsInfo3.product1" application="studentsinfo3.Application" version="1.0.0.qualifier" useFeatures="false" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/StudentsInfo3/icons/about.gif"/>

@@ -63,5 +63,100 @@
             name="StudentEditor">
       </editor>
    </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="studentsinfo3.handlers.AddHandler"
+            id="StudentsInfo3.Add"
+            name="AddComand">
+      </command>
+      <command
+            defaultHandler="studentsinfo3.handlers.RemoveHandler"
+            id="StudentsInfo3.Remove"
+            name="RemoveComand">
+      </command>
+      <command
+            defaultHandler="studentsinfo3.handlers.Option1Handler"
+            id="StudentsInfo3.Option1Command"
+            name="Option1Command">
+      </command>
+      <command
+            defaultHandler="studentsinfo3.handlers.Option2Handler"
+            id="StudentsInfo3.Option2Command"
+            name="Option2Command">
+      </command>
+      <command
+            defaultHandler="studentsinfo3.handlers.AboutStudentHandler"
+            id="StudentsInfo3.AboutStudents"
+            name="AboutStudentsComand">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:studentsInfo3.view.students">
+         <command
+               commandId="StudentsInfo3.Add"
+               icon="icons/add_student.jpg"
+               label="Add"
+               style="push">
+         </command>
+         <command
+               commandId="StudentsInfo3.Remove"
+               icon="icons/remove_student.png"
+               label="Remove"
+               style="push">
+         </command>
+         <separator
+               name="StudentsInfo3.separator1"
+               visible="true">
+               
+         </separator>
+         
+         
+         
+         
+         <command
+               commandId="StudentsInfo3.Option1Command"
+               id="1"
+               label="Option1"
+               style="radio">
+               <parameter
+                     name="Option1Command"
+                     value="StudentsInfo3.parameter1">
+               </parameter>
+         </command>
+         
+         <command
+               commandId="StudentsInfo3.Option2Command"
+               id="1"
+               label="Option2"
+               style="radio">
+            <parameter
+                  name="Option1Command"
+                  value="StudentsInfo3.parameter2">
+            </parameter>
+         </command>
+         
+         
+         
+         
+         <separator
+               name="StudentsInfo3.separator2"
+               visible="true">
+         </separator>
+         <menu
+               icon="icons/students.gif"
+               label="Student Information">
+            <command
+                  commandId="StudentsInfo3.AboutStudents"
+                  icon="icons/student.gif"
+                  label="About Student"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
 
 </plugin>
