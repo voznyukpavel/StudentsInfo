@@ -28,7 +28,6 @@ public class AdapterFactory implements IAdapterFactory {
         }
 
         public Object[] getChildren(Object o) {
-      //      return  ArrayContentProvider.getInstance().getElements(o);
             return ((Group) o).getEntries();
         }
     };
@@ -46,7 +45,6 @@ public class AdapterFactory implements IAdapterFactory {
 
         public ImageDescriptor getImageDescriptor(Object object) {
             return AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.STUDENT);
-
         }
 
         public Object[] getChildren(Object o) {

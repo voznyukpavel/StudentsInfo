@@ -95,16 +95,9 @@ public class AddStudentDialog extends Dialog {
             return;
         }
         
-        String fieldAddress = FieldsNamesEnum.ADDRESS.getText();
-        if (isFieldEmpty(fieldAddress, address)) {
-            return;
-        }
-
-        if (!FieldsChecker.numbersSignsAndLatersCheck(address)) {
-            sendErrorMessage(ErrorMessageTextFinals.INVALID_ADDRESS,
-                    ErrorMessageTextFinals.ADDRESS_CONTAIN_FORBIDDEN_SYMBOLS);
-            return;
-        }
+		if (!isFieldNotOnlyLatersValid(FieldsNamesEnum.ADDRESS.getText(), address)) {
+			return;
+		}
 
         if (!isFieldValid(FieldsNamesEnum.CITY.getText(), city)) {
             return;
@@ -125,6 +118,19 @@ public class AddStudentDialog extends Dialog {
         }
         return true;
     }
+    
+    private boolean isFieldNotOnlyLatersValid(String fieldsName, String content) {
+		return !isFieldEmpty(fieldsName, content) && isFieldDataNotOnlyLatersValid(fieldsName, content);
+	}
+
+	private boolean isFieldDataNotOnlyLatersValid(String fieldsName, String content) {
+		if (!FieldsChecker.numbersSignsAndLatersCheck(content)) {
+			sendErrorMessage(ErrorMessageTextFinals.INVALID + fieldsName,
+					fieldsName + ErrorMessageTextFinals.CONTAIN_FORBIDDEN_SYMBOLS);
+			return false;
+		}
+		return true;
+	}
 
     private boolean isFieldValid(String fieldsName, String content) {
         return !isFieldEmpty(fieldsName, content) && isFieldDataValid(fieldsName, content);

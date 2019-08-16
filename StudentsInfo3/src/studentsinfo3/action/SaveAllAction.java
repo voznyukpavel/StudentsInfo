@@ -28,8 +28,8 @@ public class SaveAllAction extends Action implements EditorListener, ActionFacto
 
     public SaveAllAction(IWorkbenchWindow window) {
         setId(ID);
-        setText("&Save");
-        setToolTipText("Save");
+        setText("&Save All");
+        setToolTipText("Save All");
         setImageDescriptor(
                 AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.SAVE_ALL));
         page = window.getActivePage();

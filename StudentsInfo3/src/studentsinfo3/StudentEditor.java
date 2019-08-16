@@ -30,280 +30,278 @@ import studentsinfo3.util.FieldsChecker;
 import studentsinfo3.util.ResizedImage;
 
 public class StudentEditor extends EditorPart implements SaveListener {
-    public static final String ID = "StudentsInfo3.editors.studentseditor";
+	public static final String ID = "StudentsInfo3.editors.studentseditor";
 
-    private static final int PHOTO_SIZE = 120;
+	private static final int PHOTO_SIZE = 120;
 
-    private boolean isDirty;
-    
-    private Text nameText;
-    private Text groupText;
-    private Text addressText;
-    private Text cityText;
-    private Text resultText;
+	private boolean isDirty;
 
-    private String name;
-    private String groupName;
-    private String address;
-    private String city;
-    
-    private Canvas photoCanvas;
-    private Image photoImage;
-    private Composite parent;
+	private Text nameText;
+	private Text groupText;
+	private Text addressText;
+	private Text cityText;
+	private Text resultText;
 
-    private Student currentStudent;
-    private StudentEditor studentEditor;
+	private String name;
+	private String groupName;
+	private String address;
+	private String city;
 
+	private Canvas photoCanvas;
+	private Image photoImage;
+	private Composite parent;
 
-    public StudentEditor() {
-    }
+	private Student currentStudent;
+	private StudentEditor studentEditor;
 
-    @Override
-    public void init(IEditorSite site, IEditorInput input) throws PartInitException {
-        setSite(site);
-        setInput(input);
-       
-    }
-    public StudentEditor getStudentEditor() {
-        return studentEditor;
-    }
+	public StudentEditor() {
+	}
 
-    @Override
-    public boolean isDirty() {
-        return isDirty;
-    }
+	@Override
+	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
+		setSite(site);
+		setInput(input);
+	}
 
-    public void setDirty() {
-        if (!currentStudent.getName().equals(nameText.getText())) {
-            isDirty = true;
-        } else if (!currentStudent.getAddress().equals(addressText.getText())) {
-            isDirty = true;
-        } else if (!currentStudent.getCity().equals(cityText.getText())) {
-            isDirty = true;
-        } else if (!currentStudent.getGroup().getName().equals(groupText.getText())) {
-            isDirty = true;
-        } else if (!((Integer) currentStudent.getResult()).toString().equals(resultText.getText())) {
-            isDirty = true;
-        } else {
-            isDirty = false;
-        }
-    }
-    
-    @Override
-    public void createPartControl(Composite parent) {
-        studentEditor=this;
-        this.parent = parent;
-        signUp();
-        currentStudent = getStudent();
-        setPartName(currentStudent.getName() + " " + currentStudent.getGroup().getName());
+	public StudentEditor getStudentEditor() {
+		return studentEditor;
+	}
 
-        GridLayout gridLayout = new GridLayout();
-        gridLayout.numColumns = 3;
-        parent.setLayout(gridLayout);
+	@Override
+	public boolean isDirty() {
+		return isDirty;
+	}
 
-        Label name = new Label(parent, SWT.NULL);
-        name.setText(FieldsNamesEnum.NAME.getText());
+	public void setDirty() {
+		if (!currentStudent.getName().equals(nameText.getText())) {
+			isDirty = true;
+		} else if (!currentStudent.getAddress().equals(addressText.getText())) {
+			isDirty = true;
+		} else if (!currentStudent.getCity().equals(cityText.getText())) {
+			isDirty = true;
+		} else if (!currentStudent.getGroup().getName().equals(groupText.getText())) {
+			isDirty = true;
+		} else if (!((Integer) currentStudent.getResult()).toString().equals(resultText.getText())) {
+			isDirty = true;
+		} else {
+			isDirty = false;
+		}
+	}
 
-        TextModifyListener textModifyListener = new TextModifyListener();
-        nameText = new Text(parent, SWT.SINGLE | SWT.BORDER);
-        GridData textGridData = new GridData();
-        textGridData.widthHint = 150;
-        nameText.setLayoutData(textGridData);
-        nameText.setText(currentStudent.getName());
-        nameText.addModifyListener(textModifyListener);
+	@Override
+	public void createPartControl(Composite parent) {
+		studentEditor = this;
+		this.parent = parent;
+		signUp();
+		currentStudent = getStudent();
+		setPartName(currentStudent.getName() + " " + currentStudent.getGroup().getName());
 
-        photoCanvas = new Canvas(parent, SWT.BORDER);
-        GridData gridData = new GridData();
-        gridData.widthHint = PHOTO_SIZE;
-        gridData.heightHint = PHOTO_SIZE;
-        gridData.verticalSpan = 5;
-        photoImage = currentStudent.getPhoto();
-        photoCanvas.setLayoutData(gridData);
-        photoCanvas.addPaintListener(new PaintListener() {
-            public void paintControl(final PaintEvent event) {
-                // photoImage=new
-                // Image(Display.getCurrent(),"C:\\Users\\h239267\\git\\repository\\StudentsInfo3\\icons\\eclipse128.png");
-                if (photoImage != null) {
-                    photoImage = ResizedImage.resize(photoImage, PHOTO_SIZE);
-                    event.gc.drawImage(photoImage, 0, 0);
-                } else {
-                    event.gc.drawImage(AbstractUIPlugin
-                            .imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.STUDENT_INSTEAD)
-                            .createImage(), 0, 0);
-                }
-            }
-        });
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 3;
+		parent.setLayout(gridLayout);
 
-        Label group = new Label(parent, SWT.NULL);
-        group.setText(FieldsNamesEnum.GROUP_NAME.getText());
+		Label name = new Label(parent, SWT.NULL);
+		name.setText(FieldsNamesEnum.NAME.getText());
 
-        groupText = new Text(parent, SWT.SINGLE | SWT.BORDER);
-        groupText.setLayoutData(textGridData);
-        groupText.setText(currentStudent.getGroup().getName());
-        groupText.addModifyListener(textModifyListener);
+		TextModifyListener textModifyListener = new TextModifyListener();
+		nameText = new Text(parent, SWT.SINGLE | SWT.BORDER);
+		GridData textGridData = new GridData();
+		textGridData.widthHint = 150;
+		nameText.setLayoutData(textGridData);
+		nameText.setText(currentStudent.getName());
+		nameText.addModifyListener(textModifyListener);
 
-        Label address = new Label(parent, SWT.NULL);
-        address.setText(FieldsNamesEnum.ADDRESS.getText());
+		photoCanvas = new Canvas(parent, SWT.BORDER);
+		GridData gridData = new GridData();
+		gridData.widthHint = PHOTO_SIZE;
+		gridData.heightHint = PHOTO_SIZE;
+		gridData.verticalSpan = 5;
+		photoImage = currentStudent.getPhoto();
+		photoCanvas.setLayoutData(gridData);
+		photoCanvas.addPaintListener(new PaintListener() {
+			public void paintControl(final PaintEvent event) {
+				// photoImage=new
+				// Image(Display.getCurrent(),"C:\\Users\\h239267\\git\\repository\\StudentsInfo3\\icons\\eclipse128.png");
+				if (photoImage != null) {
+					photoImage = ResizedImage.resize(photoImage, PHOTO_SIZE);
+					event.gc.drawImage(photoImage, 0, 0);
+				} else {
+					event.gc.drawImage(AbstractUIPlugin
+							.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.STUDENT_INSTEAD)
+							.createImage(), 0, 0);
+				}
+			}
+		});
 
-        addressText = new Text(parent, SWT.SINGLE | SWT.BORDER);
-        addressText.setLayoutData(textGridData);
-        addressText.setText(currentStudent.getAddress());
-        addressText.addModifyListener(textModifyListener);
+		Label group = new Label(parent, SWT.NULL);
+		group.setText(FieldsNamesEnum.GROUP_NAME.getText());
 
-        Label city = new Label(parent, SWT.NULL);
-        city.setText(FieldsNamesEnum.CITY.getText());
+		groupText = new Text(parent, SWT.SINGLE | SWT.BORDER);
+		groupText.setLayoutData(textGridData);
+		groupText.setText(currentStudent.getGroup().getName());
+		groupText.addModifyListener(textModifyListener);
 
-        cityText = new Text(parent, SWT.SINGLE | SWT.BORDER);
-        cityText.setLayoutData(textGridData);
-        cityText.setText(currentStudent.getCity());
-        cityText.addModifyListener(textModifyListener);
+		Label address = new Label(parent, SWT.NULL);
+		address.setText(FieldsNamesEnum.ADDRESS.getText());
 
-        Label result = new Label(parent, SWT.NULL);
-        result.setText(FieldsNamesEnum.RESULT.getText());
+		addressText = new Text(parent, SWT.SINGLE | SWT.BORDER);
+		addressText.setLayoutData(textGridData);
+		addressText.setText(currentStudent.getAddress());
+		addressText.addModifyListener(textModifyListener);
 
-        resultText = new Text(parent, SWT.SINGLE | SWT.BORDER);
-        GridData resultGridData = new GridData();
-        resultGridData.widthHint = 5;
-        resultText.setLayoutData(resultGridData);
-        resultText.setText(((Integer) currentStudent.getResult()).toString());
-        resultText.addModifyListener(textModifyListener);
+		Label city = new Label(parent, SWT.NULL);
+		city.setText(FieldsNamesEnum.CITY.getText());
 
-    }
+		cityText = new Text(parent, SWT.SINGLE | SWT.BORDER);
+		cityText.setLayoutData(textGridData);
+		cityText.setText(currentStudent.getCity());
+		cityText.addModifyListener(textModifyListener);
 
-    private Student getStudent() {
-        return ((StudentEditorInput) getEditorInput()).getStudent();
-    }
+		Label result = new Label(parent, SWT.NULL);
+		result.setText(FieldsNamesEnum.RESULT.getText());
 
-    @Override
-    public void setFocus() {
-        if (nameText != null && !nameText.isDisposed()) {
-            nameText.setFocus();
-        }
-    }
+		resultText = new Text(parent, SWT.SINGLE | SWT.BORDER);
+		GridData resultGridData = new GridData();
+		resultGridData.widthHint = 5;
+		resultText.setLayoutData(resultGridData);
+		resultText.setText(((Integer) currentStudent.getResult()).toString());
+		resultText.addModifyListener(textModifyListener);
 
-    private class TextModifyListener implements ModifyListener {
-        @Override
-        public void modifyText(ModifyEvent e) {
-            setDirty();
-            EditorIsDirtydManager.getInstance().dataIsDirty(isDirty,studentEditor);
-        }
-    }
+	}
 
-    @Override
-    public void saveStart() {
-        
-        groupName = groupText.getText().trim();
-        name = nameText.getText().trim();
-        address = addressText.getText().trim();
-        city = cityText.getText().trim();
-        String resultString = resultText.getText().trim();
+	private Student getStudent() {
+		return ((StudentEditorInput) getEditorInput()).getStudent();
+	}
 
-        if (!isFieldNotOnlyLatersValid(FieldsNamesEnum.GROUP_NAME.getText(),groupName)) {
-            return;
-        }
+	@Override
+	public void setFocus() {
+		if (nameText != null && !nameText.isDisposed()) {
+			nameText.setFocus();
+		}
+	}
 
-        if (resultString.equals("")) {
-        } else if (!isNumberFieldValid(resultString)) {
-            return;
-        }
+	private class TextModifyListener implements ModifyListener {
+		@Override
+		public void modifyText(ModifyEvent e) {
+			setDirty();
+			EditorIsDirtydManager.getInstance().dataIsDirty(isDirty, studentEditor);
+		}
+	}
 
-        if (!isFieldValid(FieldsNamesEnum.NAME.getText(), name)) {
-            return;
-        }
+	@Override
+	public void saveStart() {
 
-        if (!isFieldNotOnlyLatersValid(FieldsNamesEnum.ADDRESS.getText(),address)) {
-            return;
-        }
-        
-        if (!isFieldValid(FieldsNamesEnum.CITY.getText(), city)) {
-            return;
-        }
-        
-        setPartName(name + " " + groupName);
-        currentStudent.setName(name);
-        currentStudent.setAddress(address);
-        currentStudent.setCity(city);
-        currentStudent.setResult(Integer.parseInt(resultString));
-        if (!currentStudent.getGroup().getName().equals(groupName)) {
-            currentStudent.setGroup(new Group(Storage.getRoot(), groupName));
-        }
-        EditorIsDirtydManager.getInstance().dataChenged(currentStudent);
-        isDirty = false;
-    }
+		groupName = groupText.getText().trim();
+		name = nameText.getText().trim();
+		address = addressText.getText().trim();
+		city = cityText.getText().trim();
+		String resultString = resultText.getText().trim();
 
-    private boolean isNumberFieldValid(String resultString) {
-        try {
-            if (FieldsChecker.numbersCheck(resultString)) {
-                Integer.parseInt(resultString);
-            } else
-                throw new NumberFormatException();
-        } catch (NumberFormatException e) {
-            sendErrorMessage(ErrorMessageTextFinals.WRONG_RESULT, ErrorMessageTextFinals.RESULT_MUST_BE_INTEGER);
-            return false;
-        }
-        return true;
-    }
-    
-    private boolean isFieldNotOnlyLatersValid(String fieldsName, String content) {
-        return !isFieldEmpty(fieldsName, content) && isFieldDataNotOnlyLatersValid(fieldsName, content);
-    }
-    
-    private boolean isFieldDataNotOnlyLatersValid(String fieldsName, String content) {
-        if (!FieldsChecker.numbersSignsAndLatersCheck(content)) {
-            sendErrorMessage(ErrorMessageTextFinals.INVALID + fieldsName,
-                    fieldsName + ErrorMessageTextFinals.CONTAIN_FORBIDDEN_SYMBOLS);
-            return false;
-        }
-        return true;
-    }
+		if (!isFieldNotOnlyLatersValid(FieldsNamesEnum.GROUP_NAME.getText(), groupName)) {
+			return;
+		}
 
-    private boolean isFieldValid(String fieldsName, String content) {
-        return !isFieldEmpty(fieldsName, content) && isFieldDataValid(fieldsName, content);
-    }
+		if (!isNumberFieldValid(resultString)) {
+			return;
+		}
 
-    private boolean isFieldDataValid(String fieldsName, String content) {
-        if (!FieldsChecker.latersCheck(content)) {
-            sendErrorMessage(ErrorMessageTextFinals.INVALID + fieldsName,
-                    fieldsName + ErrorMessageTextFinals.ONLY_LATERS_ERROR_MESSAGE);
-            return false;
-        }
-        return true;
-    }
-    
-    private boolean isFieldEmpty(String fieldsName, String content) {
-        if (content.equals("")) {
-            sendErrorMessage(ErrorMessageTextFinals.INVALID + fieldsName,
-                    fieldsName + ErrorMessageTextFinals.EMPTY_FIELD_ERROR_MESSAGE);
-            return true;
-        }
-        return false;
-    }
+		if (!isFieldValid(FieldsNamesEnum.NAME.getText(), name)) {
+			return;
+		}
 
-    private void signUp() {
-        SaveDataManager.getInstance().registerObserver(this);
-    }
+		if (!isFieldNotOnlyLatersValid(FieldsNamesEnum.ADDRESS.getText(), address)) {
+			return;
+		}
 
-    private void sendErrorMessage(String title, String message) {
-        MessageDialog.openError(parent.getShell(), title, message);
-    }
-    
-    @Override
-    public void doSaveAs() {
-    }
+		if (!isFieldValid(FieldsNamesEnum.CITY.getText(), city)) {
+			return;
+		}
 
-    @Override
-    public boolean isSaveAsAllowed() {
-        return false;
-    }
+		setPartName(name + " " + groupName);
+		currentStudent.setName(name);
+		currentStudent.setAddress(address);
+		currentStudent.setCity(city);
+		currentStudent.setResult(Integer.parseInt(resultString));
+		if (!currentStudent.getGroup().getName().equals(groupName)) {
+			currentStudent.setGroup(new Group(Storage.getRoot(), groupName));
+		}
+		EditorIsDirtydManager.getInstance().dataChenged(currentStudent);
+		isDirty = false;
+	}
 
-    @Override
-    public void doSave(IProgressMonitor monitor) {
-    }
+	private boolean isNumberFieldValid(String resultString) {
+		try {
+			if (FieldsChecker.numbersCheck(resultString)) {
+				Integer.parseInt(resultString);
+			} else
+				throw new NumberFormatException();
+		} catch (NumberFormatException e) {
+			sendErrorMessage(ErrorMessageTextFinals.WRONG_RESULT, ErrorMessageTextFinals.RESULT_MUST_BE_INTEGER);
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public void dispose() {
-        SaveDataManager.getInstance().unregisterObserver(this);
-        super.dispose();
-    }
+	private boolean isFieldNotOnlyLatersValid(String fieldsName, String content) {
+		return !isFieldEmpty(fieldsName, content) && isFieldDataNotOnlyLatersValid(fieldsName, content);
+	}
+
+	private boolean isFieldDataNotOnlyLatersValid(String fieldsName, String content) {
+		if (!FieldsChecker.numbersSignsAndLatersCheck(content)) {
+			sendErrorMessage(ErrorMessageTextFinals.INVALID + fieldsName,
+					fieldsName + ErrorMessageTextFinals.CONTAIN_FORBIDDEN_SYMBOLS);
+			return false;
+		}
+		return true;
+	}
+
+	private boolean isFieldValid(String fieldsName, String content) {
+		return !isFieldEmpty(fieldsName, content) && isFieldDataValid(fieldsName, content);
+	}
+
+	private boolean isFieldDataValid(String fieldsName, String content) {
+		if (!FieldsChecker.latersCheck(content)) {
+			sendErrorMessage(ErrorMessageTextFinals.INVALID + fieldsName,
+					fieldsName + ErrorMessageTextFinals.ONLY_LATERS_ERROR_MESSAGE);
+			return false;
+		}
+		return true;
+	}
+
+	private boolean isFieldEmpty(String fieldsName, String content) {
+		if (content.equals("")) {
+			sendErrorMessage(ErrorMessageTextFinals.INVALID + fieldsName,
+					fieldsName + ErrorMessageTextFinals.EMPTY_FIELD_ERROR_MESSAGE);
+			return true;
+		}
+		return false;
+	}
+
+	private void signUp() {
+		SaveDataManager.getInstance().registerObserver(this);
+	}
+
+	private void sendErrorMessage(String title, String message) {
+		MessageDialog.openError(parent.getShell(), title, message);
+	}
+
+	@Override
+	public void doSaveAs() {
+	}
+
+	@Override
+	public boolean isSaveAsAllowed() {
+		return false;
+	}
+
+	@Override
+	public void doSave(IProgressMonitor monitor) {
+	}
+
+	@Override
+	public void dispose() {
+		SaveDataManager.getInstance().unregisterObserver(this);
+		super.dispose();
+	}
 
 }
