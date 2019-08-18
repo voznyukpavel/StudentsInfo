@@ -116,10 +116,10 @@ public class StudentEditor extends EditorPart implements SaveListener {
 		gridData.widthHint = PHOTO_SIZE;
 		gridData.heightHint = PHOTO_SIZE;
 		gridData.verticalSpan = 5;
-		photoImage = currentStudent.getPhoto();
 		photoCanvas.setLayoutData(gridData);
 		photoCanvas.addPaintListener(new PaintListener() {
 			public void paintControl(final PaintEvent event) {
+				photoImage = currentStudent.getPhotoData().getPhoto();
 				// photoImage=new
 				// Image(Display.getCurrent(),"C:\\Users\\h239267\\git\\repository\\StudentsInfo3\\icons\\eclipse128.png");
 				if (photoImage != null) {

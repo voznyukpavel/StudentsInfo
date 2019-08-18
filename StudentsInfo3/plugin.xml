@@ -66,12 +66,10 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="studentsinfo3.handlers.AddHandler"
             id="StudentsInfo3.Add"
             name="AddComand">
       </command>
       <command
-            defaultHandler="studentsinfo3.handlers.RemoveHandler"
             id="StudentsInfo3.Remove"
             name="RemoveComand">
       </command>
@@ -90,22 +88,48 @@
             id="StudentsInfo3.AboutStudents"
             name="AboutStudentsComand">
       </command>
+      <command
+            id="StudentsInfo3.Rename_Group"
+            name="Rename_Group">
+      </command>
+      
    </extension>
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            allPopups="false"
             locationURI="popup:studentsInfo3.view.students">
+     
+     
          <command
                commandId="StudentsInfo3.Add"
                icon="icons/add_student.jpg"
                label="Add"
                style="push">
+
          </command>
+
+         
+         
          <command
                commandId="StudentsInfo3.Remove"
                icon="icons/remove_student.png"
                label="Remove"
+               style="push">
+         </command>
+         
+
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         <command
+               commandId="StudentsInfo3.Rename_Group"
+               label="Rename Group"
                style="push">
          </command>
          <separator
@@ -148,15 +172,55 @@
          </separator>
          <menu
                icon="icons/students.gif"
-               label="Student Information">
+               label=" Information">
             <command
                   commandId="StudentsInfo3.AboutStudents"
                   icon="icons/student.gif"
-                  label="About Student"
+                  label="About Selection"
                   style="push">
             </command>
          </menu>
       </menuContribution>
    </extension>
+   
+   <!--handlers -->
+  <extension point="org.eclipse.ui.handlers">
+  <handler class="studentsinfo3.handlers.AddHandler"
+           commandId="StudentsInfo3.Add">      
+     <activeWhen>
+        <with variable="selection">
+           <iterate ifEmpty="false" operator="and">
+              <adapt type="studentsinfo3.model.Group"/>
+           </iterate>
+        </with>
+     </activeWhen>
+  </handler>
+</extension>  
 
+  <extension point="org.eclipse.ui.handlers">
+  <handler class="studentsinfo3.handlers.RemoveHandler"
+           commandId="StudentsInfo3.Remove">
+     <activeWhen>
+        <with variable="selection">
+           <iterate ifEmpty="false" operator="and">
+              <adapt type="studentsinfo3.model.Student"/>
+           </iterate>
+        </with>
+     </activeWhen>
+  </handler>
+</extension>   
+
+  <extension point="org.eclipse.ui.handlers">
+  <handler class="studentsinfo3.handlers.RenameGroup"
+           commandId="StudentsInfo3.Rename_Group">
+     <activeWhen>
+        <with variable="selection">
+           <iterate ifEmpty="false" operator="and">
+              <adapt type="studentsinfo3.model.Group"/>
+           </iterate>
+        </with>
+     </activeWhen>
+  </handler>
+</extension> 
+  
 </plugin>
