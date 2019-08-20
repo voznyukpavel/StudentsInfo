@@ -15,6 +15,10 @@ public class Student extends Entity {
 	private Date dateOfChange;
 	private boolean male;
 
+	public Student() {
+
+	}
+
 	public Student(String name, Group group, String address, String city, int result, boolean male) {
 		super();
 		this.name = name;

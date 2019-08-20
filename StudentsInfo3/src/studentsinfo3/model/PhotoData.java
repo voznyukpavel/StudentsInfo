@@ -1,6 +1,10 @@
 package studentsinfo3.model;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 
 public class PhotoData {
     private Image photo;
@@ -20,5 +24,9 @@ public class PhotoData {
 	}
 	public String getImageWay() {
 		return imageWay;
+	}
+	
+	public void setPhoto() throws FileNotFoundException {
+		 this.photo=new Image(Display.getCurrent(), (new FileInputStream(imageWay)));
 	}
 }

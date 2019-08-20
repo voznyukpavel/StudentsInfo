@@ -5,11 +5,18 @@ import java.util.logging.Logger;
 
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.gef.dnd.TemplateTransfer;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSourceEvent;
+import org.eclipse.swt.dnd.DragSourceListener;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.widgets.Composite;
@@ -22,8 +29,12 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 import org.eclipse.ui.part.ViewPart;
+//import org.eclipse.ui.internal.ide.EditorAreaDropAdapter;
 
 import studentsinfo3.action.OpenStudentAction;
+import studentsinfo3.dnd.EntityDragListener;
+import studentsinfo3.dnd.EntityDropListener;
+//import studentsinfo3.dnd.GroupTransfer;
 import studentsinfo3.listeners.EntityListener;
 import studentsinfo3.managers.DataManager;
 import studentsinfo3.model.Entity;
@@ -53,48 +64,25 @@ public class StudentsView extends ViewPart implements EntityListener {
 		treeViewer.setLabelProvider(new WorkbenchLabelProvider());
 		treeViewer.setContentProvider(new BaseWorkbenchContentProvider());
 		treeViewer.setInput(Storage.getRoot());
-		treeViewer.getTree().addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseDown(MouseEvent e) {
-				if (e.button == 3) {
-					//createMenu();
-				}
-			}
-
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				if (e.button == 1) {
-					IWorkbench workbench = PlatformUI.getWorkbench();
-					IWorkbenchWindow activeWindow = workbench.getActiveWorkbenchWindow();
-					IWorkbenchPage activePage = activeWindow.getActivePage();
-
-					ISelection selection = treeViewer.getSelection();
-					IStructuredSelection structSelection = (IStructuredSelection) selection;
-					Object selectedObject = structSelection.getFirstElement();
-					if (selectedObject instanceof Student) {
-						openStudentInEditor(selectedObject, activePage);
-					} else if (selectedObject instanceof Group) {
-						openGroupInEditor(selectedObject, activePage);
-					}
-				}
-			}
-			
-		});
+		initDragSupport();
+		
+		treeViewer.getTree().addMouseListener(new TreeMouseAdapter() );
 		createMenu();
+	}
+
+	private void initDragSupport() {
+		int operations = DND.DROP_COPY | DND.DROP_MOVE;
+		Transfer[] transferTypes = new Transfer[] {TextTransfer.getInstance()};
+		treeViewer.addDragSupport(operations,transferTypes, new EntityDragListener(treeViewer));
+		treeViewer.addDropSupport(operations, transferTypes, new EntityDropListener(treeViewer));
 	}
 
 	private void createMenu() {
 		MenuManager menuManager = new MenuManager();
 		Menu menu = menuManager.createContextMenu(treeViewer.getTree());
-	
 		treeViewer.getTree().setMenu(menu);
-	
 		getSite().registerContextMenu(menuManager, treeViewer);
-	//	MenuItem[]menuItem= menu.getItems();
-	//	menuItem[0].getText();
-	//	menuItem[0].setEnabled(false);
 		getSite().setSelectionProvider(treeViewer);
-
 	}
 
 	private void openGroupInEditor(Object selectedObject, IWorkbenchPage activePage) {
@@ -133,6 +121,32 @@ public class StudentsView extends ViewPart implements EntityListener {
 
 	private void signUp() {
 		DataManager.getInstance().registerObserver(this);
+	}
+	
+	private class TreeMouseAdapter extends MouseAdapter {
+		@Override
+		public void mouseDown(MouseEvent e) {
+			if (e.button == 3) {
+				// createMenu();
+			}
+		}
+		
+		@Override
+		public void mouseDoubleClick(MouseEvent e) {
+			if (e.button == 1) {
+				IWorkbench workbench = PlatformUI.getWorkbench();
+				IWorkbenchWindow activeWindow = workbench.getActiveWorkbenchWindow();
+				IWorkbenchPage activePage = activeWindow.getActivePage();
+				ISelection selection = treeViewer.getSelection();
+				IStructuredSelection structSelection = (IStructuredSelection) selection;
+				Object selectedObject = structSelection.getFirstElement();
+				if (selectedObject instanceof Student) {
+					openStudentInEditor(selectedObject, activePage);
+				} else if (selectedObject instanceof Group) {
+					openGroupInEditor(selectedObject, activePage);
+				}
+			}
+		}
 	}
 
 }

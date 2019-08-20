@@ -2,6 +2,7 @@ package studentsinfo3;
 
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.graphics.Image;
@@ -17,6 +18,10 @@ import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
+//import org.eclipse.ui.internal.ide.EditorAreaDropAdapter;
+import org.eclipse.ui.part.EditorInputTransfer;
+//import org.eclipse.ui.part.MarkerTransfer;
+//import org.eclipse.ui.part.ResourceTransfer;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
@@ -50,15 +55,13 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         configurer.setShowMenuBar(true);
         configurer.setShowStatusLine(false);
         
-       // IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
-
-      //  configurer.addEditorAreaTransfer(EditorInputTransfer.getInstance());
-      //  configurer.addEditorAreaTransfer(ResourceTransfer.getInstance());
-       // configurer.addEditorAreaTransfer(FileTransfer.getInstance());
-       // configurer.addEditorAreaTransfer(MarkerTransfer.getInstance());
-
-     //   configurer.configureEditorAreaDropListener(new EditorAreaDropAdapter(
-     //          configurer.getWindow()));
+   //     configurer.addEditorAreaTransfer(EditorInputTransfer.getInstance());
+  //      configurer.addEditorAreaTransfer(ResourceTransfer.getInstance());
+   //     configurer.addEditorAreaTransfer(FileTransfer.getInstance());
+ //       configurer.addEditorAreaTransfer(MarkerTransfer.getInstance());
+  //      configurer.configureEditorAreaDropListener(new EditorAreaDropAdapter(
+ //           configurer.getWindow()));
+        
     }
 
     public void postWindowOpen() {
