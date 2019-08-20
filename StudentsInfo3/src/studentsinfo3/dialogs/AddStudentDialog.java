@@ -5,6 +5,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -21,10 +22,12 @@ public class AddStudentDialog extends Dialog {
     private Text addressText;
     private Text cityText;
     private Text resultText;
+    Button[] radios;
 
     private String name;
     private String address;
     private String city;
+    private boolean male;
     private int result;
 
     public AddStudentDialog(Shell shell) {
@@ -38,12 +41,14 @@ public class AddStudentDialog extends Dialog {
 
     protected Control createDialogArea(Composite parent) {
         Composite composite = new Composite(parent, SWT.NONE);
-        GridLayout layout = new GridLayout(2, false);
+        GridLayout layout = new GridLayout(3, false);
         composite.setLayout(layout);
+        radios= new Button[2];
 
         GridData labelGridData = new GridData(GridData.END, GridData.CENTER, false, false);
         GridData textGridData = new GridData(GridData.FILL, GridData.FILL, true, false);
-
+        textGridData.horizontalSpan=2;
+        
         Label nameLabel = new Label(composite, SWT.NONE);
         nameLabel.setText("&Name:");
         nameLabel.setLayoutData(labelGridData);
@@ -53,7 +58,7 @@ public class AddStudentDialog extends Dialog {
 
         Label addressLabel = new Label(composite, SWT.NONE);
         addressLabel.setText("&Address:");
-        addressLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.CENTER, false, false));
+        addressLabel.setLayoutData(new GridData(GridData.END, GridData.CENTER, false, false));
 
         addressText = new Text(composite, SWT.BORDER);
         addressText.setLayoutData(textGridData);
@@ -65,6 +70,7 @@ public class AddStudentDialog extends Dialog {
         cityText = new Text(composite, SWT.BORDER);
         GridData gridData = new GridData(GridData.FILL, GridData.FILL, true, false);
         gridData.widthHint = convertHeightInCharsToPixels(20);
+        gridData.horizontalSpan=2;
         cityText.setLayoutData(gridData);
 
         Label resultLabel = new Label(composite, SWT.NONE);
@@ -74,8 +80,22 @@ public class AddStudentDialog extends Dialog {
         resultText = new Text(composite, SWT.BORDER);
         GridData resultGridData = new GridData(GridData.BEGINNING, GridData.FILL, true, false);
         resultGridData.widthHint = convertHeightInCharsToPixels(1);
+        resultGridData.horizontalSpan=2;
         resultText.setLayoutData(resultGridData);
-
+        
+        Label sex= new Label(composite, SWT.NONE);
+        sex.setText("&Sex:");
+        sex.setLayoutData(new GridData(GridData.END, GridData.CENTER, false, false));
+        
+        radios[0] = new Button(composite, SWT.RADIO);
+        radios[0].setSelection(true);
+        radios[0].setText(FieldsNamesEnum.BOY.getText());
+   
+        radios[1] = new Button(composite, SWT.RADIO);
+        radios[1].setText(FieldsNamesEnum.GIRL.getText());
+        
+        nameText.setFocus();
+        
         return composite;
     }
 
@@ -84,7 +104,8 @@ public class AddStudentDialog extends Dialog {
         address = addressText.getText().trim();
         city = cityText.getText().trim();
         String resultString = resultText.getText().trim();
-
+        male=radios[0].getSelection();
+        
         if (resultString.equals("")) {
             result = 0;
         } else if (!isNumberFieldValid(resultString)) {
@@ -169,9 +190,14 @@ public class AddStudentDialog extends Dialog {
     public int getResult() {
         return result;
     }
+    
+	public boolean isMale() {
+		return male;
+	}
 
     private void sendErrorMessage(String title, String message) {
         MessageDialog.openError(getShell(), title, message);
     }
+
 
 }

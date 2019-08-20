@@ -4,5 +4,4 @@ public enum EntityType {
 
     STUDENT,
     GROUP;
-
 }

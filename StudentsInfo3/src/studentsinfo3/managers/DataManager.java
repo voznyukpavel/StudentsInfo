@@ -39,7 +39,7 @@ public class DataManager {
         }
         return false;
     }
-
+    
     public boolean isGroupExist(String name) {
         Entity[] groups = Storage.getRoot().getEntries();
         for (int i = 0; i < groups.length; i++) {
@@ -50,6 +50,7 @@ public class DataManager {
         }
         return false;
     }
+    
 
     public void addStudent(Group group, Student student) {
         counter++;
@@ -62,23 +63,6 @@ public class DataManager {
         Group group = getGroup(student.getGroup().getName());
         group.removeEntry(student);
         notifyObserversUpdate();
-    }
-
-    public void addGroup(String groupName) {
-        Storage.getRoot().addEntry(new Group(Storage.getRoot(), groupName));
-        notifyObserversUpdate();
-    }
-
-    public void removeGroup(Group group) {
-        Storage.getRoot().removeEntry(group);
-        notifyObserversUpdate();
-    }
-
-    public void notifyObserversUpdate() {
-        for (int i = 0; i < observers.size(); i++) {
-            EntityListener observer = (EntityListener) observers.get(i);
-            observer.updateData();
-        }
     }
 
     public void updateStudent(Student student) {
@@ -101,6 +85,22 @@ public class DataManager {
             findStudent(student);
         }
         notifyObserversUpdate();
+    }
+    
+    public void addGroup(String groupName) {
+        Storage.getRoot().addEntry(new Group(Storage.getRoot(), groupName));
+        notifyObserversUpdate();
+    }
+
+    public void removeGroup(Group group) {
+        Storage.getRoot().removeEntry(group);
+        notifyObserversUpdate();
+    }
+    
+    public void renameGroup(String oldName, String newName) {
+    	Group group=getGroup(oldName);
+    	group.setName(newName);
+    	notifyObserversUpdate();
     }
 
     private void findStudent(Student student) {
@@ -139,5 +139,12 @@ public class DataManager {
             }
         }
         return null;
+    }
+    
+    private void notifyObserversUpdate() {
+        for (int i = 0; i < observers.size(); i++) {
+            EntityListener observer = (EntityListener) observers.get(i);
+            observer.updateData();
+        }
     }
 }

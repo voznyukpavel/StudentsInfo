@@ -13,16 +13,18 @@ public class Student extends Entity {
 	private PhotoData photoData;
 	private int result;
 	private Date dateOfChange;
+	private boolean male;
 
-	public Student(String name, Group group, String address, String city, int result) {
+	public Student(String name, Group group, String address, String city, int result, boolean male) {
 		super();
 		this.name = name;
 		this.group = group;
 		this.address = address;
 		this.city = city;
 		this.result = result;
+		this.male = male;
 		type = EntityType.STUDENT;
-		photoData=new PhotoData();
+		photoData = new PhotoData();
 		this.dateOfChange = new Date(System.currentTimeMillis());
 
 	}
@@ -87,6 +89,15 @@ public class Student extends Entity {
 
 	public Date getDate() {
 		return dateOfChange;
+	}
+
+	public boolean isMale() {
+		return male;
+	}
+
+	public void setMale(boolean male) {
+		this.dateOfChange = new Date(System.currentTimeMillis());
+		this.male = male;
 	}
 
 	@Override

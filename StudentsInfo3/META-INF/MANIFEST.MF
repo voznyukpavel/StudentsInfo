@@ -12,3 +12,13 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui.workbench
 Automatic-Module-Name: StudentsInfo3
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: studentsinfo3,
+ studentsinfo3.action,
+ studentsinfo3.dialogs,
+ studentsinfo3.events,
+ studentsinfo3.handlers,
+ studentsinfo3.listeners,
+ studentsinfo3.managers,
+ studentsinfo3.model,
+ studentsinfo3.storage,
+ studentsinfo3.util

@@ -57,7 +57,7 @@ public class StudentsView extends ViewPart implements EntityListener {
 			@Override
 			public void mouseDown(MouseEvent e) {
 				if (e.button == 3) {
-
+					//createMenu();
 				}
 			}
 
@@ -78,6 +78,7 @@ public class StudentsView extends ViewPart implements EntityListener {
 					}
 				}
 			}
+			
 		});
 		createMenu();
 	}
@@ -85,8 +86,13 @@ public class StudentsView extends ViewPart implements EntityListener {
 	private void createMenu() {
 		MenuManager menuManager = new MenuManager();
 		Menu menu = menuManager.createContextMenu(treeViewer.getTree());
+	
 		treeViewer.getTree().setMenu(menu);
+	
 		getSite().registerContextMenu(menuManager, treeViewer);
+	//	MenuItem[]menuItem= menu.getItems();
+	//	menuItem[0].getText();
+	//	menuItem[0].setEnabled(false);
 		getSite().setSelectionProvider(treeViewer);
 
 	}

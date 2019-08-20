@@ -20,10 +20,11 @@ public class AboutStudentHandler implements IHandler {
 
 	private IWorkbenchWindow window;
 	
-	private static final String LAST_CHANGES=     "Last data changes: ";
-	private static final String DOSENT_HAVE_PHOTO=" Dosen`t have a photo";
-	private static final String PHOTO=            "Photo: ";
 	private static final String CONTAINS=         "contains: ";
+	private static final String DOSENT_HAVE_PHOTO=" Dosen`t have a photo";
+	private static final String LAST_CHANGES=     "Last data changes: ";
+	private static final String ID=               "ID:";
+	private static final String PHOTO=            "Photo: ";
 	private static final String STUDENTS=         " students";
 
 	@Override
@@ -72,11 +73,17 @@ public class AboutStudentHandler implements IHandler {
 	private void makeMessage(Student student) {
 		String lineSeparator=System.lineSeparator();
 		String info="";
+		info+=ID+" "+student.getId()+lineSeparator;
 		info+=FieldsNamesEnum.NAME.getText()+" "+student.getName()+lineSeparator;
 		info+=FieldsNamesEnum.GROUP_NAME.getText()+" "+student.getGroup().getName()+lineSeparator;
 		info+=FieldsNamesEnum.ADDRESS.getText()+" "+student.getAddress()+lineSeparator;
 		info+=FieldsNamesEnum.CITY.getText()+" "+ student.getCity()+lineSeparator;
 		info+=FieldsNamesEnum.RESULT.getText()+" "+Integer.toString(student.getResult())+lineSeparator;
+		if(student.isMale()) {
+			info+=FieldsNamesEnum.SEX.getText()+" "+FieldsNamesEnum.BOY.getText()+lineSeparator;
+		}else {
+			info+=FieldsNamesEnum.SEX.getText()+" "+FieldsNamesEnum.GIRL.getText()+lineSeparator;
+		}
 		if(student.getPhotoData().getPhoto()==null) {
 			info+=PHOTO+DOSENT_HAVE_PHOTO+lineSeparator;
 		}else {

@@ -6,6 +6,9 @@ public enum FieldsNamesEnum {
     GROUP_NAME("Group name:"),
     ADDRESS   ("Address:"),
     CITY      ("City:"),
+    SEX       ("Sex:"),
+    BOY       ("Boy"),
+    GIRL      ("Girl"),
     RESULT    ("Result:");
 
     private String name;

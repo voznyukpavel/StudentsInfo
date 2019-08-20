@@ -27,7 +27,7 @@ public class AddGroupDialog extends Dialog {
 
     protected void configureShell(Shell newShell) {
         super.configureShell(newShell);
-        newShell.setText("Add Group");
+        newShell.setText("Group name");
     }
 
     protected Control createDialogArea(Composite parent) {
@@ -45,6 +45,7 @@ public class AddGroupDialog extends Dialog {
 
         nameText = new Text(composite, SWT.BORDER);
         nameText.setLayoutData(textGridData);
+        nameText.setFocus();
 
         return composite;
     }

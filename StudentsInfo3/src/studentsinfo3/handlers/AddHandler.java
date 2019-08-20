@@ -14,7 +14,6 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import studentsinfo3.ErrorMessageTextFinals;
 import studentsinfo3.dialogs.AddStudentDialog;
 import studentsinfo3.managers.DataManager;
-import studentsinfo3.model.Entity;
 import studentsinfo3.model.Group;
 import studentsinfo3.model.Student;
 
@@ -40,7 +39,7 @@ public class AddHandler implements IHandler {
 		int code = dialog.open();
 		if (code == Window.OK) {
 			Student student = new Student(dialog.getName(), group, dialog.getAddress(), dialog.getCity(),
-					dialog.getResult());
+					dialog.getResult(),dialog.isMale());
 			if (DataManager.getInstance().isStudentExist(group, student)) {
 				MessageDialog.openError(window.getShell(), ErrorMessageTextFinals.STUDENT_CANNOT_BE_ADDED,
 						ErrorMessageTextFinals.STUDENT_IS_ALLREADY_EXIST);

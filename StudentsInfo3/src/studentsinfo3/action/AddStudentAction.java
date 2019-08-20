@@ -44,7 +44,7 @@ public class AddStudentAction extends AbstractAction implements ActionFactory.IW
             Object item = selection.getFirstElement();
             Group group = (Group) item;
             Student student = new Student(dialog.getName(), group, dialog.getAddress(), dialog.getCity(),
-                    dialog.getResult());
+                    dialog.getResult(),dialog.isMale());
             if (DataManager.getInstance().isStudentExist(group, student)) {
                 MessageDialog.openError(window.getShell(), ErrorMessageTextFinals.STUDENT_CANNOT_BE_ADDED,
                         ErrorMessageTextFinals.STUDENT_IS_ALLREADY_EXIST);

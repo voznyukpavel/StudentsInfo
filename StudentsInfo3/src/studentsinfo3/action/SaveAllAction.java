@@ -55,12 +55,13 @@ public class SaveAllAction extends Action implements EditorListener, ActionFacto
 
     @Override
     public void dispose() {
-        
     }
 
     private void signUp() {
         EditorIsDirtydManager.getInstance().registerObserver(this);
     }
+    
+    
     
     private class EditorChangedListener implements IPartListener2 {
 
