@@ -26,7 +26,9 @@ import org.eclipse.ui.part.PluginTransfer;
 import org.eclipse.ui.part.ResourceTransfer;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
-import studentsinfo3.dnd.GroupTransfer;
+import studentsinfo3.dnd.EditorAreaDropAdapter;
+
+
 
 public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     private static final int MINIMUM_WIDTH=500;
@@ -60,12 +62,12 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         configurer.setShowStatusLine(false);
         
         configurer.addEditorAreaTransfer(EditorInputTransfer.getInstance());
-   //     configurer.addEditorAreaTransfer(ResourceTransfer.getInstance());
-   //     configurer.addEditorAreaTransfer(FileTransfer.getInstance());
-  //      configurer.addEditorAreaTransfer(MarkerTransfer.getInstance());
- //       configurer.addEditorAreaTransfer(GroupTransfer.getInstance());
+        configurer.addEditorAreaTransfer(ResourceTransfer.getInstance());
+        configurer.addEditorAreaTransfer(FileTransfer.getInstance());
+        configurer.addEditorAreaTransfer(MarkerTransfer.getInstance());
+      //  configurer.addEditorAreaTransfer(GroupTransfer.getInstance());
         configurer.addEditorAreaTransfer(TextTransfer.getInstance());
-   //     configurer.addEditorAreaTransfer(PluginTransfer.getInstance());
+        configurer.addEditorAreaTransfer(PluginTransfer.getInstance());
         
 		configurer.configureEditorAreaDropListener(new EditorAreaDropAdapter(configurer.getWindow()));
         

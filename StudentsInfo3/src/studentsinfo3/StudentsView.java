@@ -5,16 +5,12 @@ import java.util.logging.Logger;
 
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.core.runtime.Platform;
-//import org.eclipse.gef.dnd.TemplateTransfer;
 import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
-import org.eclipse.swt.dnd.DragSourceEvent;
-import org.eclipse.swt.dnd.DragSourceListener;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.MouseAdapter;
@@ -30,14 +26,9 @@ import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 import org.eclipse.ui.part.PluginTransfer;
 import org.eclipse.ui.part.ViewPart;
-//import org.eclipse.ui.internal.ide.EditorAreaDropAdapter;
-import org.eclipse.swt.dnd.FileTransfer;
-import org.eclipse.swt.dnd.Transfer;
 
 import studentsinfo3.action.OpenStudentAction;
 import studentsinfo3.dnd.EntityDragListener;
-import studentsinfo3.dnd.EntityDropListener;
-//import studentsinfo3.dnd.GroupTransfer;
 import studentsinfo3.listeners.EntityListener;
 import studentsinfo3.managers.DataManager;
 import studentsinfo3.model.Entity;
@@ -77,7 +68,7 @@ public class StudentsView extends ViewPart implements EntityListener {
 		int operations = DND.DROP_COPY | DND.DROP_MOVE;
 		Transfer[] transferTypes = new Transfer[] {TextTransfer.getInstance(),PluginTransfer.getInstance()};
 		treeViewer.addDragSupport(operations,transferTypes, new EntityDragListener(treeViewer));
-		treeViewer.addDropSupport(operations, transferTypes, new EntityDropListener(treeViewer));
+	//	treeViewer.addDropSupport(operations, transferTypes, new EntityDropListener(treeViewer));
 	}
 
 	private void createMenu() {
@@ -120,6 +111,7 @@ public class StudentsView extends ViewPart implements EntityListener {
 	@Override
 	public void updateData() {
 		treeViewer.refresh();
+		treeViewer.getControl().setFocus();
 	}
 
 	private void signUp() {

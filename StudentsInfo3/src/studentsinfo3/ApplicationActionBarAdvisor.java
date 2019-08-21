@@ -82,7 +82,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         editMenu.add(addGroupAction);
         editMenu.add(deleteGroupAction);
         
-        MenuManager helpMenu = new MenuManager("&Help", "help");
+        MenuManager helpMenu = new MenuManager("&Help", "help1");
         helpMenu.add(aboutAction);
 
         menuBar.add(fileMenu);

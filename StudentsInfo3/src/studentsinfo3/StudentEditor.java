@@ -73,6 +73,7 @@ public class StudentEditor extends EditorPart implements SaveListener {
 	}
 
 	public void setDirty() {
+		studentEditor = this;
 		if (!currentStudent.getName().equals(nameText.getText())) {
 			isDirty = true;
 		} else if (!currentStudent.getAddress().equals(addressText.getText())) {
@@ -185,6 +186,7 @@ public class StudentEditor extends EditorPart implements SaveListener {
 		public void modifyText(ModifyEvent e) {
 			setDirty();
 			EditorIsDirtydManager.getInstance().dataIsDirty(isDirty, studentEditor);
+			setFocus();
 		}
 	}
 

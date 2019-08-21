@@ -24,13 +24,20 @@ public class EntityDragListener extends DragSourceAdapter {
 	@Override
 	public void dragSetData(DragSourceEvent event) {
 		IStructuredSelection selection = viewer.getStructuredSelection();
-		Entity entity = (Entity) selection.getFirstElement();
-		// Group entity1 = (Group) selection.getFirstElement();
-		// if (GroupTransfer.getInstance().isSupportedType(event.dataType)) {
-		// event.data=entity1;
-		// System.out.println(event);
-		// }
-		// System.out.println(event);
+		Entity entity = null;
+		if (selection.size() == 1) {
+			entity = (Entity) selection.getFirstElement();
+			getAllEntries(entity, event);
+		} else {
+			Object[] entitys = selection.toArray();
+			for (int j = 0; j < entitys.length; j++) {
+				entity = (Entity) entitys[j];
+				getAllEntries(entity, event);
+			}
+		}
+	}
+
+	private void getAllEntries(Entity entity, DragSourceEvent event) {
 		if (TextTransfer.getInstance().isSupportedType(event.dataType)) {
 			if (entity.getType().equals(entityTipe.STUDENT)) {
 				Student student = (Student) entity;
@@ -43,18 +50,17 @@ public class EntityDragListener extends DragSourceAdapter {
 					writeStudent(student, event);
 				}
 			}
-
 		}
 	}
 
 	private void writeStudent(Student student, DragSourceEvent event) {
-		String data=  student.getId() + "|" + student.getName() + "|" + student.getGroup().getName() + "|"
-				+ student.getAddress() + "|" + student.getCity() + "|" + student.getResult() + "|"
-				+ student.isMale() + "|" + student.getPhotoData().getImageWay() + "|";
+		String data = student.getId() + "|" + student.getName() + "|" + student.getGroup().getName() + "|"
+				+ student.getAddress() + "|" + student.getCity() + "|" + student.getResult() + "|" + student.isMale()
+				+ "|" + student.getPhotoData().getImageWay() + "|";
 		if (event.data == null) {
-			event.data=data;
+			event.data = data;
 		} else {
-			event.data+= data;
+			event.data += data;
 		}
 	}
 

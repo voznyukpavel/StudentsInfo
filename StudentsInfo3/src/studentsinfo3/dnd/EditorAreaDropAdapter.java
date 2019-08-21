@@ -1,16 +1,16 @@
-package studentsinfo3;
+package studentsinfo3.dnd;
 
-import java.io.FileNotFoundException;
 import java.util.StringTokenizer;
 
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTargetAdapter;
 import org.eclipse.swt.dnd.DropTargetEvent;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 
+import studentsinfo3.StudentEditor;
+import studentsinfo3.StudentEditorInput;
 import studentsinfo3.model.Group;
 import studentsinfo3.model.Student;
 import studentsinfo3.storage.Storage;
@@ -29,16 +29,8 @@ public class EditorAreaDropAdapter extends DropTargetAdapter {
 	}
 
 	@Override
-	public void dragOperationChanged(DropTargetEvent event) {
-//		event.detail = DND.DROP_COPY;
-	}
-
-	@Override
 	public void drop(DropTargetEvent event) {
-		Display d = window.getShell().getDisplay();
 		final IWorkbenchPage page = window.getActivePage();
-//		Group group= (Group)event.data;
-//		System.out.println(group.getName());
 		String data = (String) event.data;
 		StringTokenizer st = new StringTokenizer(data, "|");		
 		while (st.hasMoreTokens()) {
@@ -60,7 +52,5 @@ public class EditorAreaDropAdapter extends DropTargetAdapter {
 			} catch (PartInitException e) {
 			}
 		}
-
 	}
-
 }
