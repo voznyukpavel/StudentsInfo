@@ -36,7 +36,6 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
     private DeleteGroupAction deleteGroupAction;
     private OpenStudentAction studentSelectionAction;
 
-
     public ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
         super(configurer);
     }
@@ -68,7 +67,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
     @Override
     protected void fillMenuBar(IMenuManager menuBar) {
-        MenuManager fileMenu = new MenuManager("&File", "File");
+        MenuManager fileMenu = new MenuManager("&File", "File1");
         fileMenu.add(exitAction);
         
         MenuManager editMenu = new MenuManager("&Edit", "Edit");

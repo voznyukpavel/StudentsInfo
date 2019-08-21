@@ -9,7 +9,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.apache.felix.scr,
  org.eclipse.equinox.util,
  org.eclipse.equinox.event,
- org.eclipse.ui.workbench
+ org.eclipse.ui.workbench,
+ org.eclipse.ui.ide;bundle-version="3.15.200";resolution:=optional;visibility:=reexport
 Automatic-Module-Name: StudentsInfo3
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: studentsinfo3,

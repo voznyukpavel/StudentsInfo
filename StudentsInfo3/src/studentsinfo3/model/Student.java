@@ -15,9 +15,9 @@ public class Student extends Entity {
 	private Date dateOfChange;
 	private boolean male;
 
-	public Student() {
+//	public Student() {
 
-	}
+//	}
 
 	public Student(String name, Group group, String address, String city, int result, boolean male) {
 		super();
@@ -125,8 +125,8 @@ public class Student extends Entity {
 		if (getClass() != obj.getClass())
 			return false;
 		Student other = (Student) obj;
-		if (id != other.id)
-			return false;
+		if (id == other.id)
+			return true;
 		if (!name.equals(other.name))
 			return false;
 		if (!group.equals(other.group))

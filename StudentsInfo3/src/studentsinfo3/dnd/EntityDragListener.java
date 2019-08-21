@@ -2,6 +2,7 @@ package studentsinfo3.dnd;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.dnd.DragSourceAdapter;
 import org.eclipse.swt.dnd.DragSourceEvent;
 import org.eclipse.swt.dnd.DragSourceListener;
 import org.eclipse.swt.dnd.TextTransfer;
@@ -11,7 +12,7 @@ import studentsinfo3.model.EntityType;
 import studentsinfo3.model.Group;
 import studentsinfo3.model.Student;
 
-public class EntityDragListener implements DragSourceListener {
+public class EntityDragListener extends DragSourceAdapter {
 
 	private final TreeViewer viewer;
 	private EntityType entityTipe;
@@ -21,34 +22,40 @@ public class EntityDragListener implements DragSourceListener {
 	}
 
 	@Override
-	public void dragFinished(DragSourceEvent event) {
-
-		// if(event.data instanceof Student) {
-		// Student student=(Student)event.data;
-		// System.out.println(student.toString());
-		// }else if(event.data instanceof Group) {
-		// Group group=(Group)event.data;
-		// System.out.println(group.toString());
-		// }
-		// System.out.println(event.data.toString());
-	}
-
-	@Override
 	public void dragSetData(DragSourceEvent event) {
 		IStructuredSelection selection = viewer.getStructuredSelection();
-		Student entity = (Student) selection.getFirstElement();
-
+		Entity entity = (Entity) selection.getFirstElement();
+		// Group entity1 = (Group) selection.getFirstElement();
+		// if (GroupTransfer.getInstance().isSupportedType(event.dataType)) {
+		// event.data=entity1;
+		// System.out.println(event);
+		// }
+		// System.out.println(event);
 		if (TextTransfer.getInstance().isSupportedType(event.dataType)) {
-			event.data = entity.getId() + "|" + entity.getName() + "|" + entity.getGroup().getName() + "|"
-					+ entity.getAddress() + "|" + entity.getCity() + "|" + entity.getResult() + "|"
-					+ entity.getPhotoData().getImageWay();
-		}
+			if (entity.getType().equals(entityTipe.STUDENT)) {
+				Student student = (Student) entity;
+				writeStudent(student, event);
+			} else if (entity.getType().equals(entityTipe.GROUP)) {
+				Group group = (Group) entity;
+				Entity[] students = group.getEntries();
+				for (int i = 0; i < group.getSize(); i++) {
+					Student student = (Student) students[i];
+					writeStudent(student, event);
+				}
+			}
 
+		}
 	}
 
-	@Override
-	public void dragStart(DragSourceEvent event) {
-		System.out.println(event);
+	private void writeStudent(Student student, DragSourceEvent event) {
+		String data=  student.getId() + "|" + student.getName() + "|" + student.getGroup().getName() + "|"
+				+ student.getAddress() + "|" + student.getCity() + "|" + student.getResult() + "|"
+				+ student.isMale() + "|" + student.getPhotoData().getImageWay() + "|";
+		if (event.data == null) {
+			event.data=data;
+		} else {
+			event.data+= data;
+		}
 	}
 
 }

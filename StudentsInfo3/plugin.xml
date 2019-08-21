@@ -15,8 +15,8 @@
          point="org.eclipse.ui.perspectives">
       <perspective
             class="studentsinfo3.Perspective"
-            name="RCP Perspective"
-            id="studentsInfo3.perspective">
+            id="studentsInfo3.perspective"
+            name="RCP Perspective">
       </perspective>
    </extension>
    <extension
@@ -232,6 +232,9 @@
         </with>
      </activeWhen>
   </handler>
-</extension> 
+</extension>
+  <extension
+        point="org.eclipse.ui.ide.editorAssociationOverride">
+  </extension>
 
 </plugin>

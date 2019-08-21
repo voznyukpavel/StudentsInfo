@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.gef.dnd.TemplateTransfer;
+//import org.eclipse.gef.dnd.TemplateTransfer;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
@@ -28,8 +28,11 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
+import org.eclipse.ui.part.PluginTransfer;
 import org.eclipse.ui.part.ViewPart;
 //import org.eclipse.ui.internal.ide.EditorAreaDropAdapter;
+import org.eclipse.swt.dnd.FileTransfer;
+import org.eclipse.swt.dnd.Transfer;
 
 import studentsinfo3.action.OpenStudentAction;
 import studentsinfo3.dnd.EntityDragListener;
@@ -72,7 +75,7 @@ public class StudentsView extends ViewPart implements EntityListener {
 
 	private void initDragSupport() {
 		int operations = DND.DROP_COPY | DND.DROP_MOVE;
-		Transfer[] transferTypes = new Transfer[] {TextTransfer.getInstance()};
+		Transfer[] transferTypes = new Transfer[] {TextTransfer.getInstance(),PluginTransfer.getInstance()};
 		treeViewer.addDragSupport(operations,transferTypes, new EntityDragListener(treeViewer));
 		treeViewer.addDropSupport(operations, transferTypes, new EntityDropListener(treeViewer));
 	}

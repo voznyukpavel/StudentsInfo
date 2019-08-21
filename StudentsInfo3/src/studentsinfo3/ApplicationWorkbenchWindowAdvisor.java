@@ -3,6 +3,7 @@ package studentsinfo3;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.FileTransfer;
+import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.graphics.Image;
@@ -18,11 +19,14 @@ import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
-//import org.eclipse.ui.internal.ide.EditorAreaDropAdapter;
+
 import org.eclipse.ui.part.EditorInputTransfer;
-//import org.eclipse.ui.part.MarkerTransfer;
-//import org.eclipse.ui.part.ResourceTransfer;
+import org.eclipse.ui.part.MarkerTransfer;
+import org.eclipse.ui.part.PluginTransfer;
+import org.eclipse.ui.part.ResourceTransfer;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+
+import studentsinfo3.dnd.GroupTransfer;
 
 public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     private static final int MINIMUM_WIDTH=500;
@@ -55,12 +59,15 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         configurer.setShowMenuBar(true);
         configurer.setShowStatusLine(false);
         
-   //     configurer.addEditorAreaTransfer(EditorInputTransfer.getInstance());
-  //      configurer.addEditorAreaTransfer(ResourceTransfer.getInstance());
+        configurer.addEditorAreaTransfer(EditorInputTransfer.getInstance());
+   //     configurer.addEditorAreaTransfer(ResourceTransfer.getInstance());
    //     configurer.addEditorAreaTransfer(FileTransfer.getInstance());
- //       configurer.addEditorAreaTransfer(MarkerTransfer.getInstance());
-  //      configurer.configureEditorAreaDropListener(new EditorAreaDropAdapter(
- //           configurer.getWindow()));
+  //      configurer.addEditorAreaTransfer(MarkerTransfer.getInstance());
+ //       configurer.addEditorAreaTransfer(GroupTransfer.getInstance());
+        configurer.addEditorAreaTransfer(TextTransfer.getInstance());
+   //     configurer.addEditorAreaTransfer(PluginTransfer.getInstance());
+        
+		configurer.configureEditorAreaDropListener(new EditorAreaDropAdapter(configurer.getWindow()));
         
     }
 
