@@ -45,12 +45,14 @@ public class EditorAreaDropAdapter extends DropTargetAdapter {
 				String imageWay = st.nextToken();
 				Student entry = new Student(name, new Group(Storage.getRoot(), group), address, city, result, male);
 				entry.setId(id);
-				if (!imageWay.equals("null"))
+				if (!imageWay.equals("null")) {
 					entry.getPhotoData().setPhoto(imageWay);
+				}
 				StudentEditorInput input = new StudentEditorInput(entry);
 				try {
 					page.openEditor(input, StudentEditor.ID).setFocus();
 				} catch (PartInitException e) {
+					
 				}
 			}
 		}

@@ -9,7 +9,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -243,7 +242,7 @@ public class AddStudentDialog extends Dialog {
 		FileDialog fd = new FileDialog(getShell(), swtType);
 		fd.setText(action);
 		fd.setText("Open");
-		String[] filterExt = { "*.png", "*.jpg", ".gif" };
+		String[] filterExt = { "*.png", "*.jpg", "*.gif","*" };
 		fd.setFilterExtensions(filterExt);
 		File file = null;
 		if (fd.open() != null) {
