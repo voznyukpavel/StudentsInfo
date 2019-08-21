@@ -9,6 +9,7 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.TextTransfer;
@@ -59,7 +60,7 @@ public class StudentsView extends ViewPart implements EntityListener {
 		treeViewer.setContentProvider(new BaseWorkbenchContentProvider());
 		treeViewer.setInput(Storage.getRoot());
 		initDragSupport();
-		
+		treeViewer.setComparator(new ViewerComparator());
 		treeViewer.getTree().addMouseListener(new TreeMouseAdapter() );
 		createMenu();
 	}

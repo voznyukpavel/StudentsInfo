@@ -38,17 +38,21 @@ public class EntityDragListener extends DragSourceAdapter {
 	}
 
 	private void getAllEntries(Entity entity, DragSourceEvent event) {
-		if (TextTransfer.getInstance().isSupportedType(event.dataType)) {
-			if (entity.getType().equals(entityTipe.STUDENT)) {
-				Student student = (Student) entity;
-				writeStudent(student, event);
-			} else if (entity.getType().equals(entityTipe.GROUP)) {
-				Group group = (Group) entity;
-				Entity[] students = group.getEntries();
+
+		if (entity.getType().equals(entityTipe.STUDENT)) {
+			Student student = (Student) entity;
+			writeStudent(student, event);
+		} else if (entity.getType().equals(entityTipe.GROUP)) {
+			Group group = (Group) entity;
+			Entity[] students = group.getEntries();
+			if (students.length > 0 && TextTransfer.getInstance().isSupportedType(event.dataType))
 				for (int i = 0; i < group.getSize(); i++) {
 					Student student = (Student) students[i];
 					writeStudent(student, event);
+
 				}
+			else {
+				event.data = "|";
 			}
 		}
 	}

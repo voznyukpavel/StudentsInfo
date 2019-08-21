@@ -4,8 +4,11 @@ public final class ErrorMessageTextFinals {
 
     public static final String CONTAIN_FORBIDDEN_SYMBOLS=          " contains forbidden symbols";
     public static final String EMPTY_FIELD_ERROR_MESSAGE=          " field can`t be empty";
+    public static final String FILE_NOT_FOUND_ERROR=               "File not found error";  
+    public static final String FILE_READ_ERROR=                    "File read error";
     public static final String GROUP_CANNOT_BE_ADDED=              "Group cannot be added";
     public static final String GROUP_IS_ALLREADY_EXIST=            "Group is allready exist";
+    public static final String IOEXCEPTION=                        "I\\O Exception";
     public static final String INVALID=                            "Invalid ";
     public static final String ONLY_LATERS_ERROR_MESSAGE=          " must contain only laters.";
     public static final String RESULT_MUST_BE_INTEGER=             "Result must be an integer number 0-5.";

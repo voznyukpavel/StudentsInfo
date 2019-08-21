@@ -31,25 +31,27 @@ public class EditorAreaDropAdapter extends DropTargetAdapter {
 	@Override
 	public void drop(DropTargetEvent event) {
 		final IWorkbenchPage page = window.getActivePage();
-		String data = (String) event.data;
-		StringTokenizer st = new StringTokenizer(data, "|");		
-		while (st.hasMoreTokens()) {
-			int id = Integer.parseInt(st.nextToken());
-			String name = st.nextToken();
-			String group = st.nextToken();
-			String address = st.nextToken();
-			String city = st.nextToken();
-			int result = Integer.parseInt(st.nextToken());
-			boolean male = Boolean.parseBoolean(st.nextToken());
-			String imageWay = st.nextToken();
-			Student entry = new Student(name, new Group(Storage.getRoot(), group), address, city, result, male);
-			entry.setId(id);
-			if (!imageWay.equals("null") )
-				entry.getPhotoData().setPhoto(imageWay);
-			StudentEditorInput input = new StudentEditorInput(entry);
-			try {
-				page.openEditor(input, StudentEditor.ID).setFocus();
-			} catch (PartInitException e) {
+		if (event.data != "|") {
+			String data = (String) event.data;
+			StringTokenizer st = new StringTokenizer(data, "|");
+			while (st.hasMoreTokens()) {
+				int id = Integer.parseInt(st.nextToken());
+				String name = st.nextToken();
+				String group = st.nextToken();
+				String address = st.nextToken();
+				String city = st.nextToken();
+				int result = Integer.parseInt(st.nextToken());
+				boolean male = Boolean.parseBoolean(st.nextToken());
+				String imageWay = st.nextToken();
+				Student entry = new Student(name, new Group(Storage.getRoot(), group), address, city, result, male);
+				entry.setId(id);
+				if (!imageWay.equals("null"))
+					entry.getPhotoData().setPhoto(imageWay);
+				StudentEditorInput input = new StudentEditorInput(entry);
+				try {
+					page.openEditor(input, StudentEditor.ID).setFocus();
+				} catch (PartInitException e) {
+				}
 			}
 		}
 	}

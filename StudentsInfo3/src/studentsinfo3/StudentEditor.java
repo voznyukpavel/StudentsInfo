@@ -121,8 +121,6 @@ public class StudentEditor extends EditorPart implements SaveListener {
 		photoCanvas.addPaintListener(new PaintListener() {
 			public void paintControl(final PaintEvent event) {
 				photoImage = currentStudent.getPhotoData().getPhoto();
-				// photoImage=new
-				// Image(Display.getCurrent(),"C:\\Users\\h239267\\git\\repository\\StudentsInfo3\\icons\\eclipse128.png");
 				if (photoImage != null) {
 					photoImage = ResizedImage.resize(photoImage, PHOTO_SIZE);
 					event.gc.drawImage(photoImage, 0, 0);
