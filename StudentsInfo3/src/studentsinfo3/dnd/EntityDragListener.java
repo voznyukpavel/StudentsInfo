@@ -47,7 +47,7 @@ public class EntityDragListener extends DragSourceAdapter {
                     Student student = (Student) students[i];
                     writeStudent(student, event);
                 }
-            else {
+            else {//
                 event.data = "|";
             }
         }
