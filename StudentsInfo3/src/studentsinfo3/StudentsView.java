@@ -38,10 +38,9 @@ import studentsinfo3.model.Student;
 import studentsinfo3.storage.Storage;
 
 public class StudentsView extends ViewPart implements EntityListener {
-
-	private final Logger logger = Logger.getLogger(OpenStudentAction.class.getName());
-
 	public static final String ID = "studentsInfo3.view.students";
+	
+	private final Logger logger = Logger.getLogger(OpenStudentAction.class.getName());
 
 	private TreeViewer treeViewer;
 	private IAdapterFactory adapterFactory = new AdapterFactory();

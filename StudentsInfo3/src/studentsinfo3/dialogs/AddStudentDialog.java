@@ -106,6 +106,7 @@ public class AddStudentDialog extends Dialog {
 
 		radios[1] = new Button(composite, SWT.RADIO);
 		radios[1].setText(FieldsNamesEnum.GIRL.getText());
+		
 		addPhotoButton = new Button(composite, SWT.PUSH);
 		addPhotoButton.setText(ADD_PHOTO);
 		addPhotoButton.addSelectionListener(new SelectionAdapter() {
@@ -114,8 +115,7 @@ public class AddStudentDialog extends Dialog {
 				File file = createFileDialog("Open", SWT.OPEN);
 				try {
 					if (file != null) {
-						 image = new Image(Display.getCurrent(), (new FileInputStream(file)));
-						// fd.getFilterPath() + "\\" + fd.getFileName()
+						image = new Image(Display.getCurrent(), (new FileInputStream(file)));
 					}
 				} catch (FileNotFoundException e1) {
 					sendErrorMessage(ErrorMessageTextFinals.IOEXCEPTION, ErrorMessageTextFinals.FILE_NOT_FOUND_ERROR);
@@ -217,7 +217,7 @@ public class AddStudentDialog extends Dialog {
 	public String getCity() {
 		return city;
 	}
-	
+
 	public String getImageWay() {
 		return imageWay;
 	}
@@ -225,7 +225,7 @@ public class AddStudentDialog extends Dialog {
 	public int getResult() {
 		return result;
 	}
-	
+
 	public Image getPhoto() {
 		return image;
 	}
@@ -242,13 +242,13 @@ public class AddStudentDialog extends Dialog {
 		FileDialog fd = new FileDialog(getShell(), swtType);
 		fd.setText(action);
 		fd.setText("Open");
-		String[] filterExt = { "*.png", "*.jpg", "*.gif","*" };
+		String[] filterExt = { "*.png", "*.jpg", "*.gif", "*" };
 		fd.setFilterExtensions(filterExt);
 		File file = null;
 		if (fd.open() != null) {
-			String way=fd.getFilterPath() + "\\" + fd.getFileName();
+			String way = fd.getFilterPath() + "\\" + fd.getFileName();
 			file = new File(way);
-			imageWay=way;
+			imageWay = way;
 		}
 		return file;
 	}
