@@ -111,11 +111,10 @@ public class AddStudentDialog extends Dialog {
 		addPhotoButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				File file = createFileDialog("Open", SWT.OPEN);
+				File file = createFileDialog(SWT.OPEN);
 				try {
 					if (file != null) {
 						 image = new Image(Display.getCurrent(), (new FileInputStream(file)));
-						// fd.getFilterPath() + "\\" + fd.getFileName()
 					}
 				} catch (FileNotFoundException e1) {
 					sendErrorMessage(ErrorMessageTextFinals.IOEXCEPTION, ErrorMessageTextFinals.FILE_NOT_FOUND_ERROR);
@@ -238,9 +237,8 @@ public class AddStudentDialog extends Dialog {
 		MessageDialog.openError(getShell(), title, message);
 	}
 
-	private File createFileDialog(String action, int swtType) {
+	private File createFileDialog( int swtType) {
 		FileDialog fd = new FileDialog(getShell(), swtType);
-		fd.setText(action);
 		fd.setText("Open");
 		String[] filterExt = { "*.png", "*.jpg", "*.gif","*" };
 		fd.setFilterExtensions(filterExt);
