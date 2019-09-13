@@ -9,47 +9,45 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.handlers.RadioState;
 
+import studentsinfo3.FieldsNamesEnum;
+import studentsinfo3.model.Student;
 
 public class TypeRadioHandler implements IHandler {
 
-	@Override
-	public void addHandlerListener(IHandlerListener handlerListener) {
+    @Override
+    public void addHandlerListener(IHandlerListener handlerListener) {
+    }
 
-	}
+    @Override
+    public void dispose() {
+    }
 
-	@Override
-	public void dispose() {
+    @Override
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
+        if (selection != null & selection instanceof IStructuredSelection) {
+            IStructuredSelection strucSelection = (IStructuredSelection) selection;
+            Student student = (Student) strucSelection.getFirstElement();
+            if (event.getParameter(RadioState.PARAMETER_ID).contains(FieldsNamesEnum.BOY.getText()) && !student.isMale()) {
+                student.setMale(true);
+            } else if (event.getParameter(RadioState.PARAMETER_ID).contains(FieldsNamesEnum.GIRL.getText()) && student.isMale()) {
+                student.setMale(false);
+            }
+        }
+        return null;
+    }
 
-	}
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
-		if (selection != null & selection instanceof IStructuredSelection) {
+    @Override
+    public boolean isHandled() {
+        return true;
+    }
 
-		}
-
-		String currentState = event.getParameter(RadioState.PARAMETER_ID);
-		HandlerUtil.updateRadioState(event.getCommand(), currentState);
-		return null;
-	}
-
-	@Override
-	public boolean isEnabled() {
-	
-		return true;
-	}
-
-	@Override
-	public boolean isHandled() {
-
-		return true;
-	}
-
-	@Override
-	public void removeHandlerListener(IHandlerListener handlerListener) {
-	
-
-	}
-
+    @Override
+    public void removeHandlerListener(IHandlerListener handlerListener) {
+    }
 }

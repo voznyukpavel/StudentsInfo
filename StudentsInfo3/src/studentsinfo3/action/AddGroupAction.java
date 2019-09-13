@@ -30,12 +30,17 @@ public class AddGroupAction extends Action {
 
     public void run() {
         AddGroupDialog dialog = new AddGroupDialog(window.getShell());
+        createDialog(dialog);
+    }
+
+    private void createDialog(AddGroupDialog dialog) {
         int code = dialog.open();
         if (code == Window.OK) {
             String groupName = dialog.getName();
             if (DataManager.getInstance().isGroupExist(groupName)) {
                 MessageDialog.openError(window.getShell(), ErrorMessageTextFinals.GROUP_CANNOT_BE_ADDED,
                         ErrorMessageTextFinals.GROUP_IS_ALLREADY_EXIST);
+                createDialog(dialog);
             } else {
                 DataManager.getInstance().addGroup(groupName);
             }

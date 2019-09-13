@@ -89,7 +89,7 @@
                       class="org.eclipse.ui.handlers.RadioState"> 
                       <parameter 
                           name="default" 
-                          value="Option1"> 
+                          value="Boy"> 
                       </parameter> 
                       <parameter 
                           name="persisted" 
@@ -144,21 +144,21 @@
          
 		<command 
             commandId="StudentsInfo3.RadioCommand" 
-            label="Option1" 
+            label="Boy" 
             style="radio"> 
          <parameter 
                name="org.eclipse.ui.commands.radioStateParameter" 
-               value="Option1"> 
+               value="Boy"> 
          </parameter> 
       </command> 
       
       <command 
             commandId="StudentsInfo3.RadioCommand" 
-            label="Option2" 
+            label="Girl" 
             style="radio"> 
          <parameter 
                name="org.eclipse.ui.commands.radioStateParameter" 
-               value="Option2"> 
+               value="Girl"> 
          </parameter> 
       </command> 
       
@@ -233,8 +233,6 @@
      </activeWhen>
   </handler>
 </extension>
-  <extension
-        point="org.eclipse.ui.ide.editorAssociationOverride">
-  </extension>
+
 
 </plugin>

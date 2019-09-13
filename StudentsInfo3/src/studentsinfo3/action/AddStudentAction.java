@@ -39,6 +39,11 @@ public class AddStudentAction extends AbstractAction implements ActionFactory.IW
 
     public void run() {
         AddStudentDialog dialog = new AddStudentDialog(window.getShell());
+        createDialog(dialog);
+
+    }
+
+    private void createDialog(AddStudentDialog dialog) {
         int code = dialog.open();
         if (code == Window.OK) {
             Object item = selection.getFirstElement();
@@ -51,11 +56,11 @@ public class AddStudentAction extends AbstractAction implements ActionFactory.IW
             if (DataManager.getInstance().isStudentExist(group, student)) {
                 MessageDialog.openError(window.getShell(), ErrorMessageTextFinals.STUDENT_CANNOT_BE_ADDED,
                         ErrorMessageTextFinals.STUDENT_IS_ALLREADY_EXIST);
+                createDialog(dialog);
             } else {
                 DataManager.getInstance().addStudent(group, student);
             }
         }
-
     }
 
 }

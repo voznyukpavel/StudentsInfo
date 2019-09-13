@@ -69,7 +69,5 @@ public class AddHandler implements IHandler {
 
 	@Override
 	public void removeHandlerListener(IHandlerListener handlerListener) {
-
 	}
-
 }
