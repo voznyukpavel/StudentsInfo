@@ -18,22 +18,18 @@ import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
-import org.eclipse.ui.part.PluginTransfer;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import studentsinfo3.dnd.EditorAreaDropAdapter;
 
-
-
 public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
-    private static final int MINIMUM_WIDTH=500;
-    private static final int MINIMUM_HEIGHT=300;
-    private static final int INITIAL_WIDTH=600;
-    private static final int INITIAL_HEIGHT=300;
-    private static final String TOOL_TIP_TEXT="Student info";
-    
+    private static final int MINIMUM_WIDTH = 500;
+    private static final int MINIMUM_HEIGHT = 300;
+    private static final int INITIAL_WIDTH = 600;
+    private static final int INITIAL_HEIGHT = 300;
+    private static final String TOOL_TIP_TEXT = "Student info";
+
     private TrayItem trayItem;
-    private Image trayImage;
     private ApplicationActionBarAdvisor actionBarAdvisor;
 
     public ApplicationWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
@@ -55,13 +51,9 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         configurer.setShowCoolBar(true);
         configurer.setShowMenuBar(true);
         configurer.setShowStatusLine(false);
-        
-     
         configurer.addEditorAreaTransfer(TextTransfer.getInstance());
-        configurer.addEditorAreaTransfer(PluginTransfer.getInstance());
-        
-		configurer.configureEditorAreaDropListener(new EditorAreaDropAdapter(configurer.getWindow()));
-        
+        configurer.configureEditorAreaDropListener(new EditorAreaDropAdapter(configurer.getWindow()));
+
     }
 
     public void postWindowOpen() {
@@ -79,7 +71,6 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
                 window.getShell().setVisible(false);
             }
         });
-        
         trayItem.addListener(SWT.DefaultSelection, new Listener() {
             public void handleEvent(Event event) {
                 Shell shell = window.getShell();
@@ -107,7 +98,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         if (tray == null)
             return null;
         trayItem = new TrayItem(tray, SWT.NONE);
-        trayImage = AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.STUDENT)
+        Image trayImage = AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.STUDENT)
                 .createImage();
         trayItem.setImage(trayImage);
         trayItem.setToolTipText(TOOL_TIP_TEXT);

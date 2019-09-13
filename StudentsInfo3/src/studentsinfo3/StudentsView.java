@@ -28,7 +28,6 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
-import org.eclipse.ui.part.PluginTransfer;
 import org.eclipse.ui.part.ViewPart;
 
 import studentsinfo3.dnd.EntityDragListener;
@@ -68,7 +67,7 @@ public class StudentsView extends ViewPart implements EntityListener {
 
     private void initDragSupport() {
         int operations = DND.DROP_COPY | DND.DROP_MOVE;
-        Transfer[] transferTypes = new Transfer[] { TextTransfer.getInstance(), PluginTransfer.getInstance() };
+        Transfer[] transferTypes = new Transfer[] { TextTransfer.getInstance() };
         treeViewer.addDragSupport(operations, transferTypes, new EntityDragListener(treeViewer));
         // treeViewer.addDropSupport(operations, transferTypes, new EntityDropListener(treeViewer));
     }
