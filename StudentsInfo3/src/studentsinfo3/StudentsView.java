@@ -14,6 +14,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.MenuAdapter;
 import org.eclipse.swt.events.MenuEvent;
 import org.eclipse.swt.events.MenuListener;
 import org.eclipse.swt.events.MouseAdapter;
@@ -78,7 +79,7 @@ public class StudentsView extends ViewPart implements EntityListener {
         treeViewer.getTree().setMenu(menu);
         getSite().registerContextMenu(menuManager, treeViewer);
         getSite().setSelectionProvider(treeViewer);
-        menu.addMenuListener(new PopUpMenuListener(menu));
+        menu.addMenuListener(new PopUpMenuAdapter(menu));
     }
 
     private void openGroupInEditor(Object selectedObject, IWorkbenchPage activePage) {
@@ -140,16 +141,12 @@ public class StudentsView extends ViewPart implements EntityListener {
         }
     }
 
-    private class PopUpMenuListener implements MenuListener {
+    private class PopUpMenuAdapter extends MenuAdapter {
 
         private Menu menu;
 
-        public PopUpMenuListener(Menu menu) {
+        public PopUpMenuAdapter(Menu menu) {
             this.menu = menu;
-        }
-
-        @Override
-        public void menuHidden(MenuEvent e) {
         }
 
         @Override

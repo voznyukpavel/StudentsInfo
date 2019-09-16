@@ -1,17 +1,14 @@
 package studentsinfo3.action;
 
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import studentsinfo3.Application;
-import studentsinfo3.ErrorMessageTextFinals;
 import studentsinfo3.ImageWayKeys;
 import studentsinfo3.dialogs.AddGroupDialog;
 import studentsinfo3.managers.DataManager;
-
 
 public class AddGroupAction extends Action {
 
@@ -24,8 +21,7 @@ public class AddGroupAction extends Action {
         setId(ID);
         setText("&Add Group");
         setToolTipText("Add Group");
-        setImageDescriptor(
-                AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.ADD_GROUP));
+        setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.ADD_GROUP));
     }
 
     public void run() {
@@ -37,13 +33,7 @@ public class AddGroupAction extends Action {
         int code = dialog.open();
         if (code == Window.OK) {
             String groupName = dialog.getName();
-            if (DataManager.getInstance().isGroupExist(groupName)) {
-                MessageDialog.openError(window.getShell(), ErrorMessageTextFinals.GROUP_CANNOT_BE_ADDED,
-                        ErrorMessageTextFinals.GROUP_IS_ALLREADY_EXIST);
-                createDialog(dialog);
-            } else {
-                DataManager.getInstance().addGroup(groupName);
-            }
+            DataManager.getInstance().addGroup(groupName);
         }
     }
 }

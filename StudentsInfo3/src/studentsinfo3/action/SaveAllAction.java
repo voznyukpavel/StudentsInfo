@@ -72,6 +72,7 @@ public class SaveAllAction extends Action implements EditorListener, ActionFacto
         @Override
         public void partInputChanged(IWorkbenchPartReference partRef) {
         }
+        
         @Override
         public void partClosed(IWorkbenchPartReference partRef) {
             setEnabled(false);

@@ -65,75 +65,52 @@ public class SaveAction extends Action implements EditorListener, ActionFactory.
 
         @Override
         public void partActivated(IWorkbenchPartReference partRef) {
-            IWorkbenchPart part = partRef.getPart(true);
-            if (part instanceof StudentEditor) {
-            	 studentEditor = ((StudentEditor) part).getStudentEditor();
-                setEnabled(((StudentEditor) part).isDirty());
-            }
+            setEnable(partRef);
         }
 
         @Override
         public void partInputChanged(IWorkbenchPartReference partRef) {
-            IWorkbenchPart part = partRef.getPart(true);
-            if (part instanceof StudentEditor) {     
-                studentEditor = ((StudentEditor) part).getStudentEditor();
-                setEnabled(((StudentEditor) part).isDirty());
-            }
+            setEnable(partRef);
         }
 
         @Override
         public void partClosed(IWorkbenchPartReference partRef) {
-            IWorkbenchPart part = partRef.getPart(true);
-            if (part instanceof StudentEditor) {     
-                studentEditor = ((StudentEditor) part).getStudentEditor();
-                setEnabled(((StudentEditor) part).isDirty());
-            }
+            setEnable(partRef);
         }
 
         @Override
         public void partDeactivated(IWorkbenchPartReference partRef) {
-            IWorkbenchPart part = partRef.getPart(true);
-            if (part instanceof StudentEditor) {     
-                studentEditor = ((StudentEditor) part).getStudentEditor();
-                setEnabled(((StudentEditor) part).isDirty());
-            }
+            setEnable(partRef);
         }
 
         @Override
         public void partBroughtToTop(IWorkbenchPartReference partRef) {
-            IWorkbenchPart part = partRef.getPart(true);
-            if (part instanceof StudentEditor) {     
-                studentEditor = ((StudentEditor) part).getStudentEditor();
-                setEnabled(((StudentEditor) part).isDirty());
-            }
+            setEnable(partRef);
         }
 
         @Override
         public void partOpened(IWorkbenchPartReference partRef) {
-            IWorkbenchPart part = partRef.getPart(true);
-            if (part instanceof StudentEditor) {     
-                studentEditor = ((StudentEditor) part).getStudentEditor();
-                setEnabled(((StudentEditor) part).isDirty());
-            }
+            setEnable(partRef);
         }
 
         @Override
         public void partHidden(IWorkbenchPartReference partRef) {
-            IWorkbenchPart part = partRef.getPart(true);
-            if (part instanceof StudentEditor) {     
-                studentEditor = ((StudentEditor) part).getStudentEditor();
-                setEnabled(((StudentEditor) part).isDirty());
-            }
+            setEnable(partRef);
         }
 
         @Override
         public void partVisible(IWorkbenchPartReference partRef) {
+            setEnable(partRef);
+        }
+
+        private void setEnable(IWorkbenchPartReference partRef) {
             IWorkbenchPart part = partRef.getPart(true);
             if (part instanceof StudentEditor) {     
                 studentEditor = ((StudentEditor) part).getStudentEditor();
                 setEnabled(((StudentEditor) part).isDirty());
             }
         }
+      
     }
 
 }

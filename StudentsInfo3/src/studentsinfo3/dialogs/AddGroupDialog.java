@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Text;
 
 import studentsinfo3.ErrorMessageTextFinals;
 import studentsinfo3.FieldsNamesEnum;
+import studentsinfo3.managers.DataManager;
 import studentsinfo3.util.FieldsChecker;
 
 public class AddGroupDialog extends Dialog {
@@ -61,6 +62,12 @@ public class AddGroupDialog extends Dialog {
                     fieldName + ErrorMessageTextFinals.CONTAIN_FORBIDDEN_SYMBOLS);
             return;
         }
+        if (DataManager.getInstance().isGroupExist(groupName)) {
+            sendErrorMessage( ErrorMessageTextFinals.GROUP_CANNOT_BE_ADDED,
+                    ErrorMessageTextFinals.GROUP_IS_ALLREADY_EXIST);
+            return;
+        }
+        
         super.okPressed();
     }
 

@@ -1,13 +1,11 @@
 package studentsinfo3.action;
 
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import studentsinfo3.Application;
-import studentsinfo3.ErrorMessageTextFinals;
 import studentsinfo3.ImageWayKeys;
 import studentsinfo3.dialogs.AddStudentDialog;
 import studentsinfo3.managers.DataManager;
@@ -26,8 +24,7 @@ public class AddStudentAction extends AbstractAction implements ActionFactory.IW
         setId(ID);
         setText("&Add Student");
         setToolTipText("Add student in this group.");
-        setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID,
-                ImageWayKeys.ADD_STUDENT));
+        setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.ADD_STUDENT));
         window.getSelectionService().addSelectionListener(this);
     }
 
@@ -38,28 +35,22 @@ public class AddStudentAction extends AbstractAction implements ActionFactory.IW
     }
 
     public void run() {
-        AddStudentDialog dialog = new AddStudentDialog(window.getShell());
-        createDialog(dialog);
+        Object item = selection.getFirstElement();
+        Group group = (Group) item;
+        AddStudentDialog dialog = new AddStudentDialog(window.getShell(), group.getName());
+        createDialog(dialog, group);
 
     }
 
-    private void createDialog(AddStudentDialog dialog) {
+    private void createDialog(AddStudentDialog dialog, Group group) {
         int code = dialog.open();
         if (code == Window.OK) {
-            Object item = selection.getFirstElement();
-            Group group = (Group) item;
             Student student = new Student(dialog.getName(), group, dialog.getAddress(), dialog.getCity(),
-                    dialog.getResult(),dialog.isMale());
-            if(dialog.getPhoto()!=null) {
-            	student.setPhotoData(dialog.getPhoto(), dialog.getImageWay());
+                    dialog.getResult(), dialog.isMale());
+            if (dialog.getPhoto() != null) {
+                student.setPhotoData(dialog.getPhoto(), dialog.getImageWay());
             }
-            if (DataManager.getInstance().isStudentExist(group, student)) {
-                MessageDialog.openError(window.getShell(), ErrorMessageTextFinals.STUDENT_CANNOT_BE_ADDED,
-                        ErrorMessageTextFinals.STUDENT_IS_ALLREADY_EXIST);
-                createDialog(dialog);
-            } else {
-                DataManager.getInstance().addStudent(group, student);
-            }
+            DataManager.getInstance().addStudent(group, student);
         }
     }
 

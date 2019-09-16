@@ -2,6 +2,8 @@ package studentsinfo3.managers;
 
 import java.util.ArrayList;
 
+import org.eclipse.swt.graphics.Image;
+
 import studentsinfo3.listeners.EntityListener;
 import studentsinfo3.model.Entity;
 import studentsinfo3.model.Group;
@@ -29,6 +31,19 @@ public class DataManager {
         observers.add(observer);
     }
 
+    public boolean isStudentExist(String groupName, String studentName, String address, String city, int result,
+            boolean male, Image photo, String imageWay) {
+        
+        Group group =getGroupByName(groupName);
+        Student student = new Student(studentName, group, address, city, result, male);
+        if (photo != null) {
+            student.setPhotoData(photo, imageWay);
+        }
+        student.setPhotoData(photo, imageWay);
+        
+        return isStudentExist(group, student);
+    }
+
     public boolean isStudentExist(Group group, Student student) {
         Entity[] students = group.getEntries();
         for (int i = 0; i < students.length; i++) {
@@ -39,7 +54,7 @@ public class DataManager {
         }
         return false;
     }
-    
+
     public boolean isGroupExist(String name) {
         Entity[] groups = Storage.getRoot().getEntries();
         for (int i = 0; i < groups.length; i++) {
@@ -51,6 +66,17 @@ public class DataManager {
         return false;
     }
     
+    public Group getGroupByName(String name) {
+        Entity[] groups = Storage.getRoot().getEntries();
+        for (int i = 0; i < groups.length; i++) {
+            Group group = (Group) groups[i];
+            if (group.getName().equals(name)) {
+                return group;
+            }
+        }
+        return null;
+    }
+
 
     public void addStudent(Group group, Student student) {
         counter++;
@@ -86,7 +112,7 @@ public class DataManager {
         }
         notifyObserversUpdate();
     }
-    
+
     public void addGroup(String groupName) {
         Storage.getRoot().addEntry(new Group(Storage.getRoot(), groupName));
         notifyObserversUpdate();
@@ -96,11 +122,11 @@ public class DataManager {
         Storage.getRoot().removeEntry(group);
         notifyObserversUpdate();
     }
-    
+
     public void renameGroup(String oldName, String newName) {
-    	Group group=getGroup(oldName);
-    	group.setName(newName);
-    	notifyObserversUpdate();
+        Group group = getGroup(oldName);
+        group.setName(newName);
+        notifyObserversUpdate();
     }
 
     private void findStudent(Student student) {
@@ -140,7 +166,7 @@ public class DataManager {
         }
         return null;
     }
-    
+
     private void notifyObserversUpdate() {
         for (int i = 0; i < observers.size(); i++) {
             EntityListener observer = (EntityListener) observers.get(i);

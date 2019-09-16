@@ -35,7 +35,7 @@ public class AddHandler implements IHandler {
 	}
 
 	private void createStudent(Group group) {
-		AddStudentDialog dialog = new AddStudentDialog(window.getShell());
+		AddStudentDialog dialog = new AddStudentDialog(window.getShell(),group.getName());
 		int code = dialog.open();
 		if (code == Window.OK) {
 			Student student = new Student(dialog.getName(), group, dialog.getAddress(), dialog.getCity(),
