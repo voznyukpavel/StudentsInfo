@@ -52,8 +52,9 @@ public class AdapterFactory implements IAdapterFactory {
         }
     };
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public Object getAdapter(Object adaptableObject, Class adapterType) {
+    public Object getAdapter(Object adaptableObject,  Class adapterType) {
         if (adapterType == IWorkbenchAdapter.class) {
             Entity entity=(Entity)adaptableObject;
             if (entity.getType() == EntityType.GROUP) {
@@ -67,6 +68,7 @@ public class AdapterFactory implements IAdapterFactory {
         return null;
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public Class[] getAdapterList() {
         return new Class[] { IWorkbenchAdapter.class };

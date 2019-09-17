@@ -48,6 +48,10 @@ public class OpenGroupAction extends AbstractAction implements ActionFactory.IWo
         Group group = (Group) item;
         IWorkbenchPage page = window.getActivePage();
         Entity[] entitys = group.getEntries();
+        addStudentsToEditor(page, entitys);
+    }
+
+    private void addStudentsToEditor(IWorkbenchPage page, Entity[] entitys) {
         for (int i = 0; i < entitys.length; i++) {
             Student student = (Student) entitys[i];
             StudentEditorInput input = new StudentEditorInput(student);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Students Info" uid="StudentsInfo3" id="StudentsInfo3.product1" application="StudentsInfo3.application" version="1.0.0.qualifier" useFeatures="false" includeLaunchers="true">
+<product name="Students Info" uid="StudentsInfo31" id="StudentsInfo3.product1" application="StudentsInfo3.application" version="1.0.0.qualifier" useFeatures="false" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/StudentsInfo3/icons/about.gif"/>
@@ -24,9 +24,17 @@
 
    <splash
       location="StudentsInfo3" />
-   <launcher>
-      <win useIco="false">
-         <bmp/>
+   <launcher name="StudentInfo">
+      <win useIco="true">
+         <ico path="/StudentsInfo3/branding/alt16 - Copy.ico"/>
+         <bmp
+            winSmallHigh="/StudentsInfo3/branding/alt16.bmp"
+            winSmallLow="/StudentsInfo3/branding/alt16.bmp"
+            winMediumHigh="/StudentsInfo3/branding/alt32.bmp"
+            winMediumLow="/StudentsInfo3/branding/alt32.bmp"
+            winLargeHigh="/StudentsInfo3/branding/alt48.bmp"
+            winLargeLow="/StudentsInfo3/branding/alt48.bmp"
+            winExtraLargeHigh="/StudentsInfo3/branding/alt256.bmp"/>
       </win>
    </launcher>
 
@@ -34,7 +42,6 @@
    <vm>
       <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8</windows>
    </vm>
-
 
    <plugins>
       <plugin id="StudentsInfo3"/>
