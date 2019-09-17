@@ -83,9 +83,9 @@ public class StudentsView extends ViewPart implements EntityListener {
 
     private void openGroupInEditor(Object selectedObject, IWorkbenchPage activePage) {
         Group group = (Group) selectedObject;
-        Entity[] entitys = group.getEntries();
-        for (int i = 0; i < entitys.length; i++) {
-            selectedObject = entitys[i];
+        Entity[] entities = group.getEntries();
+        for (int i = 0; i < entities.length; i++) {
+            selectedObject = entities[i];
             openStudentInEditor(selectedObject, activePage);
         }
     }
