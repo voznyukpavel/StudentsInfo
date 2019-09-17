@@ -81,25 +81,6 @@ public class StudentsView extends ViewPart implements EntityListener {
         menu.addMenuListener(new PopUpMenuAdapter(menu));
     }
 
-    private void openGroupInEditor(Object selectedObject, IWorkbenchPage activePage) {
-        Group group = (Group) selectedObject;
-        Entity[] entities = group.getEntries();
-        for (int i = 0; i < entities.length; i++) {
-            selectedObject = entities[i];
-            openStudentInEditor(selectedObject, activePage);
-        }
-    }
-
-    private void openStudentInEditor(Object selectedObject, IWorkbenchPage activePage) {
-        Student student = (Student) selectedObject;
-        StudentEditorInput sei = new StudentEditorInput(student);
-        try {
-            activePage.openEditor(sei, StudentEditor.ID).setFocus();
-        } catch (PartInitException ex) {
-            logger.log(Level.SEVERE, ErrorMessageTextFinals.STUDENT_CANNOT_BE_ADDED, ex);
-        }
-    }
-
     public void dispose() {
         Platform.getAdapterManager().unregisterAdapters(adapterFactory);
         super.dispose();
@@ -125,18 +106,64 @@ public class StudentsView extends ViewPart implements EntityListener {
         @Override
         public void mouseDoubleClick(MouseEvent e) {
             if (e.button == 1) {
-                IWorkbench workbench = PlatformUI.getWorkbench();
-                IWorkbenchWindow activeWindow = workbench.getActiveWorkbenchWindow();
-                IWorkbenchPage activePage = activeWindow.getActivePage();
-                ISelection selection = treeViewer.getSelection();
-                IStructuredSelection structSelection = (IStructuredSelection) selection;
-                Object selectedObject = structSelection.getFirstElement();
+                IWorkbenchPage activePage = getWorkbenchPage();
+                Object selectedObject = getSelection();
                 if (selectedObject instanceof Student) {
                     openStudentInEditor(selectedObject, activePage);
                 } else if (selectedObject instanceof Group) {
                     openGroupInEditor(selectedObject, activePage);
                 }
             }
+        }
+        
+        @Override
+        public void mouseDown(MouseEvent e) {
+            IWorkbenchPage activePage = getWorkbenchPage();
+            Object selectedObject = getSelection();
+            if (selectedObject instanceof Student) {
+                Student student = (Student) selectedObject;
+                StudentEditorInput sei = new StudentEditorInput(student);
+                if(activePage.findEditor(sei)!=null) {
+                    openEditor(activePage, sei);
+                }
+            }
+        }
+
+        private void openEditor(IWorkbenchPage activePage, StudentEditorInput sei) {
+            try {
+                activePage.openEditor(sei, StudentEditor.ID).setFocus();
+            } catch (PartInitException ex) {
+                logger.log(Level.SEVERE, ErrorMessageTextFinals.STUDENT_CANNOT_BE_ADDED, ex);
+            }
+        }
+
+        private Object getSelection() {
+            ISelection selection = treeViewer.getSelection();
+            IStructuredSelection structSelection = (IStructuredSelection) selection;
+            Object selectedObject = structSelection.getFirstElement();
+            return selectedObject;
+        }
+
+        private IWorkbenchPage getWorkbenchPage() {
+            IWorkbench workbench = PlatformUI.getWorkbench();
+            IWorkbenchWindow activeWindow = workbench.getActiveWorkbenchWindow();
+            IWorkbenchPage activePage = activeWindow.getActivePage();
+            return activePage;
+        }
+
+        private void openGroupInEditor(Object selectedObject, IWorkbenchPage activePage) {
+            Group group = (Group) selectedObject;
+            Entity[] entities = group.getEntries();
+            for (int i = 0; i < entities.length; i++) {
+                selectedObject = entities[i];
+                openStudentInEditor(selectedObject, activePage);
+            }
+        }
+
+        private void openStudentInEditor(Object selectedObject, IWorkbenchPage activePage) {
+            Student student = (Student) selectedObject;
+            StudentEditorInput sei = new StudentEditorInput(student);
+            openEditor(activePage, sei);
         }
     }
 

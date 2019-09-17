@@ -23,5 +23,4 @@ public class DirtyEvent extends EventObject{
     public StudentEditor getImDirty() {
         return imDirty;
     }
-
 }

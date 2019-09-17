@@ -36,5 +36,4 @@ public abstract class AbstractAction extends Action implements ISelectionListene
         }
         return null;
     }
-
 }

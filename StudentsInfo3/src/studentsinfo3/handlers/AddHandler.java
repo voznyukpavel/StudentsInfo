@@ -19,55 +19,55 @@ import studentsinfo3.model.Student;
 
 public class AddHandler implements IHandler {
 
-	private IWorkbenchWindow window;
+    private IWorkbenchWindow window;
 
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
-		if (selection != null & selection instanceof IStructuredSelection) {
-			window = HandlerUtil.getActiveWorkbenchWindow(event);
-			IStructuredSelection structSelection = (IStructuredSelection) selection;
-			Object item = structSelection.getFirstElement();
-			Group group = (Group) item;
-			createStudent(group);
-		}
-		return null;
-	}
+    @Override
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
+        if (selection != null & selection instanceof IStructuredSelection) {
+            window = HandlerUtil.getActiveWorkbenchWindow(event);
+            IStructuredSelection structSelection = (IStructuredSelection) selection;
+            Object item = structSelection.getFirstElement();
+            Group group = (Group) item;
+            createStudent(group);
+        }
+        return null;
+    }
 
-	private void createStudent(Group group) {
-		AddStudentDialog dialog = new AddStudentDialog(window.getShell(),group.getName());
-		int code = dialog.open();
-		if (code == Window.OK) {
-			Student student = new Student(dialog.getName(), group, dialog.getAddress(), dialog.getCity(),
-					dialog.getResult(),dialog.isMale());
-			if (DataManager.getInstance().isStudentExist(group, student)) {
-				MessageDialog.openError(window.getShell(), ErrorMessageTextFinals.STUDENT_CANNOT_BE_ADDED,
-						ErrorMessageTextFinals.STUDENT_IS_ALLREADY_EXIST);
-			} else {
-				DataManager.getInstance().addStudent(group, student);
-			}
-		}
-	}
+    private void createStudent(Group group) {
+        AddStudentDialog dialog = new AddStudentDialog(window.getShell(), group.getName());
+        int code = dialog.open();
+        if (code == Window.OK) {
+            Student student = new Student(dialog.getName(), group, dialog.getAddress(), dialog.getCity(),
+                    dialog.getResult(), dialog.isMale());
+            if (DataManager.getInstance().isStudentExist(group, student)) {
+                MessageDialog.openError(window.getShell(), ErrorMessageTextFinals.STUDENT_CANNOT_BE_ADDED,
+                        ErrorMessageTextFinals.STUDENT_IS_ALLREADY_EXIST);
+            } else {
+                DataManager.getInstance().addStudent(group, student);
+            }
+        }
+    }
 
-	@Override
-	public void addHandlerListener(IHandlerListener handlerListener) {
-	}
+    @Override
+    public void addHandlerListener(IHandlerListener handlerListener) {
+    }
 
-	@Override
-	public void dispose() {
-	}
+    @Override
+    public void dispose() {
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
-	@Override
-	public boolean isHandled() {
-		return true;
-	}
+    @Override
+    public boolean isHandled() {
+        return true;
+    }
 
-	@Override
-	public void removeHandlerListener(IHandlerListener handlerListener) {
-	}
+    @Override
+    public void removeHandlerListener(IHandlerListener handlerListener) {
+    }
 }

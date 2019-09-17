@@ -46,7 +46,6 @@ public class OpenStudentAction extends AbstractAction implements IWorkbenchActio
         StudentEditorInput input = new StudentEditorInput(entry);
         try {
             page.openEditor(input, StudentEditor.ID).setFocus();
-
         } catch (PartInitException e) {
             logger.log(Level.SEVERE, ErrorMessageTextFinals.STUDENT_CANNOT_BE_ADDED, e);
         }

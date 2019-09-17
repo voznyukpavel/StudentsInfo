@@ -19,7 +19,5 @@ public class UpdateEvent extends EventObject{
         return student;
     }
 
-
-
 }
 

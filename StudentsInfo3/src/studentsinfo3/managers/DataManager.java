@@ -40,7 +40,6 @@ public class DataManager {
             student.setPhotoData(photo, imageWay);
         }
         student.setPhotoData(photo, imageWay);
-        
         return isStudentExist(group, student);
     }
 

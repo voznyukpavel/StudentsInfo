@@ -13,16 +13,12 @@ public class EditorIsDirtydManager {
 
     private static EditorIsDirtydManager instance;
     private ArrayList<EditorListener> observers;
-    
     private boolean isDataDirty;
     private Student student;
     private StudentEditor dirtyStudentEditor;
 
-    
-    
     private EditorIsDirtydManager() {
         observers = new ArrayList<EditorListener>();
-
     }
     
     public static EditorIsDirtydManager getInstance() {
@@ -39,7 +35,6 @@ public class EditorIsDirtydManager {
     }
     
     public void dataChenged(Student student) {
-
         this.student=student;
         notifyObserversUpdate();
     }
@@ -61,5 +56,4 @@ public class EditorIsDirtydManager {
             observer.updateStudent(new UpdateEvent(this,student));
         }
     }
-
 }

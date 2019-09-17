@@ -48,7 +48,6 @@ public class DeleteGroupAction extends AbstractAction implements ActionFactory.I
             }
             DataManager.getInstance().removeGroup(group);
         }
-
     }
 
     @Override

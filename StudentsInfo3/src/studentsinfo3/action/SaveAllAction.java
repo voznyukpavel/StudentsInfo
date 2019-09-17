@@ -21,7 +21,6 @@ import studentsinfo3.managers.SaveDataManager;
 public class SaveAllAction extends Action implements EditorListener, ActionFactory.IWorkbenchAction {
 
     protected IStructuredSelection selection;
-
     private IWorkbenchPage page;
 
     public final static String ID = "studentsinfo3.save";
@@ -60,8 +59,6 @@ public class SaveAllAction extends Action implements EditorListener, ActionFacto
     private void signUp() {
         EditorIsDirtydManager.getInstance().registerObserver(this);
     }
-    
-    
     
     private class EditorChangedListener implements IPartListener2 {
 

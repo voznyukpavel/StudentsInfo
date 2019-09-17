@@ -15,14 +15,6 @@ import studentsinfo3.model.Student;
 public class TypeRadioHandler implements IHandler {
 
     @Override
-    public void addHandlerListener(IHandlerListener handlerListener) {
-    }
-
-    @Override
-    public void dispose() {
-    }
-
-    @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
         ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
         if (selection != null & selection instanceof IStructuredSelection) {
@@ -35,6 +27,14 @@ public class TypeRadioHandler implements IHandler {
             }
         }
         return null;
+    }
+    
+    @Override
+    public void addHandlerListener(IHandlerListener handlerListener) {
+    }
+
+    @Override
+    public void dispose() {
     }
 
     @Override

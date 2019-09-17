@@ -31,7 +31,6 @@ public class AddStudentAction extends AbstractAction implements ActionFactory.IW
     @Override
     public void dispose() {
         window.getSelectionService().removeSelectionListener(this);
-
     }
 
     public void run() {
@@ -39,7 +38,6 @@ public class AddStudentAction extends AbstractAction implements ActionFactory.IW
         Group group = (Group) item;
         AddStudentDialog dialog = new AddStudentDialog(window.getShell(), group.getName());
         createDialog(dialog, group);
-
     }
 
     private void createDialog(AddStudentDialog dialog, Group group) {
@@ -53,5 +51,4 @@ public class AddStudentAction extends AbstractAction implements ActionFactory.IW
             DataManager.getInstance().addStudent(group, student);
         }
     }
-
 }

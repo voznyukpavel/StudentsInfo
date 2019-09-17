@@ -40,7 +40,6 @@ public class OpenGroupAction extends AbstractAction implements ActionFactory.IWo
     @Override
     public void dispose() {
         window.getSelectionService().removeSelectionListener(this);
-
     }
 
     public void run() {

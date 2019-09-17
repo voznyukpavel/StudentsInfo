@@ -27,16 +27,6 @@ public class AboutStudentHandler implements IHandler {
     private static final String STUDENTS = " students";
 
     @Override
-    public void addHandlerListener(IHandlerListener handlerListener) {
-
-    }
-
-    @Override
-    public void dispose() {
-
-    }
-
-    @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
         ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
         window = HandlerUtil.getActiveWorkbenchWindow(event);
@@ -98,6 +88,14 @@ public class AboutStudentHandler implements IHandler {
         info += group.getSize();
         info += STUDENTS;
         MessageDialog.openInformation(window.getShell(), group.getName(), info);
+    }
+
+    @Override
+    public void addHandlerListener(IHandlerListener handlerListener) {
+    }
+
+    @Override
+    public void dispose() {
     }
 
     @Override

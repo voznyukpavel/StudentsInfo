@@ -20,8 +20,7 @@ public class StudentEditorInput implements IEditorInput {
     public Student getStudent() {
         return currentStudent;
     }
-    
-    
+
     @Override
     public IPersistableElement getPersistable() {
         return null;
@@ -33,10 +32,12 @@ public class StudentEditorInput implements IEditorInput {
     }
 
     public boolean equals(Object obj) {
-        if (super.equals(obj))
+        if (super.equals(obj)) {
             return true;
-        if (!(obj instanceof StudentEditorInput))
+        }
+        if (!(obj instanceof StudentEditorInput)) {
             return false;
+        }
         StudentEditorInput other = (StudentEditorInput) obj;
         return this.currentStudent.equals(other.currentStudent);
     }
@@ -49,6 +50,7 @@ public class StudentEditorInput implements IEditorInput {
     public String getName() {
         return null;
     }
+
     @Override
     public <T> T getAdapter(Class<T> adapter) {
         return null;
