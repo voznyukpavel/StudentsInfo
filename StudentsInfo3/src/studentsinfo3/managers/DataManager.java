@@ -33,8 +33,8 @@ public class DataManager {
 
     public boolean isStudentExist(String groupName, String studentName, String address, String city, int result,
             boolean male, Image photo, String imageWay) {
-        
-        Group group =getGroupByName(groupName);
+
+        Group group = getGroupByName(groupName);
         Student student = new Student(studentName, group, address, city, result, male);
         if (photo != null) {
             student.setPhotoData(photo, imageWay);
@@ -55,27 +55,11 @@ public class DataManager {
     }
 
     public boolean isGroupExist(String name) {
-        Entity[] groups = Storage.getRoot().getEntries();
-        for (int i = 0; i < groups.length; i++) {
-            Group group = (Group) groups[i];
-            if (group.getName().equals(name)) {
-                return true;
-            }
+        if (getGroupByName(name) != null) {
+            return true;
         }
         return false;
     }
-    
-    public Group getGroupByName(String name) {
-        Entity[] groups = Storage.getRoot().getEntries();
-        for (int i = 0; i < groups.length; i++) {
-            Group group = (Group) groups[i];
-            if (group.getName().equals(name)) {
-                return group;
-            }
-        }
-        return null;
-    }
-
 
     public void addStudent(Group group, Student student) {
         counter++;
@@ -85,9 +69,36 @@ public class DataManager {
     }
 
     public void removeStudent(Student student) {
-        Group group = getGroup(student.getGroup().getName());
+        Group group = getGroupByName(student.getGroup().getName());
         group.removeEntry(student);
         notifyObserversUpdate();
+    }
+
+    public void addGroup(String groupName) {
+        Storage.getRoot().addEntry(new Group(Storage.getRoot(), groupName));
+        notifyObserversUpdate();
+    }
+
+    public void removeGroup(Group group) {
+        Storage.getRoot().removeEntry(group);
+        notifyObserversUpdate();
+    }
+
+    public void renameGroup(String oldName, String newName) {
+        Group group = getGroupByName(oldName);
+        group.setName(newName);
+        notifyObserversUpdate();
+    }
+
+    public Group getGroupByName(String name) {
+        Entity[] groups = Storage.getRoot().getEntries();
+        for (int i = 0; i < groups.length; i++) {
+            Group group = (Group) groups[i];
+            if (group.getName().equals(name)) {
+                return group;
+            }
+        }
+        return null;
     }
 
     public void updateStudent(Student student) {
@@ -112,22 +123,6 @@ public class DataManager {
         notifyObserversUpdate();
     }
 
-    public void addGroup(String groupName) {
-        Storage.getRoot().addEntry(new Group(Storage.getRoot(), groupName));
-        notifyObserversUpdate();
-    }
-
-    public void removeGroup(Group group) {
-        Storage.getRoot().removeEntry(group);
-        notifyObserversUpdate();
-    }
-
-    public void renameGroup(String oldName, String newName) {
-        Group group = getGroup(oldName);
-        group.setName(newName);
-        notifyObserversUpdate();
-    }
-
     private void findStudent(Student student) {
         Entity[] groups = Storage.getRoot().getEntries();
         for (int i = 0; i < groups.length; i++) {
@@ -148,22 +143,11 @@ public class DataManager {
                     Storage.getRoot().addEntry(newGroup);
                     newGroup.addEntry(student);
                 } else {
-                    group = getGroup(groupName);
+                    group = getGroupByName(groupName);
                     group.addEntry(student);
                 }
             }
         }
-    }
-
-    private Group getGroup(String name) {
-        Entity[] groups = Storage.getRoot().getEntries();
-        for (int i = 0; i < groups.length; i++) {
-            Group group = (Group) groups[i];
-            if (group.getName().equals(name)) {
-                return group;
-            }
-        }
-        return null;
     }
 
     private void notifyObserversUpdate() {
