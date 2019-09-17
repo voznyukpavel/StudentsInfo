@@ -104,23 +104,25 @@ public class DataManager {
     public void updateStudent(Student student) {
         Group group = student.getGroup();
         if (isGroupExist(group.getName())) {
-            Entity[] students = group.getEntries();
-            boolean isfounded = false;
-            for (int i = 0; i < students.length; i++) {
-                Student stud = (Student) students[i];
-                if (stud.getId() == student.getId()) {
-                    group.update(i, student);
-                    isfounded = true;
-                    break;
-                }
-            }
-            if (!isfounded) {
+            if (!isStudentInGroup(student, group)) {
                 findStudent(student);
             }
         } else {
             findStudent(student);
         }
         notifyObserversUpdate();
+    }
+
+    private boolean isStudentInGroup(Student student, Group group) {
+        Entity[] students = group.getEntries();
+        for (int i = 0; i < students.length; i++) {
+            Student stud = (Student) students[i];
+            if (stud.getId() == student.getId()) {
+                group.update(i, student);
+                return true;
+            }
+        }
+        return false;
     }
 
     private void findStudent(Student student) {
@@ -136,17 +138,21 @@ public class DataManager {
         for (int i = 0; i < students.length; i++) {
             Student stud = (Student) students[i];
             if (stud.getId() == student.getId()) {
-                group.removeEntry(student);
-                String groupName = student.getGroup().getName();
-                if (!isGroupExist(groupName)) {
-                    Group newGroup = new Group(Storage.getRoot(), groupName);
-                    Storage.getRoot().addEntry(newGroup);
-                    newGroup.addEntry(student);
-                } else {
-                    group = getGroupByName(groupName);
-                    group.addEntry(student);
-                }
+                 replaceStudent(group, student);
             }
+        }
+    }
+
+    private void replaceStudent(Group group, Student student) {
+        group.removeEntry(student);
+        String groupName = student.getGroup().getName();
+        if (!isGroupExist(groupName)) {
+            Group newGroup = new Group(Storage.getRoot(), groupName);
+            Storage.getRoot().addEntry(newGroup);
+            newGroup.addEntry(student);
+        } else {
+            group = getGroupByName(groupName);
+            group.addEntry(student);
         }
     }
 

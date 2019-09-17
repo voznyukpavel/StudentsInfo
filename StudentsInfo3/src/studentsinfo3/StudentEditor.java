@@ -184,7 +184,11 @@ public class StudentEditor extends EditorPart implements SaveListener {
         public void modifyText(ModifyEvent e) {
             setDirty();
             EditorIsDirtydManager.getInstance().dataIsDirty(isDirty, studentEditor);
-            setFocus();
+           e.getSource();
+           if( e.getSource()instanceof Text) {
+               Text text= (Text)e.getSource();
+               text.setFocus();
+           }
         }
     }
 
