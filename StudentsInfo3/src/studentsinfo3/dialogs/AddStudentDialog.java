@@ -35,7 +35,6 @@ public class AddStudentDialog extends Dialog {
     private Text resultText;
     private Button[] radios;
     private Button addPhotoButton;
-
     private String name;
     private String groupName;
     private String address;
