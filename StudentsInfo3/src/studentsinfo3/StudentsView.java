@@ -179,6 +179,7 @@ public class StudentsView extends ViewPart implements EntityListener {
 
         @Override
         public void menuShown(MenuEvent e) {
+            treeViewer.getControl().setFocus();
             ISelection selection = treeViewer.getSelection();
             IStructuredSelection structSelection = (IStructuredSelection) selection;
             Object selectedObject = structSelection.getFirstElement();
