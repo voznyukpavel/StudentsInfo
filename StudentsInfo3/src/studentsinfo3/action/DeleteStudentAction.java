@@ -38,13 +38,17 @@ public class DeleteStudentAction extends AbstractAction implements ActionFactory
         Student student = (Student) selection.getFirstElement();
         if (MessageDialog.openConfirm(window.getShell(), "Delete Student",
                 "Do you want to delete the student: " + student.getName() + " ?")) {
-            IWorkbenchPage page = window.getActivePage();
-            StudentEditorInput input = new StudentEditorInput(student);
-            IEditorPart editorpart=page.findEditor(input);
-            if (editorpart!= null) {
-                page.closeEditor(editorpart, true);
-            }
+            closeStudentsEditor(student);
             DataManager.getInstance().removeStudent(student);
+        }
+    }
+
+    private void closeStudentsEditor(Student student) {
+        IWorkbenchPage page = window.getActivePage();
+        StudentEditorInput input = new StudentEditorInput(student);
+        IEditorPart editorpart=page.findEditor(input);
+        if (editorpart!= null) {
+            page.closeEditor(editorpart, true);
         }
     }
 }

@@ -1,7 +1,6 @@
 package studentsinfo3.action;
 
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPartReference;
@@ -20,10 +19,7 @@ import studentsinfo3.managers.SaveDataManager;
 
 public class SaveAllAction extends Action implements EditorListener, ActionFactory.IWorkbenchAction {
 
-    protected IStructuredSelection selection;
-    private IWorkbenchPage page;
-
-    public final static String ID = "studentsinfo3.save";
+    public final static String ID = "studentsinfo3.saveAll";
 
     public SaveAllAction(IWorkbenchWindow window) {
         setId(ID);
@@ -31,7 +27,7 @@ public class SaveAllAction extends Action implements EditorListener, ActionFacto
         setToolTipText("Save All");
         setImageDescriptor(
                 AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.SAVE_ALL));
-        page = window.getActivePage();
+        IWorkbenchPage page = window.getActivePage();
         page.addPartListener(new EditorChangedListener());
         setEnabled(false);
         signUp();

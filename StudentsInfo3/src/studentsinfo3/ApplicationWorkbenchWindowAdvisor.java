@@ -83,14 +83,13 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     }
 
     private void hookPopupMenu(final IWorkbenchWindow window) {
-        trayItem.addListener(SWT.MenuDetect, new Listener() {
-            public void handleEvent(Event event) {
+        trayItem.addListener(SWT.MenuDetect,(event)-> {
                 MenuManager trayMenu = new MenuManager();
                 Menu menu = trayMenu.createContextMenu(window.getShell());
                 actionBarAdvisor.fillTrayItem(trayMenu);
                 menu.setVisible(true);
             }
-        });
+        );
     }
 
     private TrayItem initTaskItem(IWorkbenchWindow window) {

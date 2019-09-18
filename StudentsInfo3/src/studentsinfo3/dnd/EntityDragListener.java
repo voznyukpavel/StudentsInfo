@@ -43,8 +43,8 @@ public class EntityDragListener extends DragSourceAdapter {
             Group group = (Group) entity;
             Entity[] students = group.getEntries();
             if (students.length > 0 && TextTransfer.getInstance().isSupportedType(event.dataType))
-                for (int i = 0; i < group.getSize(); i++) {
-                    Student student = (Student) students[i];
+                for (Entity studentEnt:students) {
+                    Student student = (Student) studentEnt;
                     writeStudent(student, event);
                 }
             else {

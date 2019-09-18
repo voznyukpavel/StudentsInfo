@@ -21,7 +21,6 @@ import studentsinfo3.managers.SaveDataManager;
 
 public class SaveAction extends Action implements EditorListener, ActionFactory.IWorkbenchAction {
 
-    private IWorkbenchPage page;
     private StudentEditor studentEditor;
 
     public final static String ID = "studentsinfo3.save";
@@ -31,7 +30,7 @@ public class SaveAction extends Action implements EditorListener, ActionFactory.
         setText("&Save");
         setToolTipText("Save");
         setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.SAVE));
-        page = window.getActivePage();
+        IWorkbenchPage page = window.getActivePage();
         page.addPartListener(new EditorChangedListener());
         setEnabled(false);
         signUp();
@@ -65,45 +64,45 @@ public class SaveAction extends Action implements EditorListener, ActionFactory.
 
         @Override
         public void partActivated(IWorkbenchPartReference partRef) {
-            setEnable(partRef);
+            setEnableSava(partRef);
         }
 
         @Override
         public void partInputChanged(IWorkbenchPartReference partRef) {
-            setEnable(partRef);
+            setEnableSava(partRef);
         }
 
         @Override
         public void partClosed(IWorkbenchPartReference partRef) {
-            setEnable(partRef);
+            setEnableSava(partRef);
         }
 
         @Override
         public void partDeactivated(IWorkbenchPartReference partRef) {
-            setEnable(partRef);
+            setEnableSava(partRef);
         }
 
         @Override
         public void partBroughtToTop(IWorkbenchPartReference partRef) {
-            setEnable(partRef);
+            setEnableSava(partRef);
         }
 
         @Override
         public void partOpened(IWorkbenchPartReference partRef) {
-            setEnable(partRef);
+            setEnableSava(partRef);
         }
 
         @Override
         public void partHidden(IWorkbenchPartReference partRef) {
-            setEnable(partRef);
+            setEnableSava(partRef);
         }
 
         @Override
         public void partVisible(IWorkbenchPartReference partRef) {
-            setEnable(partRef);
+            setEnableSava(partRef);
         }
 
-        private void setEnable(IWorkbenchPartReference partRef) {
+        private void setEnableSava(IWorkbenchPartReference partRef) {
             IWorkbenchPart part = partRef.getPart(true);
             if (part instanceof StudentEditor) {     
                 studentEditor = ((StudentEditor) part).getStudentEditor();

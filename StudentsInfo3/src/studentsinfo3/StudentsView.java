@@ -69,7 +69,7 @@ public class StudentsView extends ViewPart implements EntityListener {
         int operations = DND.DROP_COPY | DND.DROP_MOVE;
         Transfer[] transferTypes = new Transfer[] { TextTransfer.getInstance() };
         treeViewer.addDragSupport(operations, transferTypes, new EntityDragListener(treeViewer));
-        // treeViewer.addDropSupport(operations, transferTypes, new EntityDropListener(treeViewer));
+        //treeViewer.addDropSupport(operations, transferTypes, new EntityDropListener(treeViewer));
     }
 
     private void createMenu() {
@@ -115,7 +115,7 @@ public class StudentsView extends ViewPart implements EntityListener {
                 }
             }
         }
-        
+
         @Override
         public void mouseDown(MouseEvent e) {
             IWorkbenchPage activePage = getWorkbenchPage();
@@ -123,7 +123,7 @@ public class StudentsView extends ViewPart implements EntityListener {
             if (selectedObject instanceof Student) {
                 Student student = (Student) selectedObject;
                 StudentEditorInput sei = new StudentEditorInput(student);
-                if(activePage.findEditor(sei)!=null) {
+                if (activePage.findEditor(sei) != null) {
                     openEditor(activePage, sei);
                 }
             }
@@ -131,6 +131,8 @@ public class StudentsView extends ViewPart implements EntityListener {
 
         private void openEditor(IWorkbenchPage activePage, StudentEditorInput sei) {
             try {
+                activePage.openEditor(sei, StudentEditor.ID).setFocus();
+                treeViewer.getControl().setFocus();
                 activePage.openEditor(sei, StudentEditor.ID).setFocus();
             } catch (PartInitException ex) {
                 logger.log(Level.SEVERE, ErrorMessageTextFinals.STUDENT_CANNOT_BE_ADDED, ex);

@@ -44,9 +44,8 @@ public class DataManager {
     }
 
     public boolean isStudentExist(Group group, Student student) {
-        Entity[] students = group.getEntries();
-        for (int i = 0; i < students.length; i++) {
-            Student stud = (Student) students[i];
+        for (Entity students : group.getEntries()) {
+            Student stud = (Student) students;
             if (stud.equals(student)) {
                 return true;
             }
@@ -91,9 +90,8 @@ public class DataManager {
     }
 
     public Group getGroupByName(String name) {
-        Entity[] groups = Storage.getRoot().getEntries();
-        for (int i = 0; i < groups.length; i++) {
-            Group group = (Group) groups[i];
+        for (Entity groups : Storage.getRoot().getEntries()) {
+            Group group = (Group) groups;
             if (group.getName().equals(name)) {
                 return group;
             }
@@ -126,19 +124,17 @@ public class DataManager {
     }
 
     private void findStudent(Student student) {
-        Entity[] groups = Storage.getRoot().getEntries();
-        for (int i = 0; i < groups.length; i++) {
-            Group group = (Group) groups[i];
+        for (Entity groups : Storage.getRoot().getEntries()) {
+            Group group = (Group) groups;
             getStudent(group, student);
         }
     }
 
     private void getStudent(Group group, Student student) {
-        Entity[] students = group.getEntries();
-        for (int i = 0; i < students.length; i++) {
-            Student stud = (Student) students[i];
+        for (Entity students : group.getEntries()) {
+            Student stud = (Student) students;
             if (stud.getId() == student.getId()) {
-                 replaceStudent(group, student);
+                replaceStudent(group, student);
             }
         }
     }

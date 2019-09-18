@@ -5,8 +5,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -118,17 +116,15 @@ public class StudentEditor extends EditorPart implements SaveListener {
         gridData.heightHint = PHOTO_SIZE;
         gridData.verticalSpan = 5;
         photoCanvas.setLayoutData(gridData);
-        photoCanvas.addPaintListener(new PaintListener() {
-            public void paintControl(final PaintEvent event) {
-                photoImage = currentStudent.getPhotoData().getPhoto();
-                if (photoImage != null) {
-                    photoImage = ResizedImage.resize(photoImage, PHOTO_SIZE);
-                    event.gc.drawImage(photoImage, 0, 0);
-                } else {
-                    event.gc.drawImage(AbstractUIPlugin
-                            .imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.STUDENT_INSTEAD)
-                            .createImage(), 0, 0);
-                }
+        photoCanvas.addPaintListener((event) -> {
+            photoImage = currentStudent.getPhotoData().getPhoto();
+            if (photoImage != null) {
+                photoImage = ResizedImage.resize(photoImage, PHOTO_SIZE);
+                event.gc.drawImage(photoImage, 0, 0);
+            } else {
+                event.gc.drawImage(AbstractUIPlugin
+                        .imageDescriptorFromPlugin(Application.PLUGIN_ID, ImageWayKeys.STUDENT_INSTEAD).createImage(),
+                        0, 0);
             }
         });
 
@@ -184,11 +180,11 @@ public class StudentEditor extends EditorPart implements SaveListener {
         public void modifyText(ModifyEvent e) {
             setDirty();
             EditorIsDirtydManager.getInstance().dataIsDirty(isDirty, studentEditor);
-           e.getSource();
-           if( e.getSource()instanceof Text) {
-               Text text= (Text)e.getSource();
-               text.setFocus();
-           }
+            e.getSource();
+            if (e.getSource() instanceof Text) {
+                Text text = (Text) e.getSource();
+                text.setFocus();
+            }
         }
     }
 
