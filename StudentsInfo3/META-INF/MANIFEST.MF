@@ -2,18 +2,18 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: StudentsInfo3
 Bundle-SymbolicName: StudentsInfo3;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.0.1.qualifier
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.apache.felix.scr,
- org.eclipse.equinox.util,
  org.eclipse.equinox.event,
  org.eclipse.ui.workbench,
  org.eclipse.ui.ide;bundle-version="3.15.200";resolution:=optional;visibility:=reexport
 Automatic-Module-Name: StudentsInfo3
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: studentsinfo3,
+Export-Package: main.assembly,
+ studentsinfo3,
  studentsinfo3.action,
  studentsinfo3.dialogs,
  studentsinfo3.dnd,
